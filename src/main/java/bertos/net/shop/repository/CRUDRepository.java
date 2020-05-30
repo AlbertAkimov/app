@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @Date: 26.04.2020
  * @Description:
  */
-public interface CRUD<E extends AbstractEntity> extends JpaRepository<E, Long> {
+public interface CRUDRepository<E extends AbstractEntity> extends JpaRepository<E, Long> {
 }

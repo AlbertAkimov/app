@@ -12,7 +12,7 @@ import java.util.List;
 public interface CRUDService<E extends AbstractEntity> {
 
     E getById(Long id);
-    void save(E entity);
+    E save(E entity);
     void delete(Long id);
     List<E> getAll();
 

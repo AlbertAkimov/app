@@ -1,9 +1,8 @@
 package bertos.net.shop.services.impl;
 
 import bertos.net.shop.model.AbstractEntity;
-import bertos.net.shop.repository.CRUD;
+import bertos.net.shop.repository.CRUDRepository;
 import bertos.net.shop.services.CRUDService;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,32 +14,50 @@ import java.util.List;
  * @Description:
  */
 @Slf4j
-public abstract class AbstractCRUDServiceImpl<E extends AbstractEntity, R extends CRUD<E>> implements CRUDService<E> {
+public abstract class AbstractCRUDServiceImpl<E extends AbstractEntity, R extends CRUDRepository<E>> implements CRUDService<E> {
 
     protected final R repository;
+    private final String clazz;
 
     @Autowired
-    public AbstractCRUDServiceImpl(R repository) {
+    @SuppressWarnings("all")
+    public AbstractCRUDServiceImpl(R repository, Class<? extends AbstractEntity> clazz) {
         this.repository = repository;
+        this.clazz = clazz.getName();
     }
 
     @Override
     public E getById(Long id) {
-        return repository.findById(id).orElse(null);
+
+        E entity = repository.findById(id).orElse(null);
+
+        if(entity != null)
+            log.info("entity: " + clazz + " successfully found by id: " + id);
+
+        return entity;
     }
 
     @Override
-    public void save(E entity) {
-        repository.save(entity);
+    public E save(E entity) {
+        E result = repository.save(entity);
+        log.info("entity: " + clazz + " successfully saved");
+        return result;
     }
 
     @Override
     public void delete(Long id) {
         repository.deleteById(id);
+        log.info("entity: " + clazz + " successfully deleted by id: " + id);
     }
 
     @Override
     public List<E> getAll() {
-        return repository.findAll();
+
+        List<E> listEntity = repository.findAll();
+
+        if(!listEntity.isEmpty())
+            log.info("list entities: " + clazz + " successfully load");
+
+        return listEntity;
     }
 }

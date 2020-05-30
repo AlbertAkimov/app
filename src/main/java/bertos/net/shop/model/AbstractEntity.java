@@ -28,15 +28,4 @@ public abstract class AbstractEntity {
         uuid_id = UUID.randomUUID().toString();
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getUuid_id() {
-        return uuid_id;
-    }
-
-    public void setUuid_id(String uuid_id) {
-        this.uuid_id = uuid_id;
-    }
 }

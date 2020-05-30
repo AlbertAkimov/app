@@ -44,6 +44,11 @@ public class UserController {
 
         userValidator.validate(userForm, bindingResult);
 
+        User user = userService.findByUsername(userForm.getUsername());
+
+        if(user != null)
+            bindingResult.rejectValue("username", "Username.already.exist");
+
         if (bindingResult.hasErrors()) {
             return "registration";
         }

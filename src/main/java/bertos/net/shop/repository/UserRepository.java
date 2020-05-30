@@ -7,7 +7,7 @@ import bertos.net.shop.model.User;
  * @Date: 26.04.2020
  * @Description:
  */
-public interface UserRepository extends CRUD<User> {
+public interface UserRepository extends CRUDRepository<User> {
 
     User findByUsername(String username);
 

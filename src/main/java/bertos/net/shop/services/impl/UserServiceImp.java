@@ -6,6 +6,7 @@ import bertos.net.shop.model.User;
 import bertos.net.shop.repository.RoleRepository;
 import bertos.net.shop.repository.UserRepository;
 import bertos.net.shop.services.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.List;
  * @Description:
  */
 
+@Slf4j
 @Service
 public class UserServiceImp extends AbstractCRUDServiceImpl<User, UserRepository> implements UserService {
 
@@ -27,14 +29,20 @@ public class UserServiceImp extends AbstractCRUDServiceImpl<User, UserRepository
 
     @Autowired
     public UserServiceImp(UserRepository repository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder) {
-        super(repository);
+        super(repository, User.class);
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public User findByUsername(String username) {
-        return repository.findByUsername(username);
+
+        User user = repository.findByUsername(username);
+
+        if(user != null)
+            log.debug("user: " + username + " successfully found");
+
+        return user;
     }
 
     @Override
