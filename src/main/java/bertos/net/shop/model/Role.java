@@ -1,6 +1,7 @@
 package bertos.net.shop.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
  * @Description:
  */
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 @Table(name = "roles")

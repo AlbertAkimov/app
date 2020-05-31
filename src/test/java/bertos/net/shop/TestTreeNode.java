@@ -27,11 +27,7 @@ import java.util.List;
 public class TestTreeNode  {
 
     @Autowired
-    private final ProductService service;
-
-    public TestTreeNode(ProductService service) {
-        this.service = service;
-    }
+    private ProductService service;
 
     @Test
     public void getAll() {
