@@ -13,5 +13,6 @@ import org.springframework.data.repository.NoRepositoryBean;
 public interface CRUDRepository<E extends AbstractEntity> extends JpaRepository<E, Long> {
 
     E findByGuid(String guid);
+    void deleteByGuid(String guid);
 
 }

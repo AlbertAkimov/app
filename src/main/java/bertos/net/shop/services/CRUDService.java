@@ -16,4 +16,5 @@ public interface CRUDService<E extends AbstractEntity> {
     void delete(Long id);
     List<E> getAll();
     E findByGuid(String guid);
+    void deleteByGuid(String guid);
 }

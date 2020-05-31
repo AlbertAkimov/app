@@ -62,6 +62,12 @@ public abstract class AbstractCRUDServiceImpl<E extends AbstractEntity, R extend
     }
 
     @Override
+    public void deleteByGuid(String guid) {
+        repository.deleteByGuid(guid);
+        log.info("entity: " + clazz + " successfully deleted by guid: " + guid);
+    }
+
+    @Override
     public List<E> getAll() {
 
         List<E> listEntity = repository.findAll();
