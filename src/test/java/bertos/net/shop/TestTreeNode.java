@@ -1,11 +1,9 @@
 package bertos.net.shop;
 
 import bertos.net.shop.model.Product;
-import bertos.net.shop.repository.ProductRepository;
 import bertos.net.shop.services.impl.ProductService;
 import bertos.net.shop.utils.Data;
 import bertos.net.shop.utils.DataNode;
-import bertos.net.shop.utils.TreeNode;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +27,11 @@ import java.util.List;
 public class TestTreeNode  {
 
     @Autowired
-    private ProductService service;
+    private final ProductService service;
+
+    public TestTreeNode(ProductService service) {
+        this.service = service;
+    }
 
     @Test
     public void getAll() {

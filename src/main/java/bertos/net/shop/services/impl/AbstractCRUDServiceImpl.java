@@ -38,6 +38,17 @@ public abstract class AbstractCRUDServiceImpl<E extends AbstractEntity, R extend
     }
 
     @Override
+    public E findByGuid(String guid) {
+
+        E entity = repository.findByGuid(guid);
+
+        if(entity != null)
+            log.info("entity: " + clazz + " successfully found by guid: " + guid);
+
+        return entity;
+    }
+
+    @Override
     public E save(E entity) {
         E result = repository.save(entity);
         log.info("entity: " + clazz + " successfully saved");

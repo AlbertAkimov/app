@@ -11,18 +11,18 @@ ALTER TABLE users_roles
 create table if not exists customers
 (
     id         bigint auto_increment primary key,
-    uuid_id    varchar(36),
+    guid    varchar(36),
     first_name varchar(50)  not null,
     last_name  varchar(100) not null,
     status     varchar(25) default 'ACTIVE',
-    unique (uuid_id)
+    unique (guid)
 );
 
 create table if not exists cards
 (
     id                  bigint auto_increment primary key,
     id_customer         bigint,
-    uuid_id             varchar(36),
+    guid             varchar(36),
     created             timestamp    default CURRENT_TIMESTAMP,
     updated             timestamp    default CURRENT_TIMESTAMP,
     number_card         varchar(100),
@@ -30,14 +30,14 @@ create table if not exists cards
     discount_percentage int          default 3,
     status              varchar(25)  default 'ACTIVE',
     accumulation        bigint       default 0,
-    unique (uuid_id),
+    unique (guid),
     foreign key (id_customer) references customers (id)
 );
 
 create table if not exists orders
 (
     id          bigint auto_increment primary key,
-    uuid_id     varchar(36),
+    guid     varchar(36),
     id_customer bigint,
     id_card     bigint,
     id_product  bigint not null
@@ -47,7 +47,7 @@ create table if not exists orders
 create table if not exists products
 (
   id bigint auto_increment primary key,
-  uuid_id varchar(36),
+  guid varchar(36),
   id_parent bigint not null,
   is_group boolean default 0,
   id_category bigint not null,
@@ -59,7 +59,7 @@ create table if not exists products
 create table if not exists product_categories(
 
     id bigint auto_increment primary key,
-    uuid_id varchar(36),
+    guid varchar(36),
     id_parent bigint,
     name varchar(256),
     is_group boolean default 0
@@ -69,7 +69,7 @@ create table if not exists product_categories(
 create table if not exists roles
 (
     id      bigint auto_increment primary key not null,
-    uuid_id varchar(36),
+    guid varchar(36),
     name    varchar(100),
     unique (name)
 );
@@ -77,7 +77,7 @@ create table if not exists roles
 create table if not exists users
 (
     id        bigint auto_increment primary key not null,
-    uuid_id   varchar(36),
+    guid   varchar(36),
     username  varchar(255),
     password  varchar(255),
     firstName varchar(255),

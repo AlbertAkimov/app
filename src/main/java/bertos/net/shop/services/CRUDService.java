@@ -15,5 +15,5 @@ public interface CRUDService<E extends AbstractEntity> {
     E save(E entity);
     void delete(Long id);
     List<E> getAll();
-
+    E findByGuid(String guid);
 }

@@ -2,21 +2,13 @@ package bertos.net.shop;
 
 import bertos.net.shop.model.AbstractEntity;
 import bertos.net.shop.services.CRUDService;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringBootConfiguration;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Component;
 
-import javax.persistence.MappedSuperclass;
 import java.util.List;
+import java.util.OptionalLong;
 
 /**
  * @Authot: Albert Akimov
@@ -25,15 +17,26 @@ import java.util.List;
  */
 
 @Slf4j
-public abstract class AbstractTestCRUD<E extends AbstractEntity, S extends CRUDService<E>>  {
-
-    public final S service;
-    public final E entity;
+public abstract class AbstractTestCRUD<E extends AbstractEntity, S extends CRUDService<E>> {
 
     @Autowired
     @SuppressWarnings("all")
-    public AbstractTestCRUD(S service, E entity) {
-        this.service = service;
+    private S service;
+
+    private E entity;
+
+    public void init(E entity) {
+
+        Assert.assertNotNull(entity);
+
+/*      List<E> list = service.getAll();
+        OptionalLong maxId = list.stream().mapToLong(AbstractEntity::getId).max();
+
+        if (maxId.isPresent())
+            entity.setId(maxId.getAsLong() + 1);
+        else
+            entity.setId(1L);*/
+
         this.entity = entity;
     }
 
@@ -45,8 +48,8 @@ public abstract class AbstractTestCRUD<E extends AbstractEntity, S extends CRUDS
         service.delete(entity.getId());
     }
 
-    private List<E> getAll() {
-        return service.getAll();
+    private E findByGuid() {
+        return service.findByGuid(entity.getGuid());
     }
 
     private E getById() {
@@ -55,16 +58,19 @@ public abstract class AbstractTestCRUD<E extends AbstractEntity, S extends CRUDS
 
     public void runTest() {
 
+        Assert.assertNotNull(entity);
+
         log.info("running test's for entity: " + entity.getClass().getSimpleName());
-        log.info("run task save..");
 
         E result = save();
+        entity.setId(result.getId());
 
-        log.info("check of result executing task save");
-        // нужно проверить ссылки, возможно они будут одинаковые
-        Assert.assertEquals(entity.getId(), result.getId());
-
+        Assert.assertEquals(entity.getGuid(), findByGuid().getGuid());
         Assert.assertEquals(entity.getId(), getById().getId());
+
+        delete();
+
+        Assert.assertNull(getById());
 
     }
 

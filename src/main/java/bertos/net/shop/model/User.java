@@ -1,6 +1,7 @@
 package bertos.net.shop.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -14,6 +15,7 @@ import java.util.List;
  * @Description:
  */
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 @Table(name = "users")
