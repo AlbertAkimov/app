@@ -26,7 +26,9 @@ public class ProductCategory extends AbstractEntity {
     @Column(name = "name")
     private String name;
 
+/*
     @OneToMany(mappedBy = "productCategory", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
     private List<Product> products;
+*/
 
 }

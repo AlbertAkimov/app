@@ -1,20 +1,13 @@
+requirejs.config({
+    baseURI: 'js'
+})
 
-webix.ready(function () {
-webix.ui({
-    container:"box",
-    view:"tree",
-    data: [
-        {id:"root", value:"Cars", open:true, data:[
-                { id:"1", open:true, value:"Toyota", data:[
-                        { id:"1.1", value:"Avalon" },
-                        { id:"1.2", value:"Corolla" },
-                        { id:"1.3", value:"Camry" }
-                    ]},
-                { id:"2", open:true, value:"Skoda", data:[
-                        { id:"2.1", value:"Octavia" },
-                        { id:"2.2", value:"Superb" }
-                    ]}
-            ]}
-    ]
-});
+require(['views/main', 'util/resourcesProxy'],function (main, resourcesProxy) {
+    webix.ready(function () {
+        webix.ui({
+            container: "main",
+            id: 'root',
+            rows: [main]
+        });
+    })
 })

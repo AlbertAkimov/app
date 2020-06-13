@@ -1,7 +1,10 @@
 package bertos.net.shop.utils;
 
+import bertos.net.shop.model.AbstractEntity;
 import bertos.net.shop.utils.inter.Func2;
+import lombok.Data;
 
+import javax.persistence.MappedSuperclass;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,44 +13,46 @@ import java.util.List;
  * @Date: 17.05.2020
  * @Description:
  */
-public class TreeNode<T, N extends TreeNode<T, N>> {
+@Data
+@MappedSuperclass
+public class TreeNode<E, N extends TreeNode<E, N>> {
 
-    N parent;
-    ArrayList<N> children;
-    T data;
+    //protected N parent;
+    protected E data;
+    protected ArrayList<N> children;
 
     public TreeNode() {
     }
 
-    public TreeNode(N parent, ArrayList<N> children, T data) {
-        this.parent = parent;
-        this.children = children;
+    public TreeNode(N parent, ArrayList<N> children, E data) {
+        //this.parent = parent;
         this.data = data;
+        this.children = children;
     }
 
-    public static <T, N extends TreeNode<T, N>> N makeTree(List<T> datas, TypeAdapter<T, N> typeAdapter) {
+    public static <E extends AbstractEntity, N extends TreeNode<E, N>> N makeTree(List<E> datas, TypeAdapter<E, N> typeAdapter) {
 
         N root = typeAdapter.newInstance();
         root.children = new ArrayList<>();
 
-        for(T top : FuncUtils.filter(datas, typeAdapter::isTopLevelItem))
+        for(E top : FuncUtils.filter(datas, typeAdapter::isTopLevelItem))
             root.children.add(extractNode(top, root, datas, typeAdapter));
 
         return root;
     }
 
-    protected static <T, N extends TreeNode<T, N>> N extractNode(T data, N parent, List<T> datas, TypeAdapter<T, N> typeAdapter) {
+    protected static <E extends AbstractEntity, N extends TreeNode<E, N>> N extractNode(E data, N parent, List<E> datas, TypeAdapter<E, N> typeAdapter) {
 
         N node = typeAdapter.newInstance();
         node.data = data;
-        node.parent = parent;
+        //node.parent = parent;
 
-        List<T> directChildren = FuncUtils.filter(datas, d -> typeAdapter.isChildOf(data, d));
+        List<E> directChildren = FuncUtils.filter(datas, d -> typeAdapter.isChildOf(data, d));
 
         if(! directChildren.isEmpty()) {
             node.children = new ArrayList<>();
 
-            for(T child : directChildren)
+            for(E child : directChildren)
                 node.children.add(extractNode(child, node, datas, typeAdapter));
 
         }

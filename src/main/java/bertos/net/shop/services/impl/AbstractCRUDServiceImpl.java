@@ -5,6 +5,9 @@ import bertos.net.shop.repository.CRUDRepository;
 import bertos.net.shop.services.CRUDService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 
 import java.util.List;
 
@@ -76,5 +79,16 @@ public abstract class AbstractCRUDServiceImpl<E extends AbstractEntity, R extend
             log.info("list entities: " + clazz + " successfully load");
 
         return listEntity;
+    }
+
+    @Override
+    public Page<E> getAll(Pageable pageable) {
+
+        Page<E> pageEntity = repository.findAll(pageable);
+
+        if(!pageEntity.isEmpty())
+            log.info("page entities: " + clazz + " successfully load");
+
+        return pageEntity;
     }
 }

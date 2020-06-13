@@ -1,14 +1,16 @@
 package bertos.net.shop.controllers;
 
+import bertos.net.shop.ProductsTreeDTO;
 import bertos.net.shop.model.Product;
 import bertos.net.shop.services.impl.ProductService;
-import bertos.net.shop.utils.Data;
-import bertos.net.shop.utils.DataNode;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import bertos.net.shop.utils.ProductDataNode;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,32 +20,45 @@ import java.util.List;
  * @Date: 31.05.2020
  * @Description:
  */
-@Controller
-public class ProductController {
 
-    private final ProductService service;
+@RestController
+@RequestMapping("/products")
+public class ProductController extends AbstractRestControllerCRUD<Product, ProductService> {
 
-    @Autowired
-    public ProductController(ProductService service) {
-        this.service = service;
+    protected ProductController(ProductService service) {
+        super(service, Product.class);
     }
 
-    @RequestMapping(value = "/list_products", method = RequestMethod.GET)
-    public String loadProducts(Model model) {
+    @GetMapping("tree")
+    public Page<ProductsTreeDTO> getTree(@PageableDefault Pageable pageable) {
 
-        List<Product> listProducts = service.getAll();
+        Page<Product> productList = service.getAll(pageable);
+        ProductDataNode tree = ProductDataNode.makeTree(productList.toList(), new ProductDataNode());
 
-        List<Data> datas = new ArrayList<>();
+        List<ProductsTreeDTO> resultList = new ArrayList<>();
+        for(ProductDataNode child : tree.getChildren())
+            resultList.add(buildTreeDTO(child));
 
-        for(Product product : listProducts) {
-            Data data = new Data(product.getId(), product.getName(),product.getParentId());
-            datas.add(data);
-        }
 
-        DataNode tree = DataNode.makeTree(datas, new DataNode());
+        return new PageImpl<ProductsTreeDTO>(resultList);
+    }
 
-        model.addAttribute("treeProducts", tree);
+    public ProductsTreeDTO buildTreeDTO(ProductDataNode tree) {
 
-        return "main";
+        ProductsTreeDTO dto = new ProductsTreeDTO();
+
+        dto.setCategory(tree.getData().getProductCategory().getName());
+        dto.setName(tree.getData().getName());
+        dto.setId(tree.getData().getId());
+        dto.setParent(tree.getData().getParentId());
+        dto.setOpen(tree.getData().isGroup());
+
+        if (tree.getChildren() != null)
+            for (ProductDataNode child : tree.getChildren())
+                dto.addToList(buildTreeDTO(child));
+
+
+        return dto;
+
     }
 }
