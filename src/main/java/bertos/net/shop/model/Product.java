@@ -5,6 +5,8 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @Authot: Albert Akimov
@@ -31,5 +33,9 @@ public class Product extends AbstractEntity {
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_category", referencedColumnName = "id")
     private ProductCategory productCategory;
+
+    @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_parent")
+    private List<Product> data;
 
 }

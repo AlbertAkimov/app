@@ -32,7 +32,7 @@ public class TestTreeNode  {
 
         List<Product> products = service.getAll();
 
-        ProductDataNode tree = ProductDataNode.makeTree(products, new ProductDataNode());
+        //ProductDataNode tree = ProductDataNode.makeTree(products, new ProductDataNode());
 
         System.out.println("");
     }

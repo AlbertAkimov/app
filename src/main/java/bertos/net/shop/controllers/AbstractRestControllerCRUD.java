@@ -29,8 +29,8 @@ public abstract class AbstractRestControllerCRUD<E extends AbstractEntity, S ext
     }
 
     @GetMapping("{id}")
-    public E getById(@PathVariable("id") E entity) {
-        return entity;
+    public E getById(@PathVariable("id") Long id) {
+        return service.getById(id);
     }
 
     @PostMapping

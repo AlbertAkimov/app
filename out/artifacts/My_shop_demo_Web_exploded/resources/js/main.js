@@ -2,7 +2,7 @@ requirejs.config({
     baseURI: 'js'
 })
 
-require(['views/main'],function (main) {
+require(['views/main', 'util/resourcesProxy'],function (main, resourcesProxy) {
     webix.ready(function () {
         webix.ui({
             container: "main",

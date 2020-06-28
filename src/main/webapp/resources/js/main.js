@@ -2,12 +2,22 @@ requirejs.config({
     baseURI: 'js'
 })
 
-require(['views/main', 'util/resourcesProxy'],function (main, resourcesProxy) {
+require([
+    'views/products',
+    'util/resourcesProxy',
+    'buttons/buttonProduct',
+    'tables/productEditTable'],function (products, resourcesProxy, buttonProduct, productEditTable) {
     webix.ready(function () {
         webix.ui({
             container: "main",
             id: 'root',
-            rows: [main]
+            rows: [buttonProduct,
+                {
+                    cols: [
+                        products,
+                        productEditTable
+                    ]
+                }],
         });
     })
 })

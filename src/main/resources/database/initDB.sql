@@ -65,6 +65,8 @@ create table if not exists product_categories(
     is_group boolean default 0
 );
 
+create table
+
 #/////////////////////////////////USER//////////////////////////////////////////
 create table if not exists roles
 (
