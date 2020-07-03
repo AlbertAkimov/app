@@ -18,6 +18,8 @@
     <%--style--%>
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="${contextPath}/resources/webix/webix.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="http://cdn.webix.com/components/sidebar/sidebar.css" charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
 
     <%--libs--%>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -25,6 +27,7 @@
     <script src="${contextPath}/resources/webix/webix.js"></script>
     <script src="${contextPath}/resources/libs/routie.min.js"></script>
     <script data-main="${contextPath}/resources/js/main" src="${contextPath}/resources/libs/require.min.js"></script>
+    <script type="text/javascript" src="http://cdn.webix.com/components/sidebar/sidebar.js" charset="UTF-8"></script>
 
 </head>
 <body>

@@ -4,25 +4,18 @@ requirejs.config({
 
 define(function () {
     return {
-        id: 'productEdit',
-        view: 'form',
+        id: 'product_property',
+        view: 'property',
+        detailsUrl: '/products',
         autoheight: true,
         autowidth: true,
         width: 500,
-        elements: [
 
-            {name: 'name', view: "text", label: 'Наименование'},
-            {name: 'category',view: "text", label: 'Категория'},
-            {margin:5,
-                cols: [
-                    {
-                        view: 'button', value: 'Сохранить', css:"webix_primary", type: 'form'
-                    },
-                    {
-                        view: 'button', value: 'Отмена'
-                    },
-                ]
-            }
-        ]
+        elements: [
+            {label: 'Основные реквизиты', type: 'label'},
+            {label: 'Идентификатор', type: 'text', id: 'id'},
+            {label: 'Имя', type: 'text', id: 'name'},
+            {label: 'Тип товара', type: 'text', id: 'category'}
+        ],
     }
 })

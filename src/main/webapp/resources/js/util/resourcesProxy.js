@@ -11,18 +11,7 @@ define(function () {
 
             var url = view.config.url.source;
 
-/*            if(params.operation === 'notContent') {
-                url = url + '/' + params.id;
-            }*/
-
             return ajax.get(url).then(function (value) {
-
-             /*   if(params.operation === 'getById') {*/
-/*                    var result = value.json();
-                    $$("productEdit").elements.name.setValue(result.name);*/
-/*                    return value.json();
-                }*/
-
                 return value.json().content;
             })
         },

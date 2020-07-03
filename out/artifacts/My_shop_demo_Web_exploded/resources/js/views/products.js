@@ -41,26 +41,10 @@ define(function () {
 
         on: {
             onItemClick: function (id) {
-                const params = {id: id.row};
-                $$("product_property").clear();
-
-                $$("product_property").load({
-                    $proxy:true,
-                    load:function(view, params){
-                        return webix.ajax().get("/products/" + id.row).then(function (value) {
-
-                            const result = value.json();
-
-                            $$('product_property').setValues({
-                                id: result.id,
-                                name: result.name
-                                //category: result.productCategory.name
-                            })
-
-                        })
-                    }
-                });
+                const params = {id: id.row, operation: 'details'};
+                webix.proxy.resource.load($$('productEdit'), params);
             }
         }
+
     }
 })

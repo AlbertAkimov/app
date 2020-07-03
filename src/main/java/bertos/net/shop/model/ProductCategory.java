@@ -20,9 +20,6 @@ import java.util.List;
 @Table(name = "product_categories")
 public class ProductCategory extends AbstractEntity {
 
-    @Column(name = "id_parent")
-    private Long parentId;
-
     @Column(name = "name")
     private String name;
 

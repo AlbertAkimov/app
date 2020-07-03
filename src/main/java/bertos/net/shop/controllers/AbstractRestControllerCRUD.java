@@ -47,6 +47,6 @@ public abstract class AbstractRestControllerCRUD<E extends AbstractEntity, S ext
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable("id") E entity) {
-        service.delete(entity.getId());
+        //service.delete(entity.getId());
     }
 }
