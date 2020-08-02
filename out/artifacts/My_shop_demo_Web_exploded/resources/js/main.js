@@ -3,21 +3,12 @@ requirejs.config({
 })
 
 require([
-    'views/products',
-    'util/resourcesProxy',
-    'buttons/buttonProduct',
-    'tables/productEditTable'],function (products, resourcesProxy, buttonProduct, productEditTable) {
+    'views/sideBar'],function (sideBar) {
     webix.ready(function () {
         webix.ui({
             container: "main",
             id: 'root',
-            rows: [buttonProduct,
-                {
-                    cols: [
-                        products,
-                        productEditTable
-                    ]
-                }],
+            rows: [sideBar]
         });
     })
 })

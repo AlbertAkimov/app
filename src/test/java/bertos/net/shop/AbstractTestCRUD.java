@@ -29,34 +29,30 @@ public abstract class AbstractTestCRUD<E extends AbstractEntity, S extends CRUDS
 
         Assert.assertNotNull(entity);
 
-/*      List<E> list = service.getAll();
-        OptionalLong maxId = list.stream().mapToLong(AbstractEntity::getId).max();
-
-        if (maxId.isPresent())
-            entity.setId(maxId.getAsLong() + 1);
-        else
-            entity.setId(1L);*/
-
         this.entity = entity;
     }
 
     private E save() {
+        log.info("RUN test SAVE");
         return service.save(entity);
     }
 
     private void delete() {
+        log.info("RUN test DELETE");
         service.delete(entity.getId());
     }
 
     private E findByGuid() {
+        log.info("RUN test FIND_BY_GUID");
         return service.findByGuid(entity.getGuid());
     }
 
     private E getById() {
+        log.info("RUN test FIND_BY_ID");
         return service.getById(entity.getId());
     }
 
-    public void runTest() {
+    public void run() {
 
         Assert.assertNotNull(entity);
 

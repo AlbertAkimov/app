@@ -8,8 +8,11 @@ ALTER TABLE users_roles
     AUTO_INCREMENT = 0;
 ALTER TABLE products
     AUTO_INCREMENT = 0;
-ALTER TABLE product_categories
+ALTER TABLE type_prices
     AUTO_INCREMENT = 0;
+ALTER TABLE prices
+    AUTO_INCREMENT = 0;
+
 
 #/////////////////////////////////COMMONS//////////////////////////////////////////
 create table if not exists customers
@@ -22,6 +25,7 @@ create table if not exists customers
     unique (guid)
 );
 
+#/////////////////////////////////CARD//////////////////////////////////////////
 create table if not exists cards
 (
     id                  bigint auto_increment primary key,
@@ -38,6 +42,7 @@ create table if not exists cards
     foreign key (id_customer) references customers (id)
 );
 
+#/////////////////////////////////ORDERS//////////////////////////////////////////
 create table if not exists orders
 (
     id          bigint auto_increment primary key,
@@ -48,26 +53,20 @@ create table if not exists orders
 
 );
 
+#/////////////////////////////////PRODUCTS//////////////////////////////////////////
 create table if not exists products
 (
   id bigint auto_increment primary key,
   guid varchar(36),
   id_parent bigint not null,
-  id_category bigint,
   id_price bigint,
   is_group boolean default 0,
   name varchar(256),
+  type_product varchar(36) default 'ТОВАР'
 
-  foreign key (id_category) references product_categories(id)
 );
 
-create table if not exists product_categories(
-
-    id bigint auto_increment primary key,
-    guid varchar(36),
-    name varchar(256)
-);
-
+#/////////////////////////////////PRICE//////////////////////////////////////////
 create table if not exists prices (
     id bigint auto_increment primary key,
     id_type_price bigint not null,
@@ -90,7 +89,7 @@ create table if not exists roles
 (
     id bigint auto_increment primary key not null,
     guid varchar(36),
-    name    varchar(100),
+    name varchar(100),
     unique (name)
 );
 
@@ -119,9 +118,6 @@ create table if not exists users_roles
     UNIQUE (user_id, role_id)
 );
 #/////////////////////////////////////INSERT//////////////////////////////////////
-insert into product_categories(name) values ('Товар');
-insert into product_categories(name) values ('Услуга');
-insert into product_categories(name) values ('Блюдо');
 
 insert into type_prices(name) values ('Розница');
 insert into type_prices(name) values ('Оптовая');
@@ -134,13 +130,30 @@ insert into prices(id_type_price, id_product, price) values (1, 7, 110.65);
 insert into prices(id_type_price, id_product, price) values (1, 8, 60.30);
 insert into prices(id_type_price, id_product, price) values (1, 9, 75.5);
 
+insert into prices(id_type_price, id_product, price) values (2, 2, 100.50);
+insert into prices(id_type_price, id_product, price) values (2, 3, 100.20);
+insert into prices(id_type_price, id_product, price) values (2, 4, 10.76);
+insert into prices(id_type_price, id_product, price) values (2, 6, 50.10);
+insert into prices(id_type_price, id_product, price) values (2, 7, 10.65);
+insert into prices(id_type_price, id_product, price) values (2, 8, 30.30);
+insert into prices(id_type_price, id_product, price) values (2, 9, 25.5);
+
 
 insert into products(id_parent, name) values (0,'Соки');
-insert into products(id_parent, id_category, name) values (1, 1, 'Манго');
-insert into products(id_parent, id_category, name) values (1, 1, 'Виноградный');
-insert into products(id_parent, id_category, name) values (1, 1, 'Яблочный');
+insert into products(id_parent, name) values (1, 'Манго');
+insert into products(id_parent, name) values (1, 'Виноградный');
+insert into products(id_parent, name) values (1, 'Яблочный');
 insert into products(id_parent, name) values (0, 'Газировка');
-insert into products(id_parent, id_category, name) values (5, 1, 'Кола');
-insert into products(id_parent, id_category, name) values (5, 1, 'Спрайт');
-insert into products(id_parent, id_category, name) values (5, 1, 'Миниралка');
-insert into products(id_parent, id_category, name) values (5, 1, 'Лимонад');
+insert into products(id_parent, name) values (5, 'Кола');
+insert into products(id_parent, name) values (5, 'Спрайт');
+insert into products(id_parent, name) values (5, 'Миниралка');
+insert into products(id_parent, name) values (5, 'Лимонад');
+
+#/////////////////////////////////////QUERY//////////////////////////////////////
+select products.name, prices.price, type_prices.name  from products
+    left join prices on products.id = prices.id_product
+    left join type_prices on prices.id_type_price = type_prices.id
+
+where products.is_group = false
+
+order by products.name desc

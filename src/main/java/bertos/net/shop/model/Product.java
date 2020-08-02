@@ -30,12 +30,15 @@ public class Product extends AbstractEntity {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_category", referencedColumnName = "id")
-    private ProductCategory productCategory;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type_product")
+    private TypeProduct typeProduct;
 
     @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_parent")
     private List<Product> data;
+
+    @OneToMany(mappedBy = "product", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
+    private List<Price> prices;
 
 }

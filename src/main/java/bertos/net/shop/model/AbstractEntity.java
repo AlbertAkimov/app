@@ -19,10 +19,10 @@ public abstract class AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    protected Long id;
 
     @Column(name = "guid")
-    private String guid;
+    protected String guid;
 
     public AbstractEntity() {
         guid = UUID.randomUUID().toString();

@@ -4,13 +4,12 @@ import bertos.net.shop.model.Role;
 import bertos.net.shop.model.Status;
 import bertos.net.shop.model.User;
 import bertos.net.shop.repository.RoleRepository;
-import bertos.net.shop.services.impl.UserServiceImp;
+import bertos.net.shop.services.UserServiceImp;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -37,7 +36,7 @@ public class TestUserCRUD extends AbstractTestCRUD<User, UserServiceImp> {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Test
-    public void test_1() {
+    public void testCRUD() {
 
         Role roleUser = roleRepository.findByName("ROLE_USER");
 
@@ -56,6 +55,6 @@ public class TestUserCRUD extends AbstractTestCRUD<User, UserServiceImp> {
         user.setStatus(Status.ACTIVE);
 
         init(user);
-        runTest();
+        run();
     }
 }

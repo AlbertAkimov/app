@@ -2,8 +2,7 @@ package bertos.net.shop.controllers;
 
 import bertos.net.shop.model.User;
 import bertos.net.shop.security.SecurityService;
-import bertos.net.shop.services.UserService;
-import bertos.net.shop.services.impl.UserServiceImp;
+import bertos.net.shop.services.UserServiceImp;
 import bertos.net.shop.validators.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

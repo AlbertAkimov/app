@@ -24,11 +24,11 @@ define(function () {
             },
 
             {
-                id: "category",
-                header: "Категория",
+                id: "typeProduct",
+                header: "Тип",
                 css: {"text-align": "canter"},
                 width: 250,
-                template: "#productCategory.name#"
+                template: "#typeProduct#"
             },
         ],
 
@@ -41,21 +41,35 @@ define(function () {
 
         on: {
             onItemClick: function (id) {
-                const params = {id: id.row};
-                $$("product_property").clear();
 
-                $$("product_property").load({
-                    $proxy:true,
-                    load:function(view, params){
-                        return webix.ajax().get("/products/" + id.row).then(function (value) {
+                $$("product_edit_form").load({
+                    $proxy: true,
+                    load: function (view, params) {
+                        webix.ajax().get("/products/" + id.row).then(function (value) {
 
-                            const result = value.json();
+                            let result = value.json();
+                            let prices = result.prices;
 
-                            $$('product_property').setValues({
-                                id: result.id,
-                                name: result.name
-                                //category: result.productCategory.name
-                            })
+                            $$("product_edit_form").setValues(
+                                {
+                                    id: result.id,
+                                    name: result.name,
+                                    typeProduct: result.typeProduct
+                                }
+                            )
+
+                            //$$("prices").parse(prices);
+                            $$("prices").clearAll();
+
+                            for (let i = 0; i < prices.length; i++) {
+
+                                $$("prices").add(
+                                    {
+                                        name: prices[i].typePrice.name,
+                                        price: prices[i].price.toString()
+                                    }
+                                )
+                            }
 
                         })
                     }
