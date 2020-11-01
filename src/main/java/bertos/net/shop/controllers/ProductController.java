@@ -32,14 +32,14 @@ public class ProductController extends
     }
 
     @Override
-    public Page<ProductDTO> getAll(@PageableDefault Pageable pageable) {
+    public Page<ProductDTO> getAll(@PageableDefault(value = 1000000) Pageable pageable) {
 
         List<ProductDTO> resultDTO = new ArrayList<>();
         Page<Product> productList = service.getAll(pageable);
 
         List<Product> result = productList.stream()
                 .sorted(Comparator.comparingLong(Product::getParentId))
-                .filter(Product::isGroup).collect(Collectors.toList());
+                .filter(Product::getIsGroup).collect(Collectors.toList());
 
         for(Product product : result)
             resultDTO.add(mapper.toDTO(product)); //todo refactor to stream

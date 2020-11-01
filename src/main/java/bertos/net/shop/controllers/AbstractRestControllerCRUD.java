@@ -62,7 +62,7 @@ public abstract class AbstractRestControllerCRUD
     }
 
     @DeleteMapping("{id}")
-    public void delete(@PathVariable("id") E entity) {
-        service.delete(entity.getId());
+    public void delete(@PathVariable("id") Long id) {
+        service.delete(id);
     }
 }

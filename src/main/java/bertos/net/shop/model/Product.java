@@ -25,7 +25,7 @@ public class Product extends AbstractEntity {
     private Long parentId;
 
     @Column(name = "is_group")
-    private boolean isGroup;
+    private Boolean isGroup;
 
     @Column(name = "name")
     private String name;
@@ -38,7 +38,6 @@ public class Product extends AbstractEntity {
     @JoinColumn(name = "id_parent")
     private List<Product> data;
 
-    @OneToMany(mappedBy = "product", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)
     private List<Price> prices;
-
 }

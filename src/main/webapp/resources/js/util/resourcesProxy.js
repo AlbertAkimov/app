@@ -24,6 +24,14 @@ define(function () {
             if(params.operation === 'update') {
                 return ajax.put(url + '/' + id, params.data);
             }
+
+            if(params.operation === 'delete') {
+                return ajax.del(url + '/' + id, id);
+            }
+
+            if(params.operation === 'save') {
+                return ajax.post(url, params.data);
+            }
         }
 
     }

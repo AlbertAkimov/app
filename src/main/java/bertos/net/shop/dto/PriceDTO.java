@@ -11,7 +11,7 @@ import lombok.ToString;
  */
 @Data
 @ToString
-public class PriceDTO {
+public class PriceDTO extends AbstractDataTransferObject {
 
     private Double price;
     private TypePrice typePrice;

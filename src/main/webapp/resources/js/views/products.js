@@ -17,6 +17,15 @@ define(function () {
                 width: 100,
                 template: "#id#"
             },
+
+            {
+                id: "parentId",
+                header: "Родитель",
+                css: {"text-align": "canter"},
+                width: 100,
+                template: "#parentId#"
+            },
+
             {
                 id: "name", header: "Наименование", width: 250,
                 template: "{common.treetable()} #name#"
@@ -29,7 +38,7 @@ define(function () {
                 css: {"text-align": "canter"},
                 width: 250,
                 template: "#typeProduct#"
-            },
+            }
         ],
 
         //editable: true,
@@ -42,38 +51,60 @@ define(function () {
         on: {
             onItemClick: function (id) {
 
-                $$("product_edit_form").load({
-                    $proxy: true,
-                    load: function (view, params) {
-                        webix.ajax().get("/products/" + id.row).then(function (value) {
+                let selectedItem = $$("products").getItem(id.row);
 
-                            let result = value.json();
-                            let prices = result.prices;
+                if(selectedItem.name === "Новый элемент")  {
 
-                            $$("product_edit_form").setValues(
-                                {
-                                    id: result.id,
-                                    name: result.name,
-                                    typeProduct: result.typeProduct
-                                }
-                            )
+                    $$("product_edit_form").setValues(
+                        {
+                            id: selectedItem.id,
+                            isGroup: selectedItem.open,
+                            isNew: selectedItem.isNew,
+                            name: selectedItem.name,
+                            parentId: selectedItem.parentId,
+                            typeProduct: selectedItem.typeProduct
+                        }
+                    )
+                    $$("prices").clearAll();
+                }
+                else {
 
-                            //$$("prices").parse(prices);
-                            $$("prices").clearAll();
+                    $$("product_edit_form").load({
+                        $proxy: true,
+                        load: function (view, params) {
+                            webix.ajax().get("/products/" + id.row).then(function (value) {
 
-                            for (let i = 0; i < prices.length; i++) {
+                                let result = value.json();
+                                let prices = result.prices;
 
-                                $$("prices").add(
+                                $$("product_edit_form").setValues(
                                     {
-                                        name: prices[i].typePrice.name,
-                                        price: prices[i].price.toString()
+                                        id: result.id,
+                                        isGroup: result.group,
+                                        isNew: '0',
+                                        name: result.name,
+                                        parentId: result.parentId,
+                                        typeProduct: result.typeProduct
                                     }
                                 )
-                            }
 
-                        })
-                    }
-                });
+                                $$("prices").clearAll();
+
+                                for (let i = 0; i < prices.length; i++) {
+
+                                    $$("prices").add(
+                                        {
+                                            id: prices[i].typePrice.id,
+                                            name: prices[i].typePrice.name,
+                                            price: prices[i].price.toString()
+                                        }
+                                    )
+                                }
+
+                            })
+                        }
+                    });
+                }
             }
         }
     }
