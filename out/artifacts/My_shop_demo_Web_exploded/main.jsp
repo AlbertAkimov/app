@@ -17,17 +17,38 @@
 
     <%--style--%>
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${contextPath}/resources/webix/webix.css" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="http://cdn.webix.com/components/sidebar/sidebar.css" charset="UTF-8">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+    <link href="${contextPath}/resources/webix/webix.css" rel="stylesheet">
+    <link href="${contextPath}/resources/webix/webix.min.css" rel="stylesheet">
+
+    <%--WEBIX--%>
+    <link type="text/css" rel="stylesheet" href="http://cdn.webix.com/components/sidebar/sidebar.css" charset="UTF-8">
+    <%--<link href="${contextPath}/resources/webix/skins/mini.min.css" rel="stylesheet">
+        <link href="${contextPath}/resources/webix/skins/mini.min.css" rel="stylesheet">--%>
+    <%--<link href="${contextPath}/resources/webix/skins/material.min.css" rel="stylesheet">
+        <link href="${contextPath}/resources/webix/skins/material.css" rel="stylesheet">--%>
+     <link href="${contextPath}/resources/webix/skins/flat.min.css" rel="stylesheet">
+        <link href="${contextPath}/resources/webix/skins/flat.css" rel="stylesheet">
+<%--        <link href="${contextPath}/resources/webix/skins/contrast.min.css" rel="stylesheet">
+        <link href="${contextPath}/resources/webix/skins/contrast.css" rel="stylesheet">
+        <link href="${contextPath}/resources/webix/skins/compact.css" rel="stylesheet">
+        <link href="${contextPath}/resources/webix/skins/compact.min.css" rel="stylesheet">--%>
+    <%--WEBIX--%>
+
+    <%--AWESOME--%>
+    <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js"></script>
+    <%--AWESOME--%>
 
     <%--libs--%>
+
+    <script type="text/javascript" src="http://cdn.webix.com/components/sidebar/sidebar.js" charset="UTF-8"></script>
+    <script src="${contextPath}/resources/webix/webix.js"></script>
+    <script src="${contextPath}/resources/webix/webix.min.js"></script>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <script src="${contextPath}/resources/webix/webix.js"></script>
     <script src="${contextPath}/resources/libs/routie.min.js"></script>
     <script data-main="${contextPath}/resources/js/main" src="${contextPath}/resources/libs/require.min.js"></script>
-    <script type="text/javascript" src="http://cdn.webix.com/components/sidebar/sidebar.js" charset="UTF-8"></script>
 
 </head>
 <body>

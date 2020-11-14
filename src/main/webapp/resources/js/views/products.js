@@ -5,7 +5,10 @@ requirejs.config({
 define(function () {
     return {
         type: "line",
-        height: 1000,
+        //height: 1000,
+
+        width: "auto",
+        height: "auto",
 
         id: 'products',
         view: "treetable",

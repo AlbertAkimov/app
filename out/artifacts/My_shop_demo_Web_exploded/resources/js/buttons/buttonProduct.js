@@ -10,10 +10,22 @@ define(function () {
                 value: "Добавить",
                 width: 100,
                 click: function () {
-                    var tree = $$("products");
-                    var parent = tree.getSelectedId() || 0;
-                    tree.add({name: ""}, 0, parent);
-                    tree.open(parent);
+
+                    let tree = $$("products");
+                    let selected = tree.getSelectedItem();
+                    let parent = 0;
+
+                    if(selected !== undefined) {
+                            parent = selected.id;
+                    }
+
+                    tree.add({
+                        parentId: parent,
+                        name: "Новый элемент",
+                        typeProduct: 'ТОВАР',
+                        isNew: 1,
+                    }, 0, parent);
+
                 }
             },
             {
@@ -21,10 +33,16 @@ define(function () {
                 value: "Удалить",
                 width: 100,
                 click: function () {
-                    var tree = $$("products");
-                    var id = tree.getSelectedId();
-                    if (id)
-                        tree.remove(id);
+
+                    let tree = $$("products");
+                    let param = {
+                        id: tree.getSelectedId().id,
+                        operation: 'delete'
+                    };
+
+                    webix.proxy.resource.save(tree, param);
+                    tree.remove(tree.getSelectedId().id);
+
                 }
             },
             {
@@ -32,6 +50,7 @@ define(function () {
                 value: "Обновить",
                 width: 100,
                 click: function () {
+                    webix.proxy.resource.load($$("products"));
                     $$("products").refresh();
                 }
             },

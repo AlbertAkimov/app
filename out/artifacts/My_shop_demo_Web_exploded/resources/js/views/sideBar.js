@@ -1,45 +1,50 @@
 requirejs.config({
     baseURI: 'js'
 })
+const menu_data = [
+    {
+        id: "references_book", icon: "", value: "Справочники", data: [
+            {id: "ref1", value: "Номенклатура"},
+            {id: "ref2", value: "Цены"}
+        ]
+    },
+    {
+        id: "layouts", icon: "fas fa-bars", value: "Документы", data: [
+            {id: "ref3", value: "Продажа"},
+            {id: "ref4", value: "Склад"}
+        ]
+    }
+];
 
 define(function () {
     return {
         rows: [
-            {
-                view: 'toolbar', css: 'main_toolbar', elements: [
-                    {
-                        view: 'button',
-                        type: 'icon',
-                        icon: 'bars',
-                        width: 30,
-                        align: 'left',
-                        css: 'main_toolbar_icon_bars_icon'
+            { view: "toolbar", padding:3, elements: [
+                    { view: "icon", icon: "fas fa-bars", click: function(){
+                            $$("$sidebar1").toggle();
+                        }
                     },
-                    {view: 'label', label: 'My Application', css: 'toolbar_label'},
-                    {
-                        view: 'button', type: 'icon', icon: 'envelop-o', width: 40,
-                        align: 'left', css: 'main_toolbar_icon envelope_icon', badge: 4
-                    },
-                    {
-                        view: 'button', type: 'icon', icon: 'bell-o', width: 40,
-                        align: 'left', css: 'main_toolbar_icon bars_icon', badge: 10
-                    }
+                    { view: "label", label: "Albert Corporation"},
+                    {},
+                    { view: "icon", icon: "fas fa-envelope",  badge:4},
+                    { view: "icon", icon: "fas fa-bell",  badge:10}
                 ]
             },
-            {
-                cols: [
+            { cols:[
                     {
-                        view: 'sidebar',
-                        css: 'main_sidebar',
-                        data: [{
-                            id: 'item1', icon: 'home', value: 'Справочники', data: [
-                                {id: 'item_products', value: 'Товары'},
-                                {id: 'item_category', value: 'Категории товара'}
-                            ]
-                        }]
-                    }
-                ]
-            }
+                        view: "sidebar",
+                        multipleOpen:true,
+                        data: menu_data,
+
+                        on:{
+                            onAfterSelect: function(id){
+                                //webix.message("Selected: "+this.getItem(id).value)
+                                $$('products').show();
+                            }
+                        }
+                    },
+                    { template: ""}
+                ]}
         ]
     }
 })

@@ -6,15 +6,25 @@ require([
     'views/products',
     'util/resourcesProxy',
     'buttons/buttonProduct',
-    'tables/productEditTable'],function (products, resourcesProxy, buttonProduct, productEditTable) {
+    'tables/productEditTable',
+    'views/sidebar',
+    'views/toolbar'],function (
+        products,
+        resourcesProxy,
+        buttonProduct,
+        productEditTable,
+        sidebar,
+        toolbar) {
     webix.ready(function () {
         webix.ui({
             container: "main",
             id: 'root',
-            rows: [buttonProduct,
-                {
-                    cols: [
-                        products,
+            width: "auto",
+            height: "auto",
+            rows: [toolbar,
+                {cols: [sidebar
+                        ,
+                        {rows: [buttonProduct,products]},
                         productEditTable
                     ]
                 }],

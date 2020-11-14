@@ -1133,13 +1133,6 @@ button,
 .webix_ss_vscroll_footer {
   background: #343434;
 }
-.webix_hcell.webix_measure_size {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  font-size: 15px;
-  color: #fff;
-}
 /*content in header and footer*/
 .webix_hcell {
   padding: 0px 10px 0px 10px;
