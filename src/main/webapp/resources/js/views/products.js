@@ -2,113 +2,119 @@ requirejs.config({
     baseURI: 'js'
 })
 
-define(function () {
+define(['buttons/buttonProduct', 'tables/productEditTable'], function (buttonProduct, productEditTable) {
     return {
-        type: "line",
-        //height: 1000,
-
+        id: 'test_1',
         width: "auto",
         height: "auto",
 
-        id: 'products',
-        view: "treetable",
-        columns: [
-            {
-                id: "id",
-                header: "id",
-                css: {"text-align": "canter"},
-                width: 100,
-                template: "#id#"
-            },
+        cols: [{
+        rows: [buttonProduct, {
+            type: "line",
+            //height: 1000,
 
-            {
-                id: "parentId",
-                header: "Родитель",
-                css: {"text-align": "canter"},
-                width: 100,
-                template: "#parentId#"
-            },
+            width: "auto",
+            height: "auto",
 
-            {
-                id: "name", header: "Наименование", width: 250,
-                template: "{common.treetable()} #name#"
-                //editor: 'text'
-            },
+            id: 'products',
+            view: "treetable",
+            columns: [
+                {
+                    id: "id",
+                    header: "id",
+                    css: {"text-align": "canter"},
+                    width: 250,
+                    template: "#id#"
+                },
 
-            {
-                id: "typeProduct",
-                header: "Тип",
-                css: {"text-align": "canter"},
-                width: 250,
-                template: "#typeProduct#"
-            }
-        ],
+                {
+                    id: "parentId",
+                    header: "Родитель",
+                    css: {"text-align": "canter"},
+                    width: 250,
+                    template: "#parentId#"
+                },
 
-        //editable: true,
-        autoheight: true,
-        autowidth: true,
-        select: "multiselect",
-        url: 'resource->/products',
-        save: 'resource->/products',
+                {
+                    id: "name", header: "Наименование", width: 250,
+                    template: "{common.treetable()} #name#"
+                    //editor: 'text'
+                },
 
-        on: {
-            onItemClick: function (id) {
-
-                let selectedItem = $$("products").getItem(id.row);
-
-                if(selectedItem.name === "Новый элемент")  {
-
-                    $$("product_edit_form").setValues(
-                        {
-                            id: selectedItem.id,
-                            isGroup: selectedItem.open,
-                            isNew: selectedItem.isNew,
-                            name: selectedItem.name,
-                            parentId: selectedItem.parentId,
-                            typeProduct: selectedItem.typeProduct
-                        }
-                    )
-                    $$("prices").clearAll();
+                {
+                    id: "typeProduct",
+                    header: "Тип",
+                    css: {"text-align": "canter"},
+                    width: 250,
+                    template: "#typeProduct#"
                 }
-                else {
+            ],
 
-                    $$("product_edit_form").load({
-                        $proxy: true,
-                        load: function (view, params) {
-                            webix.ajax().get("/products/" + id.row).then(function (value) {
+            //editable: true,
+            autoheight: true,
+            autowidth: true,
+            select: "multiselect",
+            url: 'resource->/products',
+            save: 'resource->/products',
 
-                                let result = value.json();
-                                let prices = result.prices;
+            on: {
+                onItemClick: function (id) {
 
-                                $$("product_edit_form").setValues(
-                                    {
-                                        id: result.id,
-                                        isGroup: result.group,
-                                        isNew: '0',
-                                        name: result.name,
-                                        parentId: result.parentId,
-                                        typeProduct: result.typeProduct
-                                    }
-                                )
+                    let selectedItem = $$("products").getItem(id.row);
 
-                                $$("prices").clearAll();
+                    if (selectedItem.name === "Новый элемент") {
 
-                                for (let i = 0; i < prices.length; i++) {
+                        $$("product_edit_form").setValues(
+                            {
+                                id: selectedItem.id,
+                                isGroup: selectedItem.open,
+                                isNew: selectedItem.isNew,
+                                name: selectedItem.name,
+                                parentId: selectedItem.parentId,
+                                typeProduct: selectedItem.typeProduct
+                            }
+                        )
+                        $$("prices").clearAll();
+                    } else {
 
-                                    $$("prices").add(
+                        $$("product_edit_form").load({
+                            $proxy: true,
+                            load: function (view, params) {
+                                webix.ajax().get("/products/" + id.row).then(function (value) {
+
+                                    let result = value.json();
+                                    let prices = result.prices;
+
+                                    $$("product_edit_form").setValues(
                                         {
-                                            id: prices[i].typePrice.id,
-                                            name: prices[i].typePrice.name,
-                                            price: prices[i].price.toString()
+                                            id: result.id,
+                                            isGroup: result.group,
+                                            isNew: '0',
+                                            name: result.name,
+                                            parentId: result.parentId,
+                                            typeProduct: result.typeProduct
                                         }
                                     )
-                                }
 
-                            })
-                        }
-                    });
+                                    $$("prices").clearAll();
+
+                                    for (let i = 0; i < prices.length; i++) {
+
+                                        $$("prices").add(
+                                            {
+                                                id: prices[i].typePrice.id,
+                                                name: prices[i].typePrice.name,
+                                                price: prices[i].price.toString()
+                                            }
+                                        )
+                                    }
+
+                                })
+                            }
+                        });
+                    }
                 }
             }
-        }
+        }], }, productEditTable] // колонки
     }
 })

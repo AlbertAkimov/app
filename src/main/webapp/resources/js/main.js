@@ -2,32 +2,40 @@ requirejs.config({
     baseURI: 'js'
 })
 
+function buildRoute(view) {
+    return function() {
+        webix.ui({
+            id: 'root',
+            rows: [
+                view
+            ]
+        }, $$('root'))
+    }
+}
+
 require([
     'views/products',
     'util/resourcesProxy',
-    'buttons/buttonProduct',
-    'tables/productEditTable',
     'views/sidebar',
     'views/toolbar'],function (
         products,
         resourcesProxy,
-        buttonProduct,
-        productEditTable,
         sidebar,
         toolbar) {
-    webix.ready(function () {
+    webix.ready(function() {
         webix.ui({
-            container: "main",
-            id: 'root',
-            width: "auto",
-            height: "auto",
-            rows: [toolbar,
-                {cols: [sidebar
-                        ,
-                        {rows: [buttonProduct,products]},
-                        productEditTable
-                    ]
-                }],
-        });
+            container: 'main',
+            width: 'auto',
+            height: 'auto',
+            rows: [
+                toolbar,
+                {
+                    cols: [sidebar, {rows: [{id: 'root'}]}]
+                }
+            ]
+        })
+    })
+    routie({
+        'products': buildRoute(products),
     })
 })

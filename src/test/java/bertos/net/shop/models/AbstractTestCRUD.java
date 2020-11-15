@@ -1,4 +1,4 @@
-package bertos.net.shop;
+package bertos.net.shop.models;
 
 import bertos.net.shop.model.AbstractEntity;
 import bertos.net.shop.services.CRUDService;

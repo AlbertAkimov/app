@@ -1,0 +1,9 @@
+create table sidebar(
+    id bigint auto_increment primary key,
+    id_parent bigint,
+    guid varchar(36),
+    id_sidebar varchar(36),
+    value varchar(128),
+    icon varchar(256),
+    is_group boolean default false
+);

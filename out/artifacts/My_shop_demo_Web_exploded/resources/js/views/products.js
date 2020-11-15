@@ -2,13 +2,19 @@ requirejs.config({
     baseURI: 'js'
 })
 
+require(['buttons/buttonProduct'], function (buttonProduct) {
+
 define(function () {
     return {
         type: "line",
-        height: 1000,
+        //height: 1000,
+
+        width: "auto",
+        height: "auto",
 
         id: 'products',
         view: "treetable",
+        rows: [buttonProduct],
         columns: [
             {
                 id: "id",
@@ -108,4 +114,5 @@ define(function () {
             }
         }
     }
+})
 })
