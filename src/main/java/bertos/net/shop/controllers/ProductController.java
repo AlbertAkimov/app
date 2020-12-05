@@ -8,9 +8,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -23,7 +25,7 @@ import java.util.stream.Collectors;
  */
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping(value = "/products", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ProductController extends
         AbstractRestControllerCRUD<Product, ProductDTO, ProductService, ProductDTOMapper> {
 
@@ -41,8 +43,7 @@ public class ProductController extends
                 .sorted(Comparator.comparingLong(Product::getParentId))
                 .filter(Product::getIsGroup).collect(Collectors.toList());
 
-        for(Product product : result)
-            resultDTO.add(mapper.toDTO(product)); //todo refactor to stream
+        result.forEach(elem -> resultDTO.add(mapper.toDTO(elem)));
 
         return new PageImpl<>(resultDTO);
     }

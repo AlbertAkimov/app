@@ -17,6 +17,6 @@ import java.io.Serializable;
 public abstract class AbstractDataTransferObject implements Serializable {
 
     protected Long id;
-    protected String guid;
+    protected String guid; // todo don't use this field
 
 }

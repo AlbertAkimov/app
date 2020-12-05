@@ -5,17 +5,12 @@ requirejs.config({
 define(['buttons/buttonProduct', 'tables/productEditTable'], function (buttonProduct, productEditTable) {
     return {
         id: 'test_1',
-        width: "auto",
-        height: "auto",
+/*        width: "auto",
+        height: "auto",*/
 
         cols: [{
         rows: [buttonProduct, {
             type: "line",
-            //height: 1000,
-
-            width: "auto",
-            height: "auto",
-
             id: 'products',
             view: "treetable",
             columns: [
@@ -23,16 +18,18 @@ define(['buttons/buttonProduct', 'tables/productEditTable'], function (buttonPro
                     id: "id",
                     header: "id",
                     css: {"text-align": "canter"},
-                    width: 250,
-                    template: "#id#"
+                    width: 150,
+                    template: "#id#",
+                    hidden: true
                 },
 
                 {
                     id: "parentId",
                     header: "Родитель",
                     css: {"text-align": "canter"},
-                    width: 250,
-                    template: "#parentId#"
+                    width: 150,
+                    template: "#parentId#",
+                    hidden: true
                 },
 
                 {
@@ -50,12 +47,9 @@ define(['buttons/buttonProduct', 'tables/productEditTable'], function (buttonPro
                 }
             ],
 
-            //editable: true,
-            autoheight: true,
-            autowidth: true,
-            select: "multiselect",
             url: 'resource->/products',
-            save: 'resource->/products',
+            //save: 'resource->/products',
+            select: 'multiselect',
 
             on: {
                 onItemClick: function (id) {
@@ -103,6 +97,7 @@ define(['buttons/buttonProduct', 'tables/productEditTable'], function (buttonPro
                                         $$("prices").add(
                                             {
                                                 id: prices[i].typePrice.id,
+                                                id_price: prices[i].id,
                                                 name: prices[i].typePrice.name,
                                                 price: prices[i].price.toString()
                                             }

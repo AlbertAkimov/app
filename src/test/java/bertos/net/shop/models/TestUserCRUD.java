@@ -56,7 +56,7 @@ public class TestUserCRUD extends AbstractTestCRUD<User, UserServiceImp> {
         user.setRoles(userRoles);
         user.setStatus(Status.ACTIVE);
 
-        init(user);
+        init(user, true);
         run();
     }
 }

@@ -24,6 +24,10 @@ public abstract class AbstractEntity {
     @Column(name = "guid")
     protected String guid;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private Status status;
+
     public AbstractEntity() {
         guid = UUID.randomUUID().toString();
     }

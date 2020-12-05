@@ -1,5 +1,6 @@
 package bertos.net.shop.model;
 
+import javafx.geometry.Side;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -37,5 +38,5 @@ public class Sidebar extends AbstractEntity {
 
     @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_parent")
-    private List<Product> data;
+    private List<Sidebar> data;
 }

@@ -2,7 +2,7 @@ requirejs.config({
     baseURI: 'js'
 })
 
-define(function () {
+define(['tables/typePriceDialog'], function (typePriceDialog) {
     return {
         view: 'form',
         id: 'product_edit_form',
@@ -36,39 +36,8 @@ define(function () {
                         onItemClick: function (id) {
 
                             if (id.column === 'name') {
-                                //require(['typePriceDialog'], function (dialogPage) {
                                 webix.ui(
-                                    {
-                                        view: 'window',
-                                        head: 'Тип цен',
-                                        width: 400,
-                                        position: 'center',
-                                        modal: true,
-                                        parentTable: this,
-                                        cell: id,
-                                        body: {
-                                            view: 'datatable',
-                                            id: 'typePrice',
-                                            url: 'resource->/typePrice',
-                                            save: 'resource->/typePrice',
-                                            columns: [
-                                                {id: "id", header: "id", width: 150, template: "#id#"},
-                                                {id: "name", header: "Тип цены", width: 250, template: "#name#"}
-                                            ],
-                                            on: {
-                                                onItemClick: function (id) {
-                                                    let result = this.getItem(id);
-                                                    let parentConfig = this.getTopParentView().config;
-                                                    let cell = parentConfig.cell;
-                                                    
-                                                    $$('prices').updateItem(cell.row, {name: result.name, id: result.id});
-
-                                                    this.getTopParentView().close();
-                                                }
-                                            }
-                                        }
-                                    }).show()
-                                //})
+                                    {typePriceDialog}).show()
                             }
                         }
                     }
@@ -88,7 +57,6 @@ define(function () {
 
                         values.parentId = Number(values.parentId);
                         values.isGroup = Boolean(values.isGroup);
-
 
                         if (values.isNew === '1') {
                             param.id = values.id;

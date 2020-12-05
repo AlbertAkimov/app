@@ -25,11 +25,14 @@ public abstract class AbstractTestCRUD<E extends AbstractEntity, S extends CRUDS
 
     private E entity;
 
-    public void init(E entity) {
+    private boolean isDelete;
+
+    public void init(E entity, boolean isDelete) {
 
         Assert.assertNotNull(entity);
 
         this.entity = entity;
+        this.isDelete = isDelete;
     }
 
     private E save() {
@@ -64,9 +67,10 @@ public abstract class AbstractTestCRUD<E extends AbstractEntity, S extends CRUDS
         Assert.assertEquals(entity.getGuid(), findByGuid().getGuid());
         Assert.assertEquals(entity.getId(), getById().getId());
 
-        delete();
-
-        Assert.assertNull(getById());
+        if(isDelete) {
+            delete();
+            Assert.assertNull(getById());
+        }
 
     }
 

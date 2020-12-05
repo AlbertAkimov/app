@@ -1,6 +1,8 @@
 package bertos.net.shop.dto;
 
 import bertos.net.shop.model.Product;
+import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,6 +12,8 @@ import java.util.List;
  * @Date: 15.11.2020
  * @Description:
  */
+@Data
+@ToString
 public class SidebarDTO extends AbstractDataTransferObject {
 
     private Long parentId;

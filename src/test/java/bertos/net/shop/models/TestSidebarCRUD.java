@@ -24,14 +24,21 @@ public class TestSidebarCRUD extends AbstractTestCRUD<Sidebar, SidebarService> {
     @Test
     public void testCRUD() {
 
-        Sidebar sidebar = new Sidebar();
+/*        Sidebar sidebar = new Sidebar();
         sidebar.setValue("Справочники");
         sidebar.setIcon("fas fa-bars");
         sidebar.setSidebarId("references_book");
         sidebar.setIsGroup(false);
-        sidebar.setParentId(0L);
+        sidebar.setParentId(0L);*/
 
-        init(sidebar);
+        Sidebar sidebar = new Sidebar();
+        sidebar.setValue("Тип цен");
+        sidebar.setIcon("fas fa-bars");
+        sidebar.setSidebarId("typePrice");
+        sidebar.setIsGroup(false);
+        sidebar.setParentId(1L);
+
+        init(sidebar, false);
         run();
     }
 }
