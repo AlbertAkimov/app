@@ -18,12 +18,14 @@ require([
     'util/resourcesProxy',
     'views/sidebar',
     'views/toolbar',
-    'views/typePrice'],function (
+    'views/typePrice',
+    'views/units'],function (
         products,
         resourcesProxy,
         sidebar,
         toolbar,
-        typePrice) {
+        typePrice,
+        units) {
     webix.ready(function() {
         webix.ui({
             container: 'main',
@@ -39,6 +41,7 @@ require([
     })
     routie({
         'products': buildRoute(products),
-        'typePrice' : buildRoute(typePrice)
+        'typePrice' : buildRoute(typePrice),
+        'units' : buildRoute(units)
     })
 })

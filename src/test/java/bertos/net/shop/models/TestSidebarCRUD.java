@@ -32,9 +32,9 @@ public class TestSidebarCRUD extends AbstractTestCRUD<Sidebar, SidebarService> {
         sidebar.setParentId(0L);*/
 
         Sidebar sidebar = new Sidebar();
-        sidebar.setValue("Тип цен");
+        sidebar.setValue("Единицы измерения");
         sidebar.setIcon("fas fa-bars");
-        sidebar.setSidebarId("typePrice");
+        sidebar.setSidebarId("units");
         sidebar.setIsGroup(false);
         sidebar.setParentId(1L);
 
