@@ -13,6 +13,7 @@ define(['tables/typePriceDialog'], function (typePriceDialog) {
         elements:
             [
                 {view: 'text', label: 'ID', name: 'id', hidden: true},
+                {view: 'text', label: 'levelGroup', name: 'levelGroup', hidden: true},
                 {view: 'text', label: 'Это группа', name: 'isGroup',hidden: true},
                 {view: 'text', label: 'Это новый', name: 'isNew', hidden: true},
                 {view: 'text', label: 'Родитель', name: 'parentId',hidden: true},
@@ -72,6 +73,15 @@ define(['tables/typePriceDialog'], function (typePriceDialog) {
                         let price = $$('prices').serialize();
                         let prices = [];
                         let isNew = values.isNew;
+                        let levelGroup = 0;
+
+                        if (values.parentId !== 0 && values.isGroup)
+                            levelGroup = 2;
+                        else
+                            levelGroup = 1;
+
+                        Object.assign(values, {levelGroup: levelGroup})
+
                         delete values['isNew'];
 
                         for (let i = 0; i <= price.length - 1; i++) {
@@ -82,7 +92,9 @@ define(['tables/typePriceDialog'], function (typePriceDialog) {
                                     isGroup: values.isGroup,
                                     name: values.name,
                                     parentId: values.parentId,
-                                    typeProduct: values.typeProduct
+                                    typeProduct: values.typeProduct,
+                                    levelGroup: values.levelGroup
+
                                 },
                                 price: Number(price[i].price),
                                 id: price[i].id_price,

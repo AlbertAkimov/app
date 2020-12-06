@@ -18,6 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class UnitController extends AbstractRestControllerCRUD<Unit, UnitDTO, UnitService, UnitDTOMapper> {
 
     protected UnitController(UnitService service, UnitDTOMapper mapper) {
-        super(service, Unit.class, mapper);
+        super(service, mapper);
     }
 }

@@ -73,7 +73,8 @@ create table if not exists products
   is_group      boolean default 0,
   name          varchar(256),
   type_product  varchar(36) default 'ТОВАР',
-  status        varchar(25)  default 'ACTIVE'
+  status        varchar(25)  default 'ACTIVE',
+  level_group   int default 1 not null
 
 );
 
@@ -137,15 +138,15 @@ create table if not exists users_roles
 #/////////////////////////////////////INSERT//////////////////////////////////////
 
 #// INSERT TO "PRODUCTS"
-insert into products(id_parent, name) values (0,'Соки');
-insert into products(id_parent, name) values (1, 'Манго');
-insert into products(id_parent, name) values (1, 'Виноградный');
-insert into products(id_parent, name) values (1, 'Яблочный');
-insert into products(id_parent, name) values (0, 'Газировка');
-insert into products(id_parent, name) values (5, 'Кола');
-insert into products(id_parent, name) values (5, 'Спрайт');
-insert into products(id_parent, name) values (5, 'Миниралка');
-insert into products(id_parent, name) values (5, 'Лимонад');
+insert into products(id_parent, name, is_group) values (0,'Соки', true);
+insert into products(id_parent, name, is_group) values (1, 'Манго', false);
+insert into products(id_parent, name, is_group) values (1, 'Виноградный', false);
+insert into products(id_parent, name, is_group) values (1, 'Яблочный', false);
+insert into products(id_parent, name, is_group) values (0, 'Газировка', false);
+insert into products(id_parent, name, is_group) values (5, 'Кола', false);
+insert into products(id_parent, name, is_group) values (5, 'Спрайт', false);
+insert into products(id_parent, name, is_group) values (5, 'Миниралка', false);
+insert into products(id_parent, name, is_group) values (5, 'Лимонад', false);
 
 #// INSERT TO "TYPE_PRICES"
 insert into type_prices(name) values ('Розница');

@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.hibernate.annotations.Where;
+import org.springframework.core.annotation.Order;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -30,6 +32,9 @@ public class Product extends AbstractEntity {
     @Column(name = "is_group")
     private Boolean isGroup;
 
+    @Column(name = "level_group")
+    private Integer levelGroup;
+
     @Column(name = "name")
     private String name;
 
@@ -39,6 +44,7 @@ public class Product extends AbstractEntity {
 
     @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_parent")
+    @OrderBy(value = "isGroup DESC")
     private List<Product> data;
 
     @OneToMany(mappedBy = "product", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)

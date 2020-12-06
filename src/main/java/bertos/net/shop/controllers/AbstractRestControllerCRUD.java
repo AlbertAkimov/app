@@ -23,25 +23,21 @@ public abstract class AbstractRestControllerCRUD
         <E extends AbstractEntity, D extends AbstractDataTransferObject, S extends CRUDService<E>, M extends AbstractMapper<D, E>> {
 
     protected final S service;
-    protected final Class<E> clazz;
     protected final M mapper;
 
-    protected AbstractRestControllerCRUD(S service, Class<E> clazz, M mapper) {
+    protected AbstractRestControllerCRUD(S service, M mapper) {
         this.service = service;
-        this.clazz = clazz;
         this.mapper = mapper;
     }
 
     @GetMapping
-    public Page<D> getAll(@PageableDefault Pageable pageable) {
-
-        Page<E> result = service.getAll(pageable);
+    public List<D> getAll() {
+        List<E> result = service.getAll();
         List<D> resultDTO = new ArrayList<>();
 
-        for(E entity : result.getContent())
-            resultDTO.add(mapper.toDTO(entity));
+        result.forEach(x -> resultDTO.add(mapper.toDTO(x)));
 
-        return new PageImpl<>(resultDTO);
+        return resultDTO;
     }
 
     @GetMapping("{id}")

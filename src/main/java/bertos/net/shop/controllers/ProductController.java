@@ -4,15 +4,10 @@ import bertos.net.shop.dto.ProductDTO;
 import bertos.net.shop.dto.ProductDTOMapper;
 import bertos.net.shop.model.Product;
 import bertos.net.shop.services.ProductService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -30,21 +25,30 @@ public class ProductController extends
         AbstractRestControllerCRUD<Product, ProductDTO, ProductService, ProductDTOMapper> {
 
     protected ProductController(ProductService service, ProductDTOMapper mapper) {
-        super(service, Product.class, mapper);
+        super(service, mapper);
     }
 
     @Override
-    public Page<ProductDTO> getAll(@PageableDefault(value = 1000000) Pageable pageable) {
+    public List<ProductDTO> getAll() {
 
         List<ProductDTO> resultDTO = new ArrayList<>();
-        Page<Product> productList = service.getAll(pageable);
+        List<Product> productList = service.getAll();
 
-        List<Product> result = productList.stream()
+ /*       long start;
+        long end;
+
+        start = System.currentTimeMillis();*/
+
+        List<Product> result = productList.parallelStream()
                 .sorted(Comparator.comparingLong(Product::getParentId))
-                .filter(Product::getIsGroup).collect(Collectors.toList());
+                .filter(Product::getIsGroup)
+                .filter(x -> x.getLevelGroup() <= 1).collect(Collectors.toList());
 
         result.forEach(elem -> resultDTO.add(mapper.toDTO(elem)));
 
-        return new PageImpl<>(resultDTO);
+/*        end = System.currentTimeMillis();
+        System.out.println(end - start + " ms");*/
+
+        return resultDTO;
     }
 }

@@ -12,7 +12,8 @@ define(function () {
             var url = view.config.url.source;
 
             return ajax.get(url).then(function (value) {
-                return value.json().content;
+                //return value.json().content;
+                return value.json();
             })
         },
 

@@ -29,7 +29,7 @@ define(function () {
                 return ajax.del(url + '/' + id, id);
             }
 
-            if(params.operation === 'save') {
+            if(params.operation === 'insert') {
                 return ajax.post(url, params.data);
             }
         }

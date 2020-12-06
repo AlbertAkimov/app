@@ -20,6 +20,7 @@ public class ProductDTO extends AbstractDataTransferObject {
     private Long parentId;
     private boolean isGroup;
     private String name;
+    private Integer levelGroup;
     private TypeProduct typeProduct;
     private List<ProductDTO> data;
     private List<PriceDTO> prices;

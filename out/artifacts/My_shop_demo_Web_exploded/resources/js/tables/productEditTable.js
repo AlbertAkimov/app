@@ -12,10 +12,10 @@ define(['tables/typePriceDialog'], function (typePriceDialog) {
         save: 'resource->/products',
         elements:
             [
-                {view: 'text', label: 'ID', name: 'id'},
-                {view: 'text', label: 'Это группа', name: 'isGroup'},
-                {view: 'text', label: 'Это новый', name: 'isNew'},
-                {view: 'text', label: 'Родитель', name: 'parentId'},
+                {view: 'text', label: 'ID', name: 'id', hidden: true},
+                {view: 'text', label: 'Это группа', name: 'isGroup',hidden: true},
+                {view: 'text', label: 'Это новый', name: 'isNew', hidden: true},
+                {view: 'text', label: 'Родитель', name: 'parentId',hidden: true},
                 {view: 'text', label: 'Наименование', name: 'name'},
                 {view: 'combo', label: 'Тип', name: 'typeProduct', value: 'Товар', options:['ТОВАР', 'УСЛУГА', 'БЛЮДО', 'КОМПЛЕКС']},
 
@@ -27,7 +27,8 @@ define(['tables/typePriceDialog'], function (typePriceDialog) {
                     click: function () {}},
 
                 {view: 'datatable', id: 'prices', editable: true, columns:[
-                        {id: "id", header: "id", width:150},
+                        {id: "id", header: "id", width:150, editor: 'text', hidden: true},
+                        {id: "id_price", header: "id_price", width:150, hidden: true},
                         {id: "name", header: "Тип цены", width:250, editor: 'text'},
                         {id: "price", header: "Цена", width:200, editor: 'text'},
 
@@ -37,7 +38,17 @@ define(['tables/typePriceDialog'], function (typePriceDialog) {
 
                             if (id.column === 'name') {
                                 webix.ui(
-                                    {typePriceDialog}).show()
+                                    {
+                                        view: 'window',
+                                        head: 'Тип цен',
+                                        width: 400,
+                                        position: 'center',
+                                        modal: true,
+                                        parentTable: this,
+                                        cell: id,
+                                        body: typePriceDialog
+                                    }).show()
+                                //})
                             }
                         }
                     }
@@ -58,9 +69,35 @@ define(['tables/typePriceDialog'], function (typePriceDialog) {
                         values.parentId = Number(values.parentId);
                         values.isGroup = Boolean(values.isGroup);
 
-                        if (values.isNew === '1') {
+                        let price = $$('prices').serialize();
+                        let prices = [];
+                        let isNew = values.isNew;
+                        delete values['isNew'];
+
+                        for (let i = 0; i <= price.length - 1; i++) {
+
+                            let result = new Object({
+                                product: {
+                                    id: values.id,
+                                    isGroup: values.isGroup,
+                                    name: values.name,
+                                    parentId: values.parentId,
+                                    typeProduct: values.typeProduct
+                                },
+                                price: Number(price[i].price),
+                                id: price[i].id_price,
+                                typePrice: {id: price[i].id, name: price[i].name}
+
+                            })
+
+                            prices.push(result);
+                        }
+
+                        Object.assign(values, {prices: prices})
+
+                        if (isNew === '1') {
                             param.id = values.id;
-                            param.operation = 'save';
+                            param.operation = 'insert';
                             param.data = values;
 
                         } else {
@@ -69,7 +106,6 @@ define(['tables/typePriceDialog'], function (typePriceDialog) {
                             param.data = values;
                         }
 
-                        delete values['isNew'];
                         webix.proxy.resource.save(obj, param);
                     }
                 }

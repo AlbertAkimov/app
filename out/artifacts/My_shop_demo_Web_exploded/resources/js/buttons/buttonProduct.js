@@ -9,6 +9,7 @@ define(function () {
                 view: "button",
                 value: "Добавить",
                 width: 100,
+
                 click: function () {
 
                     let tree = $$("products");

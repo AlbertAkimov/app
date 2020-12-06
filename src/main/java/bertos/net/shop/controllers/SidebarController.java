@@ -29,14 +29,14 @@ import java.util.stream.Collectors;
 public class SidebarController extends AbstractRestControllerCRUD<Sidebar, SidebarDTO, SidebarService, SidebarDTOMapper> {
 
     protected SidebarController(SidebarService service, SidebarDTOMapper mapper) {
-        super(service, Sidebar.class, mapper);
+        super(service, mapper);
     }
 
     @Override
-    public Page<SidebarDTO> getAll(@PageableDefault(value = 100) Pageable pageable) {
+    public List<SidebarDTO> getAll() {
 
         List<SidebarDTO> resultDTO = new ArrayList<>();
-        Page<Sidebar> sidebar = service.getAll(pageable);
+        List<Sidebar> sidebar = service.getAll();
 
         List<Sidebar> result = sidebar.stream()
                 .sorted(Comparator.comparingLong(Sidebar::getParentId))
@@ -44,6 +44,6 @@ public class SidebarController extends AbstractRestControllerCRUD<Sidebar, Sideb
 
         result.forEach(elem -> resultDTO.add(mapper.toDTO(elem)));
 
-        return new PageImpl<>(resultDTO);
+        return resultDTO;
     }
 }
