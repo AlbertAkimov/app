@@ -35,10 +35,10 @@ public class TestSidebarCRUD extends AbstractTestCRUD<Sidebar, SidebarService> {
         sidebar.setValue("Единицы измерения");
         sidebar.setIcon("fas fa-bars");
         sidebar.setSidebarId("units");
-        sidebar.setIsGroup(true);
+        sidebar.setIsGroup(false);
         sidebar.setParentId(1L);
 
-        init(sidebar, false);
+        init(sidebar, true);
         run();
     }
 }
