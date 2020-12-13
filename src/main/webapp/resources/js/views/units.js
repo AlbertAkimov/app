@@ -15,10 +15,10 @@ define(function () {
                         width: 100,
                         click: function () {
                             $$('units').add({
-                                id: '',
-                                name: 'Введите наименоавние'
+                                id: 0,
+                                unitName: 'Введите наименоавние'
                             })
-                        }
+                        },
                     },
                     {
                         view: "button",
@@ -43,7 +43,11 @@ define(function () {
                 on: {
                     onItemClick: function(id){
                         this.editColumn(id);
-                    }
+                    }/*,
+
+                    onValidationError:function(id, obj, details){
+                        debugger;
+                    }*/
                 },
 
                 columns: [
@@ -60,9 +64,13 @@ define(function () {
                         id: "unitName",
                         header: "Наименование",
                         width: 250,
-                        editor:"text"
+                        editor:"text",
+                        rules: {
+                            "unitName": webix.rules.isNotEmpty()
+                        }
                     }
-                ]
+                ],
+
             }
         ]
 

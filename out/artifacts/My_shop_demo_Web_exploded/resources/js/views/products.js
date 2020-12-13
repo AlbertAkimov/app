@@ -12,7 +12,7 @@ define(['buttons/buttonProduct', 'tables/productEditTable'], function (buttonPro
         rows: [buttonProduct, {
             type: "line",
             id: 'products',
-            view: "tree",
+            view: "treetable",
             columns: [
                 {
                     id: "id",

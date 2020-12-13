@@ -1,12 +1,11 @@
 package bertos.net.shop.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * @Authot: Albert Akimov
@@ -23,4 +22,8 @@ public class Unit extends AbstractEntity {
 
     @Column(name = "unit_name")
     private String unitName;
+
+    @OneToOne(mappedBy = "unit", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private Product product;
 }

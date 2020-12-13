@@ -2,23 +2,60 @@ requirejs.config({
     baseURI: 'js'
 })
 
-define(['tables/typePriceDialog'], function (typePriceDialog) {
+define(['tables/typePriceDialog', 'tables/unitDialog'], function (typePriceDialog, unitDialog) {
     return {
         view: 'form',
         id: 'product_edit_form',
-        width: 600,
+        width: 870,
         height: 900,
         url: 'resource->/products',
         save: 'resource->/products',
         elements:
             [
-                {view: 'text', label: 'ID', name: 'id', hidden: true},
-                {view: 'text', label: 'levelGroup', name: 'levelGroup', hidden: true},
-                {view: 'text', label: 'Это группа', name: 'isGroup',hidden: true},
-                {view: 'text', label: 'Это новый', name: 'isNew', hidden: true},
-                {view: 'text', label: 'Родитель', name: 'parentId',hidden: true},
-                {view: 'text', label: 'Наименование', name: 'name'},
-                {view: 'combo', label: 'Тип', name: 'typeProduct', value: 'Товар', options:['ТОВАР', 'УСЛУГА', 'БЛЮДО', 'КОМПЛЕКС']},
+                {
+                    rows:[
+                        {template: "Номенклатура", type: "section"},
+                        {view: 'text', label: 'ID', name: 'id'},
+                        {view: 'text', label: 'Родитель', name: 'parentId'},
+                        {view: 'text', label: 'Уровень группировки', name: 'levelGroup'},
+                        {view: 'text', label: 'Это группа', name: 'isGroup'},
+                        {view: 'text', label: 'Это новый элемент', name: 'isNew'},
+                        {view: 'text', label: 'Наименование', name: 'name'},
+                        {view: 'combo', label: 'Тип', name: 'typeProduct', value: 'Товар', options:['ТОВАР', 'УСЛУГА', 'БЛЮДО', 'КОМПЛЕКС']}
+                    ]
+                },
+
+                {
+                    rows: [
+                        {template: "Единица измерения", type: "section"},
+                        {view: 'text', label: 'ID UNIT', name: 'idUnit'},
+                        {view: 'combo', label: 'Статус ед.из', name: 'unitStatus', value: 'Товар', options:['ACTIVE', 'NOT_ACTIVE', 'DELETED']},
+                        {
+                            view: 'combo', label: 'Единица измерения', name: 'unitName',
+                            click: function () {
+
+                                webix.ui(
+                                    {
+                                        view: 'window',
+                                        head: 'Выбор Ед.Из',
+                                        width: 400,
+                                        position: 'center',
+                                        modal: true,
+                                        //parentTable: this,
+                                        //cell: id,
+                                        body: unitDialog
+                                    }).show()
+                            }
+                        },
+                    ]
+                },
+
+                {
+                    rows: [
+                        {template: "Общее", type: "section"},
+                        {view: 'combo', label: 'Статус товара', name: 'status', value: 'Товар', options:['ACTIVE', 'NOT_ACTIVE', 'DELETED']}
+                    ]
+                },
 
                 {view: 'button', value: 'добавить цену',
                     click: function () {
@@ -28,10 +65,10 @@ define(['tables/typePriceDialog'], function (typePriceDialog) {
                     click: function () {}},
 
                 {view: 'datatable', id: 'prices', editable: true, columns:[
-                        {id: "id", header: "id", width:150, editor: 'text', hidden: true},
-                        {id: "id_price", header: "id_price", width:150, hidden: true},
-                        {id: "name", header: "Тип цены", width:250, editor: 'text'},
-                        {id: "price", header: "Цена", width:200, editor: 'text'},
+                        {id: "id", header: "id", width:150, editor: 'text'},
+                        {id: "id_price", header: "id_price", width:150},
+                        {id: "name", header: "Тип цены", width:150, editor: 'text'},
+                        {id: "price", header: "Цена", width:100, editor: 'text'},
 
                     ],
                     on: {
@@ -84,30 +121,50 @@ define(['tables/typePriceDialog'], function (typePriceDialog) {
 
                         delete values['isNew'];
 
-                        for (let i = 0; i <= price.length - 1; i++) {
+                        if (price.length >= 1) {
+                            for (let i = 0; i <= price.length - 1; i++) {
 
-                            let result = new Object({
-                                product: {
-                                    id: values.id,
-                                    isGroup: values.isGroup,
-                                    name: values.name,
-                                    parentId: values.parentId,
-                                    typeProduct: values.typeProduct,
-                                    levelGroup: values.levelGroup
+                                let result = new Object({
+                                    product: {
+                                        id: values.id,
+                                        parentId: values.parentId,
+                                        isGroup: values.isGroup,
+                                        levelGroup: values.levelGroup,
+                                        name: values.name,
+                                        typeProduct: values.typeProduct,
+                                        status: 'ACTIVE',
+                                        unit: {
+                                            id: values.idUnit,
+                                            unitName: values.unitName,
+                                            status: values.unitStatus
+                                        }
 
-                                },
-                                price: Number(price[i].price),
-                                id: price[i].id_price,
-                                typePrice: {id: price[i].id, name: price[i].name}
+                                    },
+                                    price: Number(price[i].price),
+                                    id: price[i].id_price,
+                                    status: 'ACTIVE',
+                                    typePrice: {id: price[i].id, name: price[i].name} // todo id таблицы price переименовать на id_type_price
 
-                            })
+                                })
 
-                            prices.push(result);
+                                prices.push(result);
+                            }
+
+                            Object.assign(values, {prices: prices});
+
+                        }
+                        let unit = {
+                            id: values.idUnit,
+                            unitName: values.unitName,
+                            status: values.unitStatus
                         }
 
-                        Object.assign(values, {prices: prices})
+                        delete values.idUnit;
+                        delete values.unitName;
+                        delete values.unitStatus;
+                        Object.assign(values, {unit: unit})
 
-                        if (isNew === '1') {
+                        if (isNew === "true") {
                             param.id = values.id;
                             param.operation = 'insert';
                             param.data = values;

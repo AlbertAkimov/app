@@ -1,5 +1,6 @@
 package bertos.net.shop.dto;
 
+import bertos.net.shop.model.Status;
 import lombok.Data;
 import lombok.ToString;
 
@@ -18,5 +19,6 @@ public abstract class AbstractDataTransferObject implements Serializable {
 
     protected Long id;
     protected String guid; // todo don't use this field
+    private Status status;
 
 }

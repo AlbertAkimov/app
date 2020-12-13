@@ -24,7 +24,7 @@ define(function () {
                         parentId: parent,
                         name: "Новый элемент",
                         typeProduct: 'ТОВАР',
-                        isNew: 1,
+                        isNew: String(true),
                     }, 0, parent);
 
                 }

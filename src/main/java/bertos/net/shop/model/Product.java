@@ -42,7 +42,7 @@ public class Product extends AbstractEntity {
     @Column(name = "type_product")
     private TypeProduct typeProduct;
 
-    @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_parent")
     @OrderBy(value = "isGroup DESC")
     private List<Product> data;
@@ -50,4 +50,10 @@ public class Product extends AbstractEntity {
     @OneToMany(mappedBy = "product", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<Price> prices;
+
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_unit", referencedColumnName = "id")
+    @JsonBackReference
+    @OrderColumn
+    private Unit unit;
 }

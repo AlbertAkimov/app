@@ -4,7 +4,7 @@ requirejs.config({
 
 define(['buttons/buttonProduct', 'tables/productEditTable'], function (buttonProduct, productEditTable) {
     return {
-        id: 'test_1',
+        id: 'header_1',
 /*        width: "auto",
         height: "auto",*/
 
@@ -44,6 +44,23 @@ define(['buttons/buttonProduct', 'tables/productEditTable'], function (buttonPro
                     css: {"text-align": "canter"},
                     width: 250,
                     template: "#typeProduct#"
+                },
+
+                {
+                    id: "idUnit",
+                    header: "id unit",
+                    css: {"text-align": "canter"},
+                    width: 250,
+                    template: "#unit.id#",
+                    hidden: true
+                },
+
+                {
+                    id: "nameUnit",
+                    header: "Ед.Из",
+                    css: {"text-align": "canter"},
+                    width: 250,
+                    template: "#unit.unitName#"
                 }
             ],
 
@@ -56,16 +73,17 @@ define(['buttons/buttonProduct', 'tables/productEditTable'], function (buttonPro
 
                     let selectedItem = $$("products").getItem(id.row);
 
-                    if (selectedItem.name === "Новый элемент") {
+                    if (selectedItem.name === "Новый элемент") { //todo убрать словие сделать поле isNew в таблице Products
 
                         $$("product_edit_form").setValues(
                             {
-                                id: selectedItem.id,
-                                isGroup: selectedItem.open,
-                                isNew: selectedItem.isNew,
-                                name: selectedItem.name,
-                                parentId: selectedItem.parentId,
-                                typeProduct: selectedItem.typeProduct
+                                id:             selectedItem.id,
+                                isGroup:        selectedItem.open,
+                                isNew:          selectedItem.isNew,
+                                name:           selectedItem.name,
+                                parentId:       selectedItem.parentId,
+                                typeProduct:    selectedItem.typeProduct
+
                             }
                         )
                         $$("prices").clearAll();
@@ -81,12 +99,17 @@ define(['buttons/buttonProduct', 'tables/productEditTable'], function (buttonPro
 
                                     $$("product_edit_form").setValues(
                                         {
-                                            id: result.id,
-                                            isGroup: result.group,
-                                            isNew: '0',
-                                            name: result.name,
-                                            parentId: result.parentId,
-                                            typeProduct: result.typeProduct
+                                            id:             result.id,
+                                            isGroup:        String(result.isGroup),
+                                            isNew:          String(false),
+                                            name:           result.name,
+                                            parentId:       result.parentId,
+                                            typeProduct:    result.typeProduct,
+                                            idUnit:         result.unit.id,
+                                            unitName:       result.unit.unitName,
+                                            unitStatus:     result.unit.status,
+                                            status:         result.status,
+                                            levelGroup:     result.levelGroup
                                         }
                                     )
 
