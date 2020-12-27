@@ -57,6 +57,13 @@ define(['tables/typePriceDialog', 'tables/unitDialog'], function (typePriceDialo
                     ]
                 },
 
+                {
+                  rows: [
+                      {template: "Штрихкод", type: "section"},
+                      {view: "barcode", type: "ean13", id: "barcode"}
+                  ]
+                },
+
                 {view: 'button', value: 'добавить цену',
                     click: function () {
                         $$("prices").add({name: 'выберите тип цены'});

@@ -34,20 +34,12 @@ public class ProductController extends
         List<ProductDTO> resultDTO = new ArrayList<>();
         List<Product> productList = service.getAll();
 
- /*       long start;
-        long end;
-
-        start = System.currentTimeMillis();*/
-
         List<Product> result = productList.parallelStream()
                 .sorted(Comparator.comparingLong(Product::getParentId))
                 .filter(Product::getIsGroup)
                 .filter(x -> x.getLevelGroup() <= 1).collect(Collectors.toList());
 
         result.forEach(elem -> resultDTO.add(mapper.toDTO(elem)));
-
-/*        end = System.currentTimeMillis();
-        System.out.println(end - start + " ms");*/
 
         return resultDTO;
     }

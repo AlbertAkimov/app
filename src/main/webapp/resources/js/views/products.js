@@ -109,7 +109,8 @@ define(['buttons/buttonProduct', 'tables/productEditTable'], function (buttonPro
                                             unitName:       result.unit.unitName,
                                             unitStatus:     result.unit.status,
                                             status:         result.status,
-                                            levelGroup:     result.levelGroup
+                                            levelGroup:     result.levelGroup,
+                                            barcode:        result.barcode.barcode
                                         }
                                     )
 

@@ -56,4 +56,10 @@ public class Product extends AbstractEntity {
     @JsonBackReference
     @OrderColumn
     private Unit unit;
+
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_barcode", referencedColumnName = "id")
+    @JsonBackReference
+    @OrderColumn
+    private Barcode barcode;
 }

@@ -13,6 +13,17 @@ ALTER TABLE type_prices
 ALTER TABLE prices
     AUTO_INCREMENT = 0;
 
+#/////////////////////////////////BARCODES///////////////////////////////////////
+
+create table if not exists barcodes(
+    id          bigint auto_increment primary key,
+    guid        varchar(36),
+    barcode     varchar(256) not null,
+    type_barcode varchar(10) default 'EAN13',
+    status      varchar(25) default 'ACTIVE',
+    unique (guid)
+
+);
 
 #/////////////////////////////////UNITS//////////////////////////////////////////
 create table if not exists units
@@ -53,7 +64,7 @@ create table if not exists cards
 );
 
 #/////////////////////////////////ORDERS//////////////////////////////////////////
-create table if not exists orders
+create table if not exists orders #todo доделать таблицу
 (
     id          bigint auto_increment primary key,
     guid        varchar(36),
@@ -69,12 +80,18 @@ create table if not exists products
   id            bigint auto_increment primary key,
   guid          varchar(36),
   id_parent     bigint not null,
+  id_unit       bigint not null,
+  id_barcode    bigint,
   id_price      bigint,
   is_group      boolean default 0,
+  level_group   int default 1 not null,
   name          varchar(256),
   type_product  varchar(36) default 'ТОВАР',
   status        varchar(25)  default 'ACTIVE',
-  level_group   int default 1 not null
+
+    foreign key (id_unit) references units(id),
+    foreign key (id_barcode) references barcodes(id),
+    unique (guid)
 
 );
 
