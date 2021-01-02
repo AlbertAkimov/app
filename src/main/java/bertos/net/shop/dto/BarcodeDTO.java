@@ -16,7 +16,8 @@ import lombok.ToString;
 @ToString
 public class BarcodeDTO extends AbstractDataTransferObject {
 
-    private String barcode;
+    private String code;
     private TypeBarcode typeBarcode;
     private Status status;
+    private String imageBarcode;
 }

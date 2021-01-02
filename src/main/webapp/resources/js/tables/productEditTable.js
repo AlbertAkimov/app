@@ -14,12 +14,13 @@ define(['tables/typePriceDialog', 'tables/unitDialog'], function (typePriceDialo
             [
                 {
                     rows:[
-                        {template: "Номенклатура", type: "section"},
+                        {template: "Карточка товара", type: "section"},
                         {view: 'text', label: 'ID', name: 'id'},
                         {view: 'text', label: 'Родитель', name: 'parentId'},
                         {view: 'text', label: 'Уровень группировки', name: 'levelGroup'},
                         {view: 'text', label: 'Это группа', name: 'isGroup'},
                         {view: 'text', label: 'Это новый элемент', name: 'isNew'},
+                        {view: 'combo', label: 'Статус товара', name: 'status', value: 'Товар', options:['ACTIVE', 'NOT_ACTIVE', 'DELETED']},
                         {view: 'text', label: 'Наименование', name: 'name'},
                         {view: 'combo', label: 'Тип', name: 'typeProduct', value: 'Товар', options:['ТОВАР', 'УСЛУГА', 'БЛЮДО', 'КОМПЛЕКС']}
                     ]
@@ -52,30 +53,60 @@ define(['tables/typePriceDialog', 'tables/unitDialog'], function (typePriceDialo
 
                 {
                     rows: [
-                        {template: "Общее", type: "section"},
-                        {view: 'combo', label: 'Статус товара', name: 'status', value: 'Товар', options:['ACTIVE', 'NOT_ACTIVE', 'DELETED']}
+                        {template: "Штрихкод", type: "section"},
+                        {view: 'text', label: 'id', name: 'id_barcode', hidden: true},
+                        {
+                            cols: [
+                                {
+                                    view: 'text', label: 'code', name: 'code',
+                                },
+                                {
+                                    view: 'button', value: 'Новай штрихкод', inputWidth:150, align:"right",
+                                    click: function() {
+                                        let newBarcode = "";
+                                        let possible = "0123456789";
+
+                                        for (let i = 0; i < 12; i++)
+                                            newBarcode += possible.charAt(Math.floor(Math.random() * possible.length));
+
+                                        let values = $$("product_edit_form").getValues();
+                                        values.id_barcode = "";
+                                        values.code = newBarcode;
+
+                                        $$("product_edit_form").setValues(values);
+
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            view: 'template', id: 'image_barcode', height: 45, width: 40, data: {
+                                path: ""
+                            },
+                            template: "<img src='#path#'/>"
+                        },
+
                     ]
                 },
 
                 {
-                  rows: [
-                      {template: "Штрихкод", type: "section"},
-                      {view: "barcode", type: "ean13", id: "barcode"}
-                  ]
+                    cols:
+                        [
+                            {view: 'button', value: 'добавить цену',
+                                click: function () {
+                                    $$("prices").add({name: 'выберите тип цены'});
+                                }},
+                            {view: 'button', value: 'удалить цену',
+                                click: function () {}}
+                        ]
                 },
 
-                {view: 'button', value: 'добавить цену',
-                    click: function () {
-                        $$("prices").add({name: 'выберите тип цены'});
-                    }},
-                {view: 'button', value: 'удалить цену',
-                    click: function () {}},
 
                 {view: 'datatable', id: 'prices', editable: true, columns:[
-                        {id: "id", header: "id", width:150, editor: 'text'},
-                        {id: "id_price", header: "id_price", width:150},
-                        {id: "name", header: "Тип цены", width:150, editor: 'text'},
-                        {id: "price", header: "Цена", width:100, editor: 'text'},
+                        {id: "id", header: "id", width:150, editor: 'text', hidden: true},
+                        {id: "id_price", header: "id_price", width:150, hidden: true},
+                        {id: "name", header: "Тип цены", editor: 'text', fillspace: true},
+                        {id: "price", header: "Цена", editor: 'text'},
 
                     ],
                     on: {
@@ -112,7 +143,8 @@ define(['tables/typePriceDialog', 'tables/unitDialog'], function (typePriceDialo
                         let values = obj.getValues();
 
                         values.parentId = Number(values.parentId);
-                        values.isGroup = Boolean(values.isGroup);
+
+                        values.isGroup = values.isGroup === "true";
 
                         let price = $$('prices').serialize();
                         let prices = [];
@@ -121,8 +153,10 @@ define(['tables/typePriceDialog', 'tables/unitDialog'], function (typePriceDialo
 
                         if (values.parentId !== 0 && values.isGroup)
                             levelGroup = 2;
-                        else
+                        else if(values.parentId === 0 && values.isGroup)
                             levelGroup = 1;
+                        else
+                            levelGroup = 0;
 
                         Object.assign(values, {levelGroup: levelGroup})
 
@@ -139,12 +173,7 @@ define(['tables/typePriceDialog', 'tables/unitDialog'], function (typePriceDialo
                                         levelGroup: values.levelGroup,
                                         name: values.name,
                                         typeProduct: values.typeProduct,
-                                        status: 'ACTIVE',
-                                        unit: {
-                                            id: values.idUnit,
-                                            unitName: values.unitName,
-                                            status: values.unitStatus
-                                        }
+                                        status: 'ACTIVE'
 
                                     },
                                     price: Number(price[i].price),
@@ -166,10 +195,27 @@ define(['tables/typePriceDialog', 'tables/unitDialog'], function (typePriceDialo
                             status: values.unitStatus
                         }
 
+                        let barcode;
+
+                        if(values.code !== "") {
+
+                            barcode = {
+                                id: values.id_barcode,
+                                code: values.code,
+                                typeBarcode: 'EAN13',
+                                status: 'ACTIVE'
+                            }
+                        }else barcode = null;
+
                         delete values.idUnit;
                         delete values.unitName;
                         delete values.unitStatus;
+                        delete values.id_barcode;
+                        delete values.code;
+                        delete values.isNew;
+
                         Object.assign(values, {unit: unit})
+                        Object.assign(values, {barcode: barcode})
 
                         if (isNew === "true") {
                             param.id = values.id;

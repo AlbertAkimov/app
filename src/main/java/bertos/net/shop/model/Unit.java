@@ -24,6 +24,6 @@ public class Unit extends AbstractEntity {
     private String unitName;
 
     @OneToOne(mappedBy = "unit", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
-    @JsonManagedReference
+    //@JsonManagedReference
     private Product product;
 }

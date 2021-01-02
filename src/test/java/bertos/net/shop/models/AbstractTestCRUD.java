@@ -21,9 +21,9 @@ public abstract class AbstractTestCRUD<E extends AbstractEntity, S extends CRUDS
 
     @Autowired
     @SuppressWarnings("all")
-    private S service;
+    protected S service;
 
-    private E entity;
+    protected E entity;
 
     private boolean isDelete;
 

@@ -1,16 +1,11 @@
 package bertos.net.shop.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.hibernate.annotations.Where;
-import org.springframework.core.annotation.Order;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -53,13 +48,13 @@ public class Product extends AbstractEntity {
 
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_unit", referencedColumnName = "id")
-    @JsonBackReference
+    //@JsonBackReference
     @OrderColumn
     private Unit unit;
 
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_barcode", referencedColumnName = "id")
-    @JsonBackReference
+    //@JsonBackReference
     @OrderColumn
     private Barcode barcode;
 }

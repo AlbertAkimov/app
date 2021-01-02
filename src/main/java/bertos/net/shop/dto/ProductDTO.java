@@ -25,5 +25,6 @@ public class ProductDTO extends AbstractDataTransferObject {
     private List<ProductDTO> data;
     private List<PriceDTO> prices;
     private UnitDTO unit;
+    private BarcodeDTO barcode;
 
 }

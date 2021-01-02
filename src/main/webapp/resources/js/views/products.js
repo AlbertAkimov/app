@@ -34,7 +34,8 @@ define(['buttons/buttonProduct', 'tables/productEditTable'], function (buttonPro
 
                 {
                     id: "name", header: "Наименование", width: 250,
-                    template: "{common.treetable()} #name#"
+                    template: "{common.treetable()} #name#",
+                    fillspace: true
                     //editor: 'text'
                 },
 
@@ -60,7 +61,8 @@ define(['buttons/buttonProduct', 'tables/productEditTable'], function (buttonPro
                     header: "Ед.Из",
                     css: {"text-align": "canter"},
                     width: 250,
-                    template: "#unit.unitName#"
+                    template: "#unit.unitName#",
+                    hidden: true
                 }
             ],
 
@@ -82,12 +84,14 @@ define(['buttons/buttonProduct', 'tables/productEditTable'], function (buttonPro
                                 isNew:          selectedItem.isNew,
                                 name:           selectedItem.name,
                                 parentId:       selectedItem.parentId,
-                                typeProduct:    selectedItem.typeProduct
+                                typeProduct:    selectedItem.typeProduct,
+                                status:         'ACTIVE'
 
                             }
                         )
                         $$("prices").clearAll();
                     } else {
+                        $$("product_edit_form").refresh();
 
                         $$("product_edit_form").load({
                             $proxy: true,
@@ -96,6 +100,15 @@ define(['buttons/buttonProduct', 'tables/productEditTable'], function (buttonPro
 
                                     let result = value.json();
                                     let prices = result.prices;
+                                    let barcode = result.barcode;
+
+                                    if(barcode === null) {
+                                        barcode = {
+                                            id: "",
+                                            code: "",
+                                            imageBarcode: ""
+                                        }
+                                    }
 
                                     $$("product_edit_form").setValues(
                                         {
@@ -110,9 +123,21 @@ define(['buttons/buttonProduct', 'tables/productEditTable'], function (buttonPro
                                             unitStatus:     result.unit.status,
                                             status:         result.status,
                                             levelGroup:     result.levelGroup,
-                                            barcode:        result.barcode.barcode
+
+                                            id_barcode:     barcode.id,
+                                            code:           barcode.code
                                         }
                                     )
+
+                                    // set barcode if there is
+
+                                        $$("image_barcode").config.height = 30;
+                                        $$("image_barcode").config.width = 50;
+                                        $$("image_barcode").setValues(
+                                            {
+                                                path: "data:image/png;base64," + barcode.imageBarcode
+                                            }
+                                        )
 
                                     $$("prices").clearAll();
 
