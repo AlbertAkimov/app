@@ -12,20 +12,15 @@ define(function () {
 
                 click: function () {
 
-                    let tree = $$("products");
-                    let selected = tree.getSelectedItem();
-                    let parent = 0;
+                    let value =
+                        {
+                            parentId: 0,
+                            name: "Новый элемент",
+                            typeProduct: 'ТОВАР',
+                            isNew: String(true),
+                        };
 
-                    if(selected !== undefined) {
-                            parent = selected.id;
-                    }
-
-                    tree.add({
-                        parentId: parent,
-                        name: "Новый элемент",
-                        typeProduct: 'ТОВАР',
-                        isNew: String(true),
-                    }, 0, parent);
+                    addElementToTree("products", value, "parentId");
 
                 }
             },

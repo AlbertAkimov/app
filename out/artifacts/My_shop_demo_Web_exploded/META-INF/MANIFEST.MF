@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Created-By: IntelliJ IDEA
-Built-By: Its_s
-Build-Jdk: 1.8.0_201
-Implementation-Title: shop demo
-Implementation-Version: 0.0.1-SNAPSHOT
-Implementation-Vendor-Id: bertos.net
-Main-Class: ${start-class}
-

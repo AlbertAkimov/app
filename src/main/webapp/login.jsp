@@ -11,6 +11,12 @@
       <meta charset="utf-8">
       <title>Авторизация</title>
 
+      <style>
+          body {
+              background: url("resources/images/2.jpg");
+          }
+      </style>
+
       <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
       <link href="${contextPath}/resources/css/common.css" rel="stylesheet">
   </head>

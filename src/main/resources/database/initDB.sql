@@ -16,11 +16,13 @@ ALTER TABLE prices
 #/////////////////////////////////BARCODES///////////////////////////////////////
 
 create table if not exists barcodes(
-    id          bigint auto_increment primary key,
-    guid        varchar(36),
-    barcode     varchar(256) not null,
-    type_barcode varchar(10) default 'EAN13',
-    status      varchar(25) default 'ACTIVE',
+    id              bigint auto_increment primary key,
+    guid            varchar(36),
+    barcode         varchar(256) not null,
+    type_barcode    varchar(10) default 'EAN13',
+    status          varchar(25) default 'ACTIVE',
+    created         timestamp   default CURRENT_TIMESTAMP,
+    updated         timestamp   default CURRENT_TIMESTAMP,
     unique (guid)
 
 );
@@ -31,7 +33,9 @@ create table if not exists units
     id          bigint auto_increment primary key,
     guid        varchar(36),
     unit_name   varchar(256) not null,
-    status      varchar(25) default 'ACTIVE'
+    status      varchar(25) default 'ACTIVE',
+    created     timestamp   default CURRENT_TIMESTAMP,
+    updated     timestamp   default CURRENT_TIMESTAMP
 );
 
 #/////////////////////////////////CUSTOMERS//////////////////////////////////////////
@@ -42,6 +46,8 @@ create table if not exists customers
     first_name  varchar(50)  not null,
     last_name   varchar(100) not null,
     status      varchar(25) default 'ACTIVE',
+    created     timestamp   default CURRENT_TIMESTAMP,
+    updated     timestamp   default CURRENT_TIMESTAMP,
     unique (guid)
 );
 
@@ -82,12 +88,13 @@ create table if not exists products
   id_parent     bigint not null,
   id_unit       bigint not null,
   id_barcode    bigint,
-  id_price      bigint,
   is_group      boolean default 0,
   level_group   int default 1 not null,
   name          varchar(256),
   type_product  varchar(36) default 'ТОВАР',
   status        varchar(25)  default 'ACTIVE',
+  created       timestamp   default CURRENT_TIMESTAMP,
+  updated       timestamp   default CURRENT_TIMESTAMP,
 
     foreign key (id_unit) references units(id),
     foreign key (id_barcode) references barcodes(id),
@@ -103,41 +110,49 @@ create table if not exists prices (
     guid            varchar(36),
     price           double,
     status          varchar(25) default 'ACTIVE',
+    created         timestamp   default CURRENT_TIMESTAMP,
+    updated         timestamp   default CURRENT_TIMESTAMP,
 
     foreign key (id_type_price) references type_prices(id),
     foreign key (id_product) references products(id)
 );
 
 create table if not exists type_prices(
-    id      bigint auto_increment primary key,
-    guid    varchar(36),
-    name    varchar(256),
-    status  varchar(25)  default 'ACTIVE'
+    id          bigint auto_increment primary key,
+    guid        varchar(36),
+    name        varchar(256),
+    status      varchar(25)  default 'ACTIVE',
+    created     timestamp   default CURRENT_TIMESTAMP,
+    updated     timestamp   default CURRENT_TIMESTAMP
 );
 
 #/////////////////////////////////ROLES//////////////////////////////////////////
 create table if not exists roles
 (
-    id      bigint auto_increment primary key not null,
-    guid    varchar(36),
-    name    varchar(100),
-    status  varchar(25)  default 'ACTIVE',
+    id          bigint auto_increment primary key not null,
+    guid        varchar(36),
+    name        varchar(100),
+    status      varchar(25)  default 'ACTIVE',
+    created     timestamp   default CURRENT_TIMESTAMP,
+    updated     timestamp   default CURRENT_TIMESTAMP,
     unique (name)
 );
 
 #/////////////////////////////////USERS//////////////////////////////////////////
 create table if not exists users
 (
-    id          bigint auto_increment primary key not null,
-    guid        varchar(36),
-    username    varchar(255),
-    password    varchar(255),
-    firstName   varchar(255),
-    lastName    varchar(255),
-    email       varchar(255),
-    created     timestamp   default CURRENT_TIMESTAMP,
-    updated     timestamp   default CURRENT_TIMESTAMP,
-    status      varchar(25) default 'ACTIVE',
+    id                  bigint auto_increment primary key not null,
+    guid                varchar(36),
+    username            varchar(255),
+    password            varchar(255),
+    firstName           varchar(255),
+    lastName            varchar(255),
+    email               varchar(255),
+    created             timestamp   default CURRENT_TIMESTAMP,
+    updated             timestamp   default CURRENT_TIMESTAMP,
+    status              varchar(25) default 'ACTIVE',
+    password_confirm    varchar(255),
+    phone varchar(25),
 
     unique (username)
 );
@@ -152,37 +167,4 @@ create table if not exists users_roles
     foreign key (role_id) references roles (id),
     UNIQUE (user_id, role_id)
 );
-#/////////////////////////////////////INSERT//////////////////////////////////////
-
-#// INSERT TO "PRODUCTS"
-insert into products(id_parent, name, is_group) values (0,'Соки', true);
-insert into products(id_parent, name, is_group) values (1, 'Манго', false);
-insert into products(id_parent, name, is_group) values (1, 'Виноградный', false);
-insert into products(id_parent, name, is_group) values (1, 'Яблочный', false);
-insert into products(id_parent, name, is_group) values (0, 'Газировка', false);
-insert into products(id_parent, name, is_group) values (5, 'Кола', false);
-insert into products(id_parent, name, is_group) values (5, 'Спрайт', false);
-insert into products(id_parent, name, is_group) values (5, 'Миниралка', false);
-insert into products(id_parent, name, is_group) values (5, 'Лимонад', false);
-
-#// INSERT TO "TYPE_PRICES"
-insert into type_prices(name) values ('Розница');
-insert into type_prices(name) values ('Оптовая');
-
-#// INSERT TO "PRICES"
-insert into prices(id_type_price, id_product, price) values (1, 2, 150.50);
-insert into prices(id_type_price, id_product, price) values (1, 3, 190.20);
-insert into prices(id_type_price, id_product, price) values (1, 4, 90.76);
-insert into prices(id_type_price, id_product, price) values (1, 6, 100.10);
-insert into prices(id_type_price, id_product, price) values (1, 7, 110.65);
-insert into prices(id_type_price, id_product, price) values (1, 8, 60.30);
-insert into prices(id_type_price, id_product, price) values (1, 9, 75.5);
-
-insert into prices(id_type_price, id_product, price) values (2, 2, 100.50);
-insert into prices(id_type_price, id_product, price) values (2, 3, 100.20);
-insert into prices(id_type_price, id_product, price) values (2, 4, 10.76);
-insert into prices(id_type_price, id_product, price) values (2, 6, 50.10);
-insert into prices(id_type_price, id_product, price) values (2, 7, 10.65);
-insert into prices(id_type_price, id_product, price) values (2, 8, 30.30);
-insert into prices(id_type_price, id_product, price) values (2, 9, 25.5);
 

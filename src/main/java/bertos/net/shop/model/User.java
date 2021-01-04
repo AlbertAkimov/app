@@ -42,18 +42,6 @@ public class User extends AbstractEntity {
     @Column(name = "phone")
     private String phone;
 
-    @CreatedDate
-    @Column(name = "created")
-    private Date created;
-
-    @LastModifiedDate
-    @Column(name = "updated")
-    private Date updated;
-
-/*    @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private Status status;*/
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},

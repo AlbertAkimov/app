@@ -54,7 +54,7 @@ define(['tables/typePriceDialog', 'tables/unitDialog'], function (typePriceDialo
                 {
                     rows: [
                         {template: "Штрихкод", type: "section"},
-                        {view: 'text', label: 'id', name: 'id_barcode', hidden: true},
+                        {view: 'text', label: 'id', name: 'id_barcode'},
                         {
                             cols: [
                                 {
@@ -63,18 +63,7 @@ define(['tables/typePriceDialog', 'tables/unitDialog'], function (typePriceDialo
                                 {
                                     view: 'button', value: 'Новай штрихкод', inputWidth:150, align:"right",
                                     click: function() {
-                                        let newBarcode = "";
-                                        let possible = "0123456789";
-
-                                        for (let i = 0; i < 12; i++)
-                                            newBarcode += possible.charAt(Math.floor(Math.random() * possible.length));
-
-                                        let values = $$("product_edit_form").getValues();
-                                        values.id_barcode = "";
-                                        values.code = newBarcode;
-
-                                        $$("product_edit_form").setValues(values);
-
+                                        generateBarcode("product_edit_form");
                                     }
                                 }
                             ]

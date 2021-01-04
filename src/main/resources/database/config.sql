@@ -5,5 +5,7 @@ create table sidebar(
     id_sidebar varchar(36),
     value varchar(128),
     icon varchar(256),
-    is_group boolean default false
+    is_group boolean default false,
+    created     timestamp   default CURRENT_TIMESTAMP,
+    updated     timestamp   default CURRENT_TIMESTAMP
 );
