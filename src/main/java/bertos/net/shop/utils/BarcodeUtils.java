@@ -1,6 +1,6 @@
 package bertos.net.shop.utils;
 
-import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
+import com.sun.xml.internal.messaging.saaj.util.*;
 import net.sourceforge.barbecue.Barcode;
 import net.sourceforge.barbecue.BarcodeException;
 import net.sourceforge.barbecue.BarcodeFactory;
