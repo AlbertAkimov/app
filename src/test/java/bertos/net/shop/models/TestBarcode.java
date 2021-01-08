@@ -32,7 +32,7 @@ public class TestBarcode extends AbstractTestCRUD<Barcode, BarcodeService> {
     @Test
     public void generateAndSaveBarcodeToFile() {
 
-        Barcode result = service.getById(1L);
+        Barcode result = service.getById(29L);
 
         BufferedImage image = BarcodeUtils.createEAN13(result.getCode());
         String barcodeBase64 = BarcodeUtils.encodeBarcodeToBase64(image);

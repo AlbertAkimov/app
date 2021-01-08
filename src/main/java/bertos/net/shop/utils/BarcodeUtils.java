@@ -1,6 +1,5 @@
 package bertos.net.shop.utils;
 
-import com.sun.xml.internal.messaging.saaj.util.*;
 import net.sourceforge.barbecue.Barcode;
 import net.sourceforge.barbecue.BarcodeException;
 import net.sourceforge.barbecue.BarcodeFactory;
@@ -11,6 +10,7 @@ import org.springframework.util.Base64Utils;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 /**
@@ -46,10 +46,10 @@ public class BarcodeUtils {
 
         String result = "";
 
-        try (ByteOutputStream stream = new ByteOutputStream()) {
+        try (ByteArrayOutputStream stream = new ByteArrayOutputStream()) {
 
             ImageIO.write(barcode, "png", stream);
-            result = Base64Utils.encodeToString(stream.getBytes());
+            result = Base64Utils.encodeToString(stream.toByteArray());
 
         } catch (IOException e) {
             e.printStackTrace();
