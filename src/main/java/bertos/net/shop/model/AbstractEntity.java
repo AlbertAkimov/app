@@ -1,13 +1,11 @@
 package bertos.net.shop.model;
 
+import bertos.net.shop.audit.Auditable;
 import lombok.Data;
 import lombok.ToString;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -20,7 +18,7 @@ import java.util.UUID;
 @Data
 @ToString
 @EntityListeners(AuditingEntityListener.class)
-public abstract class AbstractEntity {
+public abstract class AbstractEntity extends Auditable<String> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,14 +30,6 @@ public abstract class AbstractEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private Status status;
-
-    @CreatedDate
-    @Column(name = "created")
-    private Date created;
-
-    @LastModifiedDate
-    @Column(name = "updated")
-    private Date updated;
 
     public AbstractEntity() {
         guid = UUID.randomUUID().toString();

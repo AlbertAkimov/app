@@ -1,6 +1,5 @@
 package bertos.net.shop.model;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,7 +17,6 @@ import javax.persistence.*;
 @Entity
 @Data
 @ToString
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Barcode extends AbstractEntity {
 
     @Column(name = "barcode")

@@ -61,7 +61,8 @@ define(function () {
                         header: "Наименование",
                         width: 250,
                         editor:"text"
-                    }
+                    },
+                    {view: 'combo', label: 'Статус', name: 'status', value: 'Товар', options:['ACTIVE', 'NOT_ACTIVE', 'DELETED']},
                 ]
             }
         ]
