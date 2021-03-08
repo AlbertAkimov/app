@@ -5,10 +5,11 @@ import bertos.net.shop.dto.AbstractMapper;
 import bertos.net.shop.model.AbstractEntity;
 import bertos.net.shop.services.CRUDService;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
+import org.springframework.beans.factory.BeanFactoryAware;
+import org.springframework.beans.factory.BeanNameAware;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -19,18 +20,27 @@ import java.util.List;
  * @Date: 06.06.2020
  * @Description:
  */
-public abstract class AbstractRestControllerCRUD
-        <E extends AbstractEntity, D extends AbstractDataTransferObject, S extends CRUDService<E>, M extends AbstractMapper<D, E>> {
+@RestController
+@SuppressWarnings("all")
+public abstract class AbstractRestControllerCRUD<
+        E extends AbstractEntity,
+        D extends AbstractDataTransferObject,
+        S extends CRUDService<E>,
+        M extends AbstractMapper<D, E>> {
 
     protected final S service;
     protected final M mapper;
+    public Class<E> classEntity;
 
-    protected AbstractRestControllerCRUD(S service, M mapper) {
+    @Autowired
+    protected AbstractRestControllerCRUD(S service, M mapper, Class<E> classEntity) {
         this.service = service;
         this.mapper = mapper;
+        this.classEntity = classEntity;
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('READ:' + #root.this.getClassName())")
     public List<D> getAll() {
         List<E> result = service.getAll();
         List<D> resultDTO = new ArrayList<>();
@@ -41,16 +51,25 @@ public abstract class AbstractRestControllerCRUD
     }
 
     @GetMapping("{id}")
+    @PreAuthorize("hasAuthority('READ:' + #root.this.getClassName())")
     public D getById(@PathVariable("id") Long id) {
         return mapper.toDTO(service.getById(id));
     }
 
+    @GetMapping("{name}")
+    @PreAuthorize("hasAuthority('READ:' + #root.this.getClassName())")
+    public D findByName(@PathVariable String name) {
+        return null;
+    }
+
     @PostMapping
+    @PreAuthorize("hasAuthority('WRITE:' + #root.this.getClassName())")
     public E save(@RequestBody E entity) {
         return service.save(entity);
     }
 
     @PutMapping("{id}")
+    @PreAuthorize("hasAuthority('WRITE:' + #root.this.getClassName())")
     public E update(@PathVariable("id") E object, @RequestBody E entity) {
         BeanUtils.copyProperties(entity, object, "id", "guid");
 
@@ -58,7 +77,12 @@ public abstract class AbstractRestControllerCRUD
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasAuthority('DELETE:' + #root.this.getClassName())")
     public void delete(@PathVariable("id") Long id) {
         service.delete(id);
+    }
+
+    public String getClassName() {
+        return classEntity.getSimpleName().toUpperCase();
     }
 }

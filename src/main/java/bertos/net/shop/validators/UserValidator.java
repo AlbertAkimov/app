@@ -1,6 +1,6 @@
 package bertos.net.shop.validators;
 
-import bertos.net.shop.model.User;
+import bertos.net.shop.model.access.User;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;

@@ -2,6 +2,7 @@ package bertos.net.shop.model;
 
 import bertos.net.shop.audit.Auditable;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -14,6 +15,7 @@ import java.util.UUID;
  * @Description:
  */
 
+@EqualsAndHashCode(callSuper = true)
 @MappedSuperclass
 @Data
 @ToString

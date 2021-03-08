@@ -1,5 +1,7 @@
-package bertos.net.shop.model;
+package bertos.net.shop.model.access;
 
+import bertos.net.shop.model.AbstractEntity;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,11 +18,16 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "roles")
-public class Role extends AbstractEntity {
+public class Role extends AbstractEntity{
 
     @Column(name = "name")
     private String name;
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     private List<User> users;
+
+    @OneToMany(mappedBy = "role", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<RelationBridgeUserRolePermission> bridges;
+
 }

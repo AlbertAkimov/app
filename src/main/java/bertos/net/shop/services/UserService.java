@@ -1,6 +1,6 @@
 package bertos.net.shop.services;
 
-import bertos.net.shop.model.User;
+import bertos.net.shop.model.access.User;
 
 /**
  * @Authot: Albert Akimov

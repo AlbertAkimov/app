@@ -18,6 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class TypePriceController extends AbstractRestControllerCRUD<TypePrice, TypePriceDTO, TypePriceService, TypePriceDTOMapper> {
 
     protected TypePriceController(TypePriceService service, TypePriceDTOMapper mapper) {
-        super(service, mapper);
+        super(service, mapper, TypePrice.class);
     }
 }

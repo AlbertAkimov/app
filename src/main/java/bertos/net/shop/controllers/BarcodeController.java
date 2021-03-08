@@ -25,7 +25,7 @@ import java.awt.image.BufferedImage;
 public class BarcodeController extends AbstractRestControllerCRUD<Barcode, BarcodeDTO, BarcodeService, BarcodeDTOMapper> {
 
     protected BarcodeController(BarcodeService service, BarcodeDTOMapper mapper) {
-        super(service, mapper);
+        super(service, mapper, Barcode.class);
     }
 
     @Override

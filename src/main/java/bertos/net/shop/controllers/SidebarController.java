@@ -2,14 +2,8 @@ package bertos.net.shop.controllers;
 
 import bertos.net.shop.dto.SidebarDTO;
 import bertos.net.shop.dto.SidebarDTOMapper;
-import bertos.net.shop.model.Product;
 import bertos.net.shop.model.Sidebar;
 import bertos.net.shop.services.SidebarService;
-import javafx.geometry.Side;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,7 +23,7 @@ import java.util.stream.Collectors;
 public class SidebarController extends AbstractRestControllerCRUD<Sidebar, SidebarDTO, SidebarService, SidebarDTOMapper> {
 
     protected SidebarController(SidebarService service, SidebarDTOMapper mapper) {
-        super(service, mapper);
+        super(service, mapper, Sidebar.class);
     }
 
     @Override

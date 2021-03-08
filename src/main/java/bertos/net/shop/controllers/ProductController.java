@@ -29,7 +29,7 @@ public class ProductController extends
         AbstractRestControllerCRUD<Product, ProductDTO, ProductService, ProductDTOMapper> {
 
     protected ProductController(ProductService service, ProductDTOMapper mapper) {
-        super(service, mapper);
+        super(service, mapper, Product.class);
     }
 
     @Override

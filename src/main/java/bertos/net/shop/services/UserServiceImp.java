@@ -1,8 +1,8 @@
 package bertos.net.shop.services;
 
-import bertos.net.shop.model.Role;
+import bertos.net.shop.model.access.Role;
 import bertos.net.shop.model.Status;
-import bertos.net.shop.model.User;
+import bertos.net.shop.model.access.User;
 import bertos.net.shop.repository.RoleRepository;
 import bertos.net.shop.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;

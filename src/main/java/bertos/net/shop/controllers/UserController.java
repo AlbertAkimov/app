@@ -1,6 +1,6 @@
 package bertos.net.shop.controllers;
 
-import bertos.net.shop.model.User;
+import bertos.net.shop.model.access.User;
 import bertos.net.shop.security.SecurityService;
 import bertos.net.shop.services.UserServiceImp;
 import bertos.net.shop.validators.UserValidator;

@@ -1,6 +1,6 @@
 package bertos.net.shop.repository;
 
-import bertos.net.shop.model.Role;
+import bertos.net.shop.model.access.Role;
 
 /**
  * @Authot: Albert Akimov
