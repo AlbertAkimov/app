@@ -47,9 +47,9 @@ public class User extends AbstractEntity {
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     private List<Role> roles;
 
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JsonManagedReference
-    private List<RelationBridgeUserRolePermission> bridges;
+    private List<RelationBridge> bridges;
 
 /*    @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "users_roles",

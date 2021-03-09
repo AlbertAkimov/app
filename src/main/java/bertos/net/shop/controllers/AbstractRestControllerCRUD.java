@@ -56,11 +56,11 @@ public abstract class AbstractRestControllerCRUD<
         return mapper.toDTO(service.getById(id));
     }
 
-    @GetMapping("{name}")
+/*    @GetMapping("{name}")
     @PreAuthorize("hasAuthority('READ:' + #root.this.getClassName())")
     public D findByName(@PathVariable String name) {
         return null;
-    }
+    }*/
 
     @PostMapping
     @PreAuthorize("hasAuthority('WRITE:' + #root.this.getClassName())")

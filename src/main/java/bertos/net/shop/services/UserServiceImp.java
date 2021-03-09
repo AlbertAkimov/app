@@ -47,7 +47,7 @@ public class UserServiceImp extends AbstractCRUDServiceImpl<User, UserRepository
     @Override
     public User register(User user) {
 
-        Role roleUser = roleRepository.findByName("ROLE_USER");
+        Role roleUser = roleRepository.findByName("ROLE_BASE");
 
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(roleUser);

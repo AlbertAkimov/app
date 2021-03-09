@@ -28,6 +28,6 @@ public class Role extends AbstractEntity{
 
     @OneToMany(mappedBy = "role", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JsonManagedReference
-    private List<RelationBridgeUserRolePermission> bridges;
+    private List<RelationBridge> bridges;
 
 }

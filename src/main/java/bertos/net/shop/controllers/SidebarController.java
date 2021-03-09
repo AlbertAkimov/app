@@ -20,7 +20,8 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/sidebar")
-public class SidebarController extends AbstractRestControllerCRUD<Sidebar, SidebarDTO, SidebarService, SidebarDTOMapper> {
+public class SidebarController extends
+        AbstractRestControllerCRUD<Sidebar, SidebarDTO, SidebarService, SidebarDTOMapper> {
 
     protected SidebarController(SidebarService service, SidebarDTOMapper mapper) {
         super(service, mapper, Sidebar.class);

@@ -32,13 +32,13 @@ public class TestSidebarCRUD extends AbstractTestCRUD<Sidebar, SidebarService> {
         sidebar.setParentId(0L);*/
 
         Sidebar sidebar = new Sidebar();
-        sidebar.setValue("Единицы измерения");
+        sidebar.setValue("Пользователи");
         sidebar.setIcon("fas fa-bars");
-        sidebar.setSidebarId("units");
+        sidebar.setSidebarId("id_userManager");
         sidebar.setIsGroup(false);
-        sidebar.setParentId(1L);
+        sidebar.setParentId(5L);
 
-        init(sidebar, true);
+        init(sidebar, false);
         run();
     }
 }

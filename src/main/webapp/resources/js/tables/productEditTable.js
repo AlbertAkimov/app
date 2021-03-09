@@ -6,8 +6,9 @@ define(['tables/typePriceDialog', 'tables/unitDialog'], function (typePriceDialo
     return {
         view: 'form',
         id: 'product_edit_form',
-        width: 870,
-        height: 900,
+        //width: 870,
+        //height: 900,
+        minWidth: 500,
         url: 'resource->/products',
         save: 'resource->/products',
         elements:
@@ -15,24 +16,35 @@ define(['tables/typePriceDialog', 'tables/unitDialog'], function (typePriceDialo
                 {
                     rows:[
                         {template: "Карточка товара", type: "section"},
-                        {view: 'text', label: 'ID', name: 'id'},
-                        {view: 'text', label: 'Родитель', name: 'parentId'},
-                        {view: 'text', label: 'Уровень группировки', name: 'levelGroup'},
-                        {view: 'text', label: 'Это группа', name: 'isGroup'},
-                        {view: 'text', label: 'Это новый элемент', name: 'isNew'},
-                        {view: 'combo', label: 'Статус товара', name: 'status', value: 'Товар', options:['ACTIVE', 'NOT_ACTIVE', 'DELETED']},
-                        {view: 'text', label: 'Наименование', name: 'name'},
-                        {view: 'combo', label: 'Тип', name: 'typeProduct', value: 'Товар', options:['ТОВАР', 'УСЛУГА', 'БЛЮДО', 'КОМПЛЕКС']}
+                        {view: 'label', label: 'Идентификатор'},
+                        {view: 'text', name: 'id'},
+                        {view: 'label', label: 'Идентификатор родителя'},
+                        {view: 'text', name: 'parentId'},
+                        {view: 'label', label: 'Уровень группировки'},
+                        {view: 'text', name: 'levelGroup'},
+                        {view: 'label', label: 'Это группа'},
+                        {view: 'text', name: 'isGroup'},
+                        {view: 'label', label: 'Это новый'},
+                        {view: 'text', name: 'isNew'},
+                        {view: 'label', label: 'Статус оборота'},
+                        {view: 'combo', name: 'status', value: 'Товар', options:['ACTIVE', 'NOT_ACTIVE', 'DELETED']},
+                        {view: 'label', label: 'Наименование'},
+                        {view: 'text', name: 'name'},
+                        {view: 'label', label: 'Тип номенклатуры'},
+                        {view: 'combo', name: 'typeProduct', value: 'Товар', options:['ТОВАР', 'УСЛУГА', 'БЛЮДО', 'КОМПЛЕКС']}
                     ]
                 },
 
                 {
                     rows: [
                         {template: "Единица измерения", type: "section"},
-                        {view: 'text', label: 'ID UNIT', name: 'idUnit'},
-                        {view: 'combo', label: 'Статус ед.из', name: 'unitStatus', value: 'Товар', options:['ACTIVE', 'NOT_ACTIVE', 'DELETED']},
+                        {view: 'label', label: 'Идентификатор единицы'},
+                        {view: 'text', name: 'idUnit'},
+                        {view: 'label', label: 'Статус оборота единицы'},
+                        {view: 'combo', name: 'unitStatus', value: 'Товар', options:['ACTIVE', 'NOT_ACTIVE', 'DELETED']},
+                        {view: 'label', label: 'Наименование единицы измерения'},
                         {
-                            view: 'combo', label: 'Единица измерения', name: 'unitName',
+                            view: 'combo', name: 'unitName',
                             click: function () {
 
                                 webix.ui(
@@ -54,12 +66,12 @@ define(['tables/typePriceDialog', 'tables/unitDialog'], function (typePriceDialo
                 {
                     rows: [
                         {template: "Штрихкод", type: "section"},
-                        {view: 'text', label: 'id', name: 'id_barcode'},
+                        {view: 'label', label: 'Идентификатор штрихкода'},
+                        {view: 'text', name: 'id_barcode'},
                         {
                             cols: [
-                                {
-                                    view: 'text', label: 'code', name: 'code',
-                                },
+                                {view: 'label', label: 'Штрихкод'},
+                                {view: 'text', name: 'code'},
                                 {
                                     view: 'button', value: 'Новай штрихкод', inputWidth:150, align:"right",
                                     click: function() {
@@ -91,7 +103,7 @@ define(['tables/typePriceDialog', 'tables/unitDialog'], function (typePriceDialo
                 },
 
 
-                {view: 'datatable', id: 'prices', editable: true, columns:[
+                {view: 'datatable', id: 'prices', editable: true, maxHeight: 200, columns:[
                         {id: "id", header: "id", width:150, editor: 'text', hidden: true},
                         {id: "id_price", header: "id_price", width:150, hidden: true},
                         {id: "name", header: "Тип цены", editor: 'text', fillspace: true},
@@ -166,9 +178,13 @@ define(['tables/typePriceDialog', 'tables/unitDialog'], function (typePriceDialo
 
                                     },
                                     price: Number(price[i].price),
-                                    id: price[i].id_price,
+                                    id: Number(price[i].id_price),
                                     status: 'ACTIVE',
-                                    typePrice: {id: price[i].id, name: price[i].name} // todo id таблицы price переименовать на id_type_price
+                                    typePrice:
+                                        {
+                                            id: Number(price[i].id),
+                                            name: price[i].name
+                                        } // todo id таблицы price переименовать на id_type_price
 
                                 })
 

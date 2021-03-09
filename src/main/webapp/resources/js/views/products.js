@@ -5,8 +5,6 @@ requirejs.config({
 define(['buttons/buttonProduct', 'tables/productEditTable'], function (buttonProduct, productEditTable) {
     return {
         id: 'header_1',
-/*        width: "auto",
-        height: "auto",*/
 
         cols: [{
         rows: [buttonProduct, {
@@ -18,7 +16,7 @@ define(['buttons/buttonProduct', 'tables/productEditTable'], function (buttonPro
                     id: "id",
                     header: "id",
                     css: {"text-align": "canter"},
-                    width: 150,
+                    //width: 150,
                     template: "#id#",
                     hidden: true
                 },
@@ -27,13 +25,14 @@ define(['buttons/buttonProduct', 'tables/productEditTable'], function (buttonPro
                     id: "parentId",
                     header: "Родитель",
                     css: {"text-align": "canter"},
-                    width: 150,
+                    //width: 150,
                     template: "#parentId#",
                     hidden: true
                 },
 
                 {
-                    id: "name", header: "Наименование", width: 250,
+                    id: "name", header: "Наименование",
+                    //width: 250,
                     template: "{common.treetable()} #name#",
                     fillspace: true
                     //editor: 'text'
@@ -43,7 +42,7 @@ define(['buttons/buttonProduct', 'tables/productEditTable'], function (buttonPro
                     id: "typeProduct",
                     header: "Тип",
                     css: {"text-align": "canter"},
-                    width: 250,
+                    //width: 250,
                     template: "#typeProduct#"
                 },
 
@@ -51,7 +50,7 @@ define(['buttons/buttonProduct', 'tables/productEditTable'], function (buttonPro
                     id: "idUnit",
                     header: "id unit",
                     css: {"text-align": "canter"},
-                    width: 250,
+                    //width: 250,
                     template: "#unit.id#",
                     hidden: true
                 },
@@ -60,7 +59,7 @@ define(['buttons/buttonProduct', 'tables/productEditTable'], function (buttonPro
                     id: "nameUnit",
                     header: "Ед.Из",
                     css: {"text-align": "canter"},
-                    width: 250,
+                    //width: 250,
                     template: "#unit.unitName#",
                     hidden: true
                 }

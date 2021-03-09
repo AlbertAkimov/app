@@ -19,18 +19,20 @@ require([
     'views/sidebar',
     'views/toolbar',
     'views/typePrice',
-    'views/units'],function (
+    'views/units',
+    'views/userManager'],function (
         products,
         resourcesProxy,
         sidebar,
         toolbar,
         typePrice,
-        units) {
+        units,
+        userManager) {
     webix.ready(function() {
         webix.ui({
             container: 'main',
             width: 'auto',
-            height: 'auto',
+            height: 1500,
             rows: [
                 toolbar,
                 {
@@ -42,6 +44,7 @@ require([
     routie({
         'products': buildRoute(products),
         'typePrice' : buildRoute(typePrice),
-        'units' : buildRoute(units)
+        'units' : buildRoute(units),
+        'usersManager' : buildRoute(userManager)
     })
 })
