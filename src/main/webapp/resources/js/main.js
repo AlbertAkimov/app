@@ -4,6 +4,7 @@ requirejs.config({
 
 function buildRoute(view) {
     return function() {
+
         webix.ui({
             id: 'root',
             rows: [
@@ -32,7 +33,7 @@ require([
         webix.ui({
             container: 'main',
             width: 'auto',
-            height: 1500,
+            height: 'auto',
             rows: [
                 toolbar,
                 {

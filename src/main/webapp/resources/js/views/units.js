@@ -38,7 +38,7 @@ define(function () {
                 save: 'resource->/units',
                 editable:true,
                 editaction: "custom",
-                select: 'multiselect',
+                select: 'cell',
 
                 on: {
                     onItemClick: function(id){

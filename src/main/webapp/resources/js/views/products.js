@@ -4,7 +4,8 @@ requirejs.config({
 
 define(['buttons/buttonProduct', 'tables/productEditTable'], function (buttonProduct, productEditTable) {
     return {
-        id: 'header_1',
+
+        type: 'wide',
 
         cols: [{
         rows: [buttonProduct, {

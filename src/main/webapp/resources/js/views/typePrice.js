@@ -38,7 +38,7 @@ define(function () {
                 save: 'resource->/typePrice',
                 editable:true,
                 editaction: "custom",
-                select: 'multiselect',
+                select: 'cell',
 
                 on: {
                     onItemClick: function(id){

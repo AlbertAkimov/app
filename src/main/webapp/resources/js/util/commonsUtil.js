@@ -41,3 +41,21 @@ function generateBarcode(nameForm) {
     obj.setValues(values);
 
 }
+
+function deleteDuplicate(dataTableName) {
+
+    let data = $$(dataTableName).serialize();
+    let duplicates = new Array(data.length - 1);
+
+    for(let i = 0; i <= data.length - 1; i++)
+        duplicates[i] = data[i].id;
+
+    let res = duplicates.filter((item, index) => {
+        return duplicates.indexOf(item) !== index
+    });
+
+    for(let i = 0; i < res.length; i++)
+        $$(dataTableName).remove(res[i]);
+
+
+}
