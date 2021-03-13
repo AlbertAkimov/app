@@ -38,7 +38,7 @@ public class TestSidebarCRUD extends AbstractTestCRUD<Sidebar, SidebarService> {
         sidebar.setIsGroup(false);
         sidebar.setParentId(5L);
 
-        init(sidebar, false);
+        init(sidebar, true);
         run();
     }
 }

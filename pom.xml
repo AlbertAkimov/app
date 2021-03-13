@@ -10,7 +10,7 @@
     </parent>
     <groupId>bertos.net</groupId>
     <artifactId>demo</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>project</version>
     <name>shop demo</name>
     <description>My shop demo</description>
 
@@ -145,6 +145,11 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
             <version>4.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
         </dependency>
 
     </dependencies>

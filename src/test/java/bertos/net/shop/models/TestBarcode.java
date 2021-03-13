@@ -45,7 +45,7 @@ public class TestBarcode extends AbstractTestCRUD<Barcode, BarcodeService> {
             image = ImageIO.read(stream);
             stream.close();
 
-            File outFile = new File("C:/Users/Its_s/OneDrive/Рабочий стол/image.png");
+            File outFile = new File("/Users/albert.akimov/IdeaProjects/application/image.png");
             ImageIO.write(image, "png", outFile);
 
         } catch (IOException e) {
