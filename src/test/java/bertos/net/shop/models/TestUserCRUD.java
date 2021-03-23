@@ -6,6 +6,7 @@ import bertos.net.shop.model.access.User;
 import bertos.net.shop.model.access.Role;
 import bertos.net.shop.repository.RoleRepository;
 import bertos.net.shop.services.UserServiceImp;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,9 @@ public class TestUserCRUD extends AbstractTestCRUD<User, UserServiceImp> {
     @Test
     public void testCRUD() {
 
-        Role roleUser = roleRepository.findByName("ROLE_USER");
+        Role roleUser = roleRepository.findByName("ROLE_BASE");
+
+        Assert.assertNull(roleUser);
 
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(roleUser);

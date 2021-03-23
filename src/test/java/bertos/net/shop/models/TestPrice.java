@@ -6,6 +6,7 @@ import bertos.net.shop.model.Product;
 import bertos.net.shop.model.TypePrice;
 import bertos.net.shop.services.ProductService;
 import bertos.net.shop.services.TypePriceService;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,12 @@ public class TestPrice extends AbstractTestCRUD<Product, ProductService> {
     public void testCase() {
 
         Product product = service.getById(7L);
+
+        Assert.assertNull(product);
+
         TypePrice typePrice = typePriceService.getById(1L);
+
+        Assert.assertNull(typePrice);
 
         Price price = new Price();
 
@@ -40,7 +46,6 @@ public class TestPrice extends AbstractTestCRUD<Product, ProductService> {
 
         List<Price> prices = new ArrayList<>();
         prices.add(price);
-
         product.setPrices(prices);
 
         service.save(product);

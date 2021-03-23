@@ -4,18 +4,23 @@ import bertos.net.shop.Application;
 import bertos.net.shop.model.Barcode;
 import bertos.net.shop.services.BarcodeService;
 import bertos.net.shop.utils.BarcodeUtils;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.StringUtils;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 /**
  * @Authot: Albert Akimov
@@ -27,10 +32,25 @@ import java.io.IOException;
 @SpringBootTest(classes = Application.class)
 @SpringBootConfiguration
 @ContextConfiguration
+@TestPropertySource(locations = "classpath:config.properties")
 public class TestBarcode extends AbstractTestCRUD<Barcode, BarcodeService> {
 
     @Test
-    public void generateAndSaveBarcodeToFile() {
+    public void generateAndSaveBarcodeToFile() throws IOException {
+
+        Properties properties = new Properties();
+        InputStream in = this.getClass().getResourceAsStream("config.properties");
+
+        Assert.assertNull(in);
+
+        properties.load(in);
+
+        Assert.assertNull(properties);
+
+        String pathToSave = properties.getProperty("tests.tmp.catalog");
+
+        Assert.assertNull(pathToSave);
+        Assert.assertTrue(StringUtils.isEmpty(pathToSave));
 
         Barcode result = service.getById(29L);
 
@@ -45,7 +65,7 @@ public class TestBarcode extends AbstractTestCRUD<Barcode, BarcodeService> {
             image = ImageIO.read(stream);
             stream.close();
 
-            File outFile = new File("/Users/albert.akimov/IdeaProjects/application/image.png");
+            File outFile = new File(pathToSave);
             ImageIO.write(image, "png", outFile);
 
         } catch (IOException e) {
