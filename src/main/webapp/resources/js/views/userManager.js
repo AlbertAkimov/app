@@ -21,6 +21,53 @@ define(function () {
 
                                     click: function () {
 
+                                        let user = $$('usersManager').getSelectedItem();
+
+                                        //delete user.bridges;
+
+                                        let data = $$('role_table').serialize();
+                                        let bridges = [];
+
+                                        for(let i = 0; i < data.length; i++) {
+
+                                            let index = data[i].name.indexOf("_");
+                                            let nameTable = data[i].name.substring(index + 1);
+                                            let buildedPermission = "";
+
+                                            if(data[i].isWrite)
+                                                buildedPermission = "WRITE:" + nameTable;
+                                            else if(data[i].isRead)
+                                                buildedPermission = "READ:" + nameTable;
+                                            else if(data[i].isRemove)
+                                                buildedPermission = "DELETE:" + nameTable;
+
+                                            let result = new Object( {
+                                                permission: {
+                                                    permission: buildedPermission
+                                                },
+                                                role: {
+                                                    id: data[i].id,
+                                                    name: data[i].name
+                                                },
+
+                                                user: user
+                                            })
+
+                                            bridges.push(result);
+                                        }
+
+                                        //Object.assign(user, {bridges: bridges});
+
+                                        let param = {
+                                            id: '',
+                                            operation: '',
+                                            data: ''
+                                        }
+
+                                        param.operation = 'insert';
+                                        param.data = bridges;
+
+                                        webix.proxy.resource.save($$('usersManager'), param);
 
                                     }
                                 },

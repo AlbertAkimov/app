@@ -17,5 +17,5 @@ public class UserDTO extends AbstractDataTransferObject {
     private String email;
     private String phone;
 
-    private List<RelationBridgeDTO> bridges;
+    //private List<RelationBridgeDTO> bridges;
 }

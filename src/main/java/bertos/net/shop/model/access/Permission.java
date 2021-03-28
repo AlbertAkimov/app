@@ -26,7 +26,7 @@ public class Permission extends AbstractEntity {
     private String permission;
 
     @OneToMany(mappedBy = "permission", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @JsonManagedReference
+    //@JsonManagedReference
     private List<RelationBridge> bridges;
 
 }
