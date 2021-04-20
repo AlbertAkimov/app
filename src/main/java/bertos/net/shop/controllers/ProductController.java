@@ -5,7 +5,6 @@ import bertos.net.shop.dto.ProductDTOMapper;
 import bertos.net.shop.model.Product;
 import bertos.net.shop.services.ProductService;
 import bertos.net.shop.utils.BarcodeUtils;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

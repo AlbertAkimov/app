@@ -91,4 +91,9 @@ public abstract class AbstractCRUDServiceImpl<E extends AbstractEntity, R extend
 
         return pageEntity;
     }
+
+    @Override
+    public void saveAll(List<E> entities) {
+        repository.saveAll(entities);
+    }
 }

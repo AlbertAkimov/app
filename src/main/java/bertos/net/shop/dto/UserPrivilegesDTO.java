@@ -7,7 +7,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @ToString
-public class RelationBridgeDTO extends AbstractDataTransferObject {
+public class UserPrivilegesDTO extends AbstractDataTransferObject {
 
     private RoleDTO role;
     private PermissionDTO permission;

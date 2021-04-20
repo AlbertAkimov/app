@@ -1,7 +1,6 @@
 package bertos.net.shop.model.access;
 
 import bertos.net.shop.model.AbstractEntity;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -28,6 +27,6 @@ public class Role extends AbstractEntity{
 
     @OneToMany(mappedBy = "role", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     //@JsonManagedReference
-    private List<RelationBridge> bridges;
+    private List<UserPrivileges> bridges;
 
 }

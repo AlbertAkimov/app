@@ -20,7 +20,12 @@ define(function () {
         save:function (view, params) {
 
             const id = params.id;
-            const url = view.config.url.source;
+            let url;
+
+            if (params.hasOwnProperty('url'))
+                url = params.url;
+            else
+                url = view.config.url.source;
 
             if(params.operation === 'update') {
                 return ajax.put(url + '/' + id, params.data);

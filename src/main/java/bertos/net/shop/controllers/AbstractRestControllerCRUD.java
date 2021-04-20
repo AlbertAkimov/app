@@ -5,10 +5,7 @@ import bertos.net.shop.dto.AbstractMapper;
 import bertos.net.shop.model.AbstractEntity;
 import bertos.net.shop.services.CRUDService;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.BeanFactoryAware;
-import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -66,6 +63,12 @@ public abstract class AbstractRestControllerCRUD<
     @PreAuthorize("hasAuthority('WRITE:' + #root.this.getClassName())")
     public E save(@RequestBody E entity) {
         return service.save(entity);
+    }
+
+    @PostMapping("/all")
+    @PreAuthorize("hasAuthority('WRITE:' + #root.this.getClassName())")
+    public void saveAll(@RequestBody List<E> entities) {
+        service.saveAll(entities);
     }
 
     @PutMapping("{id}")

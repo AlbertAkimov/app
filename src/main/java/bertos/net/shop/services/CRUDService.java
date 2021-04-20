@@ -20,4 +20,5 @@ public interface CRUDService<E extends AbstractEntity> {
     Page<E> getAll(Pageable pageable);
     E findByGuid(String guid);
     void deleteByGuid(String guid);
+    void saveAll(List<E> entities);
 }

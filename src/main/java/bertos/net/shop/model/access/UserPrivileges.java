@@ -20,7 +20,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @Table(name = "users_roles")
-public class RelationBridge extends AbstractEntity {
+public class UserPrivileges extends AbstractEntity {
 
     @ManyToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "user_id")

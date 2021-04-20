@@ -1,7 +1,7 @@
 package bertos.net.shop.services;
 
 import bertos.net.shop.model.Status;
-import bertos.net.shop.model.access.RelationBridge;
+import bertos.net.shop.model.access.UserPrivileges;
 import bertos.net.shop.model.access.User;
 import bertos.net.shop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +43,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 
         if(user.getBridges() != null) {
-            for (RelationBridge bridge : user.getBridges()) {
+            for (UserPrivileges bridge : user.getBridges()) {
                 if (bridge.getRole().getStatus() == Status.ACTIVE)
                     grantedAuthorities.add(new SimpleGrantedAuthority(bridge.getRole().getName()));
                 if (bridge.getPermission() != null)
