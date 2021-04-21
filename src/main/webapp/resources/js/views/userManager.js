@@ -82,7 +82,7 @@ define(function () {
                                             id: '',
                                             url: '/privileges/all',
                                             operation: 'insert',
-                                            data: privileges
+                                            data: JSON.stringify(privileges)
                                         }
 
                                         webix.proxy.resource.save($$('usersManager'), param);

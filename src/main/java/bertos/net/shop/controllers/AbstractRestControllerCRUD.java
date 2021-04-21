@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Authot: Albert Akimov
@@ -66,7 +67,7 @@ public abstract class AbstractRestControllerCRUD<
     }
 
     @PostMapping("/all")
-    @PreAuthorize("hasAuthority('WRITE:' + #root.this.getClassName())")
+    //@PreAuthorize("hasAuthority('WRITE:' + #root.this.getClassName())")
     public void saveAll(@RequestBody List<E> entities) {
         service.saveAll(entities);
     }
