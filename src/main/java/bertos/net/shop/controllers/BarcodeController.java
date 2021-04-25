@@ -1,7 +1,7 @@
 package bertos.net.shop.controllers;
 
 import bertos.net.shop.dto.BarcodeDTO;
-import bertos.net.shop.dto.BarcodeDTOMapper;
+import bertos.net.shop.dto.mapper.BarcodeDTOMapper;
 import bertos.net.shop.model.Barcode;
 import bertos.net.shop.services.BarcodeService;
 import bertos.net.shop.utils.BarcodeUtils;

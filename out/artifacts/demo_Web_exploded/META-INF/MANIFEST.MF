@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Created-By: IntelliJ IDEA
-Built-By: albert.akimov
-Build-Jdk: 1.8.0_281
+Built-By: albertakimov
+Build-Jdk: 1.8.0_291
 Implementation-Title: shop demo
 Implementation-Version: project
 Implementation-Vendor-Id: bertos.net

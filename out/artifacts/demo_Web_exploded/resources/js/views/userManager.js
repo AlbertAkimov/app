@@ -22,50 +22,70 @@ define(function () {
                                     click: function () {
 
                                         let user = $$('usersManager').getSelectedItem();
-
-                                        //delete user.bridges;
-
                                         let data = $$('role_table').serialize();
-                                        let bridges = [];
 
-                                        for(let i = 0; i < data.length; i++) {
+                                        let privileges = [];
+
+                                        for (let i = 0; i < data.length; i++) {
 
                                             let index = data[i].name.indexOf("_");
                                             let nameTable = data[i].name.substring(index + 1);
-                                            let buildedPermission = "";
+                                            let permissions = [];
+                                            let permission;
 
-                                            if(data[i].isWrite)
-                                                buildedPermission = "WRITE:" + nameTable;
-                                            else if(data[i].isRead)
-                                                buildedPermission = "READ:" + nameTable;
-                                            else if(data[i].isRemove)
-                                                buildedPermission = "DELETE:" + nameTable;
+                                            if (data[i].isWrite) {
 
-                                            let result = new Object( {
-                                                permission: {
-                                                    permission: buildedPermission
-                                                },
-                                                role: {
-                                                    id: data[i].id,
-                                                    name: data[i].name
-                                                },
+                                                permission = {
+                                                    id: data[i].id_2_w,
+                                                    id_2: data[i].id_w,
+                                                    permission: "WRITE:" + nameTable
+                                                };
+                                                permissions.push(permission);
+                                            }
+                                            if (data[i].isRead) {
 
-                                                user: user
-                                            })
+                                                permission = {
+                                                    id: data[i].id_2_r,
+                                                    id_2: data[i].id_r,
+                                                    permission: "READ:" + nameTable
+                                                };
+                                                permissions.push(permission);
+                                            }
+                                            if (data[i].isRemove) {
 
-                                            bridges.push(result);
+                                                permission = {
+                                                    id: data[i].id_2_d,
+                                                    id_2: data[i].id_d,
+                                                    permission: "DELETE:" + nameTable
+                                                };
+                                                permissions.push(permission);
+                                            }
+
+                                            for (let j = 0; j < permissions.length; j++) {
+
+                                                let result = new Object({
+                                                    id: permissions[j].id_2,
+                                                    permission: {
+                                                        id: permissions[j].id,
+                                                        permission: permissions[j].permission
+                                                    },
+                                                    role: {
+                                                        id: data[i].id,
+                                                        name: data[i].name
+                                                    },
+                                                    user: user
+                                                })
+
+                                                privileges.push(result);
+                                            }
                                         }
-
-                                        //Object.assign(user, {bridges: bridges});
 
                                         let param = {
                                             id: '',
-                                            operation: '',
-                                            data: ''
+                                            url: '/privileges/all',
+                                            operation: 'insert',
+                                            data: JSON.stringify(privileges)
                                         }
-
-                                        param.operation = 'insert';
-                                        param.data = bridges;
 
                                         webix.proxy.resource.save($$('usersManager'), param);
 
@@ -148,74 +168,92 @@ define(function () {
                                     load: function (view, params) {
                                         webix.ajax().get("/privileges/user/" + id.row).then(function (value) {
 
-                                            let result = value.json();
-                                            let bridges = result.bridges;
+                                            let bridges = value.json();
 
                                             $$('role_table').clearAll();
 
                                             for (let i = 0; i < bridges.length; i++) {
 
-                                                let tmp = $$('role_table').serialize();
-                                                let indicator = 0;
+                                                if(bridges[i].permission === null)
+                                                    continue;
 
-                                                for(let j = 0; j < tmp.length; j++) {
+                                                //let tmp = $$('role_table').serialize();
+                                                let obj = $$('role_table').getItem(bridges[i].role.id);
 
-                                                    if(tmp[j].id === bridges[i].role.id) {
-                                                        indicator = 1;
-                                                        break;
-                                                    }
+                                                let isFound = 0;
+
+                                                if(obj !== undefined)
+                                                    isFound = 1;
+
+                                                let id_w     = 0;
+                                                let id_r     = 0;
+                                                let id_d     = 99999;
+                                                let id_2_w   = 0;
+                                                let id_2_r   = 0;
+                                                let id_2_d   = 99999;
+                                                let isWrite  = 0;
+                                                let isRead   = 0;
+                                                let isRemove = 0;
+
+                                                if(isFound) {
+                                                    id_w     = obj.id_w;
+                                                    id_r     = obj.id_r;
+                                                    id_d     = obj.id_d;
+                                                    id_2_w   = obj.id_2_w;
+                                                    id_2_r   = obj.id_2_r;
+                                                    id_2_d   = obj.id_2_d;
+                                                    isWrite  = obj.isWrite;
+                                                    isRead   = obj.isRead;
+                                                    isRemove = obj.isRemove;
                                                 }
 
-                                                if(indicator === 0) {
+                                                if (bridges[i].permission.permission.charAt(0) === 'W') {
+                                                    id_w    = bridges[i].id;
+                                                    id_2_w  = bridges[i].permission.id;
+                                                    isWrite = 1;
+                                                }
+                                                if (bridges[i].permission.permission.charAt(0) === 'R') {
+                                                    id_r    = bridges[i].id;
+                                                    id_2_r  = bridges[i].permission.id;
+                                                    isRead  = 1;
+                                                }
+                                                if (bridges[i].permission.permission.charAt(0) === 'D') {
+                                                    id_d     = bridges[i].id;
+                                                    id_2_d   = bridges[i].permission.id;
+                                                    isRemove = 1;
+                                                }
 
+                                                if(isFound) {
+                                                    obj.isWrite     = isWrite;
+                                                    obj.isRead      = isRead;
+                                                    obj.isRemove    = isRemove;
+                                                    obj.id_w        = id_w;
+                                                    obj.id_r        = id_r;
+                                                    obj.id_d        = id_d;
+                                                    obj.id_2_w      = id_2_w;
+                                                    obj.id_2_r      = id_2_r;
+                                                    obj.id_2_d      = id_2_d;
+
+                                                    $$('role_table').refresh();
+                                                }
+                                                else {
                                                     $$('role_table').add(
                                                         {
                                                             id: bridges[i].role.id,
                                                             name: bridges[i].role.name,
-                                                            isWrite: 0,
-                                                            isRead: 0,
-                                                            isRemove: 0
+                                                            isWrite: isWrite,
+                                                            isRead: isRead,
+                                                            isRemove: isRemove,
+                                                            id_w: id_w,
+                                                            id_r: id_r,
+                                                            id_d: id_d,
+                                                            id_2_w: id_2_w,
+                                                            id_2_r: id_2_r,
+                                                            id_2_d: id_2_d
                                                         }
                                                     );
                                                 }
                                             }
-
-                                            for(let i = 0; i < bridges.length; i++) {
-
-                                                if(bridges[i].permission !== null) {
-                                                    let permission = bridges[i].permission.permission;
-                                                    let index = permission.indexOf(':');
-                                                    let role = permission.substring(index + 1);
-
-                                                    let search = $$('role_table').find(function (obj) {
-                                                        return obj.name.indexOf('ROLE_' + role) !== -1;
-                                                    });
-
-                                                    if(search === undefined)
-                                                        continue;
-
-                                                    let searchObj = $$('role_table').getItem(search[0].id);
-
-                                                    let isWrite     = searchObj.isWrite;
-                                                    let isRead      = searchObj.isRead;
-                                                    let isRemove    = searchObj.isRemove;
-
-                                                    if (permission.charAt(0) === 'W')
-                                                        isWrite = 1;
-                                                    if (permission.charAt(0) === 'R')
-                                                        isRead = 1;
-                                                    if (permission.charAt(0) === 'D')
-                                                        isRemove = 1;
-
-                                                    searchObj.isWrite   = isWrite;
-                                                    searchObj.isRead    = isRead;
-                                                    searchObj.isRemove  = isRemove;
-
-                                                    $$('role_table').refresh();
-                                                }
-                                            }
-
-                                            //deleteDuplicate("role_table");
                                         })
                                     }
                                 });
@@ -235,10 +273,52 @@ define(function () {
                             [
                                 {
                                     id: "id",
-                                    header: "id",
+                                    header: "id_role",
                                     css: {"text-align": "canter"},
                                     template: "#id#",
-                                    adjust:true
+                                    //adjust:true
+                                },
+
+                                {
+                                    id: "id_w",
+                                    header: "id_w",
+                                    css: {"text-align": "canter"},
+                                    //template: "#id#",
+                                    //adjust:true
+                                },
+
+                                {
+                                    id: "id_r",
+                                    header: "id_r",
+                                    css: {"text-align": "canter"},
+                                    //template: "#id#",
+                                    //adjust:true
+                                },
+
+                                {
+                                    id: "id_d",
+                                    header: "id_d",
+                                    css: {"text-align": "canter"},
+                                    //template: "#id#",
+                                    //adjust:true
+                                },
+
+                                {
+                                    id: 'id_2_w',
+                                    header: 'id_2_w',
+                                    //hidden: true
+                                },
+
+                                {
+                                    id: 'id_2_r',
+                                    header: 'id_2_r',
+                                    //hidden: true
+                                },
+
+                                {
+                                    id: 'id_2_d',
+                                    header: 'id_2_d',
+                                    //hidden: true
                                 },
 
                                 {
@@ -264,6 +344,7 @@ define(function () {
                                     header: "Удаление",
                                     template:"{common.checkbox()}"
                                 },
+
                             ]
                     }
                 ]

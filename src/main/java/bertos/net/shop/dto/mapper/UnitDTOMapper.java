@@ -1,5 +1,7 @@
-package bertos.net.shop.dto;
+package bertos.net.shop.dto.mapper;
 
+import bertos.net.shop.dto.UnitDTO;
+import bertos.net.shop.dto.mapper.AbstractMapper;
 import bertos.net.shop.model.Unit;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

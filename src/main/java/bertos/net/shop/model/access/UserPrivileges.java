@@ -16,21 +16,20 @@ import javax.persistence.*;
  * @Description:
  */
 
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 @Table(name = "users_roles")
 public class UserPrivileges extends AbstractEntity {
 
-    @ManyToOne(cascade = {CascadeType.PERSIST})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "role_id")
     private Role role;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST})
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "permission_id")
     private Permission permission;
 }

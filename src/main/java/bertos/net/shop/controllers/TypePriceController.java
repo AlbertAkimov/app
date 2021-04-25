@@ -1,7 +1,7 @@
 package bertos.net.shop.controllers;
 
 import bertos.net.shop.dto.TypePriceDTO;
-import bertos.net.shop.dto.TypePriceDTOMapper;
+import bertos.net.shop.dto.mapper.TypePriceDTOMapper;
 import bertos.net.shop.model.TypePrice;
 import bertos.net.shop.services.TypePriceService;
 import org.springframework.web.bind.annotation.RequestMapping;

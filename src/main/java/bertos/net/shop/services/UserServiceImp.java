@@ -52,7 +52,7 @@ public class UserServiceImp extends AbstractCRUDServiceImpl<User, UserRepository
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(roleUser);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(userRoles);
+        //user.setRoles(userRoles);
         user.setStatus(Status.ACTIVE);
 
         save(user);

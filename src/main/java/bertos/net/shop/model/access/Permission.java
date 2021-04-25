@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @Authot: Albert Akimov
@@ -21,10 +22,11 @@ import java.util.List;
 @ToString
 public class Permission extends AbstractEntity {
 
-    @Column(name = "permission")
+    @Column(name = "name")
     private String permission;
 
-    @OneToMany(mappedBy = "permission", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "permission",
+            cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     //@JsonManagedReference
     private List<UserPrivileges> bridges;
 

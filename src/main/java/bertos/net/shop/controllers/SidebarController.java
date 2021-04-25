@@ -1,7 +1,7 @@
 package bertos.net.shop.controllers;
 
 import bertos.net.shop.dto.SidebarDTO;
-import bertos.net.shop.dto.SidebarDTOMapper;
+import bertos.net.shop.dto.mapper.SidebarDTOMapper;
 import bertos.net.shop.model.Sidebar;
 import bertos.net.shop.services.SidebarService;
 import org.springframework.web.bind.annotation.RequestMapping;

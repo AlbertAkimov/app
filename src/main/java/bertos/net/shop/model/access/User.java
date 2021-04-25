@@ -40,21 +40,7 @@ public class User extends AbstractEntity {
     @Column(name = "phone")
     private String phone;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "users_roles",
-            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
-    private List<Role> roles;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    //@JsonManagedReference
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
+            cascade = {CascadeType.MERGE})
     private List<UserPrivileges> bridges;
-
-/*    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "permission_id"))
-    @MapKeyJoinColumn(name = "role_id")
-    private Map<Role, Permission> list_cast = new HashMap<>();*/
-
 }

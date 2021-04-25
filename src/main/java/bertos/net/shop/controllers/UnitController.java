@@ -1,7 +1,7 @@
 package bertos.net.shop.controllers;
 
 import bertos.net.shop.dto.UnitDTO;
-import bertos.net.shop.dto.UnitDTOMapper;
+import bertos.net.shop.dto.mapper.UnitDTOMapper;
 import bertos.net.shop.model.Unit;
 import bertos.net.shop.services.UnitService;
 import org.springframework.web.bind.annotation.RequestMapping;

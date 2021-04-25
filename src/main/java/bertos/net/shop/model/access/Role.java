@@ -22,11 +22,7 @@ public class Role extends AbstractEntity{
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
-    private List<User> users;
-
-    @OneToMany(mappedBy = "role", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    //@JsonManagedReference
+    @OneToMany(mappedBy = "role",
+            cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<UserPrivileges> bridges;
-
 }

@@ -1,5 +1,6 @@
-package bertos.net.shop.dto;
+package bertos.net.shop.dto.mapper;
 
+import bertos.net.shop.dto.AbstractDataTransferObject;
 import bertos.net.shop.model.AbstractEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

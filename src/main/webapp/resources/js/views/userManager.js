@@ -2,7 +2,7 @@ requirejs.config({
     baseURI: 'js'
 })
 
-define(function () {
+define(['tables/roleDialog'], function (roleDialog) {
     return {
 
         type: 'wide',
@@ -41,7 +41,8 @@ define(function () {
                                                     permission: "WRITE:" + nameTable
                                                 };
                                                 permissions.push(permission);
-                                            } else if (data[i].isRead) {
+                                            }
+                                            if (data[i].isRead) {
 
                                                 permission = {
                                                     id: data[i].id_2_r,
@@ -49,11 +50,12 @@ define(function () {
                                                     permission: "READ:" + nameTable
                                                 };
                                                 permissions.push(permission);
-                                            } else if (data[i].isRemove) {
+                                            }
+                                            if (data[i].isRemove) {
 
                                                 permission = {
-                                                    id: data[i].id_2_r,
-                                                    id_2: data[i].id_r,
+                                                    id: data[i].id_2_d,
+                                                    id_2: data[i].id_d,
                                                     permission: "DELETE:" + nameTable
                                                 };
                                                 permissions.push(permission);
@@ -183,15 +185,15 @@ define(function () {
                                                 if(obj !== undefined)
                                                     isFound = 1;
 
-                                                let id_w     = 0;
-                                                let id_r     = 0;
-                                                let id_d     = 0;
-                                                let id_2_w   = 0;
-                                                let id_2_r   = 0;
-                                                let id_2_d   = 0;
-                                                let isWrite  = 0;
-                                                let isRead   = 0;
-                                                let isRemove = 0;
+                                                let id_w     = webix.uid();
+                                                let id_r     = webix.uid();
+                                                let id_d     = webix.uid();
+                                                let id_2_w   = webix.uid();
+                                                let id_2_r   = webix.uid();
+                                                let id_2_d   = webix.uid();
+                                                let isWrite  = webix.uid();
+                                                let isRead   = webix.uid();
+                                                let isRemove = webix.uid();
 
                                                 if(isFound) {
                                                     id_w     = obj.id_w;
@@ -261,6 +263,21 @@ define(function () {
                     },
 
                     {
+                        view: "toolbar",
+                        elements: [
+                            {
+                                view: 'button',
+                                value: 'Добавить',
+                                width: 100,
+                                click: function () {
+                                    $$("role_table").add({name: 'Выберите роль'});
+                                }
+                            },
+
+                        ]
+                    },
+
+                    {
                         id: 'role_table',
                         view: 'datatable',
                         editable:true,
@@ -274,6 +291,7 @@ define(function () {
                                     header: "id_role",
                                     css: {"text-align": "canter"},
                                     template: "#id#",
+                                    hidden: true
                                     //adjust:true
                                 },
 
@@ -281,6 +299,7 @@ define(function () {
                                     id: "id_w",
                                     header: "id_w",
                                     css: {"text-align": "canter"},
+                                    hidden: true
                                     //template: "#id#",
                                     //adjust:true
                                 },
@@ -289,6 +308,7 @@ define(function () {
                                     id: "id_r",
                                     header: "id_r",
                                     css: {"text-align": "canter"},
+                                    hidden: true
                                     //template: "#id#",
                                     //adjust:true
                                 },
@@ -297,6 +317,7 @@ define(function () {
                                     id: "id_d",
                                     header: "id_d",
                                     css: {"text-align": "canter"},
+                                    hidden: true
                                     //template: "#id#",
                                     //adjust:true
                                 },
@@ -304,18 +325,21 @@ define(function () {
                                 {
                                     id: 'id_2_w',
                                     header: 'id_2_w',
+                                    hidden: true
                                     //hidden: true
                                 },
 
                                 {
                                     id: 'id_2_r',
                                     header: 'id_2_r',
+                                    hidden: true
                                     //hidden: true
                                 },
 
                                 {
                                     id: 'id_2_d',
                                     header: 'id_2_d',
+                                    hidden: true
                                     //hidden: true
                                 },
 
@@ -343,7 +367,27 @@ define(function () {
                                     template:"{common.checkbox()}"
                                 },
 
-                            ]
+                            ],
+
+                        on: {
+                            onItemClick: function (id) {
+
+                                if (id.column === 'name') {
+                                    webix.ui(
+                                        {
+                                            view: 'window',
+                                            head: 'Список ролей',
+                                            width: 400,
+                                            position: 'center',
+                                            modal: true,
+                                            parentTable: this,
+                                            cell: id,
+                                            body: roleDialog
+                                        }).show()
+                                    //})
+                                }
+                            }
+                        }
                     }
                 ]
             }

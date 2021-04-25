@@ -95,5 +95,12 @@ public abstract class AbstractCRUDServiceImpl<E extends AbstractEntity, R extend
     @Override
     public void saveAll(List<E> entities) {
         repository.saveAll(entities);
+        log.info("Successfully save list of entities: " + clazz);
+    }
+
+    @Override
+    public void deleteAll(List<E> entities) {
+        repository.deleteAll(entities);
+        log.info("Successfully delete list of entities: " + clazz);
     }
 }

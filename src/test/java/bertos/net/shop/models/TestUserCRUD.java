@@ -55,7 +55,7 @@ public class TestUserCRUD extends AbstractTestCRUD<User, UserServiceImp> {
         user.setPasswordConfirm(passwordEncoder.encode("12345678"));
         user.setEmail("test@gmail.com");
         user.setPhone("89996669966");
-        user.setRoles(userRoles);
+        //user.setRoles(userRoles);
         user.setStatus(Status.ACTIVE);
 
         init(user, true);

@@ -1,7 +1,7 @@
 package bertos.net.shop.controllers;
 
 import bertos.net.shop.dto.UserDTO;
-import bertos.net.shop.dto.UserDTOMapper;
+import bertos.net.shop.dto.mapper.UserDTOMapper;
 import bertos.net.shop.model.access.User;
 import bertos.net.shop.services.UserServiceImp;
 import org.springframework.web.bind.annotation.RequestMapping;
