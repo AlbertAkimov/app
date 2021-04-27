@@ -65,19 +65,34 @@ define(['tables/roleDialog'], function (roleDialog) {
 
                                                 let result = new Object({
                                                     id: permissions[j].id_2,
+                                                    status: "ACTIVE",
                                                     permission: {
                                                         id: permissions[j].id,
+                                                        status: "ACTIVE",
                                                         permission: permissions[j].permission
                                                     },
                                                     role: {
                                                         id: data[i].id,
+                                                        status: "ACTIVE",
                                                         name: data[i].name
                                                     },
-                                                    user: user
+                                                    user: user // todo а нужен ли?
                                                 })
 
                                                 privileges.push(result);
                                             }
+                                        }
+
+                                        if (privileges.length === 0) {
+
+                                            privileges.push(
+                                                new Object({
+                                                        id: null,
+                                                        permission: null,
+                                                        user: user
+                                                    }
+                                                )
+                                            );
                                         }
 
                                         let param = {
@@ -191,9 +206,9 @@ define(['tables/roleDialog'], function (roleDialog) {
                                                 let id_2_w   = webix.uid();
                                                 let id_2_r   = webix.uid();
                                                 let id_2_d   = webix.uid();
-                                                let isWrite  = webix.uid();
-                                                let isRead   = webix.uid();
-                                                let isRemove = webix.uid();
+                                                let isWrite  = 0;
+                                                let isRead   = 0;
+                                                let isRemove = 0;
 
                                                 if(isFound) {
                                                     id_w     = obj.id_w;

@@ -2,10 +2,15 @@ package bertos.net.shop.controllers;
 
 import bertos.net.shop.dto.UserPrivilegesDTO;
 import bertos.net.shop.dto.mapper.UserPrivilegesMapper;
+import bertos.net.shop.model.access.Permission;
 import bertos.net.shop.model.access.User;
 import bertos.net.shop.model.access.UserPrivileges;
+import bertos.net.shop.services.PermissionService;
 import bertos.net.shop.services.UserPrivilegesServiceImpl;
+import bertos.net.shop.services.UserServiceImp;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -22,12 +27,17 @@ import java.util.List;
 public class UserPrivilegesController extends AbstractRestControllerCRUD<
         UserPrivileges, UserPrivilegesDTO, UserPrivilegesServiceImpl, UserPrivilegesMapper> {
 
-    protected UserPrivilegesController(UserPrivilegesServiceImpl service, UserPrivilegesMapper mapper) {
+    protected final PermissionService permissionService;
+    protected final UserServiceImp userService;
+
+    protected UserPrivilegesController(UserPrivilegesServiceImpl service, UserPrivilegesMapper mapper, PermissionService permissionService, UserServiceImp userService) {
         super(service, mapper, UserPrivileges.class);
+        this.permissionService = permissionService;
+        this.userService = userService;
     }
 
     @GetMapping("/user/{userId}")
-    //@PreAuthorize("hasAuthority('READ:USERPRIVILEGES')")
+    @PreAuthorize("hasAuthority('READ:USERPRIVILEGES')")
     public List<UserPrivilegesDTO> findByUser(@PathVariable Long userId) {
         List<UserPrivileges> userPrivileges = service.findByUser_Id(userId);
         List<UserPrivilegesDTO> userPrivilegesDTO = new ArrayList<>();
@@ -37,32 +47,26 @@ public class UserPrivilegesController extends AbstractRestControllerCRUD<
     }
 
     @PostMapping("/all")
-    //@PreAuthorize("hasAuthority('WRITE:USERPRIVILEGER')")
+    @PreAuthorize("hasAuthority('WRITE:USERPRIVILEGES')")
     @Override
-    public void saveAll(@RequestBody List<UserPrivileges> entities) {
+    public void saveAll(@RequestBody List<UserPrivileges> userPrivileges) {
 
-/*        User user = entities.get(0).getUser();
-        List<UserPrivileges> userPrivileges = service.findByUser_Id(user.getId());
+        Long userId = userPrivileges.get(0).getUser().getId();
+        User user = userService.getById(userId);
+        List<UserPrivileges> currentPrivileges = service.findByUser_Id(userId);
 
-        List<UserPrivileges> delete = new ArrayList<>();
-        List<UserPrivileges> save = new ArrayList<>();
+        service.deleteAll(currentPrivileges);
 
-        for(UserPrivileges i: userPrivileges) {
+        List<Permission> permissions = permissionService.getAll();
 
-            for(UserPrivileges j : entities) {
-
-                if(i.getPermission().getPermission().equals(j.getPermission().getPermission())
-                && i.getPermission().getId().equals(j.getPermission().getId()))
-                    save.add(i);
-                else if(i.getPermission().getPermission().equals(j.getPermission().getPermission())
-                && j.getPermission().getId() == 0)
-                    save.add(i);
-                else
-                    delete.add(i);
+        userPrivileges.forEach(x -> x.setUser(user));
+        userPrivileges.forEach(x -> {
+            if(permissions.contains(x.getPermission())) {
+                x.setPermission(permissions.get(permissions.indexOf(x.getPermission())));
             }
-        }*/
+        });
 
-        service.saveAll(entities);
-        //service.deleteAll(delete);
+        if(userPrivileges.get(0).getPermission() != null)
+            service.saveAll(userPrivileges);
     }
 }

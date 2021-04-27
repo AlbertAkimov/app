@@ -15,7 +15,6 @@ import java.util.Objects;
  * @Description:
  */
 
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "permissions")
 @Data
@@ -26,8 +25,14 @@ public class Permission extends AbstractEntity {
     private String permission;
 
     @OneToMany(mappedBy = "permission",
-            cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
-    //@JsonManagedReference
+            cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<UserPrivileges> bridges;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Permission that = (Permission) o;
+        return permission.equals(that.permission);
+    }
 }

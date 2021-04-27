@@ -6,6 +6,7 @@ import bertos.net.shop.model.AbstractEntity;
 import bertos.net.shop.services.CRUDService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public abstract class AbstractRestControllerCRUD<
     }
 
     @GetMapping
-    //@PreAuthorize("hasAuthority('READ:' + #root.this.getClassName())")
+    @PreAuthorize("hasAuthority('READ:' + #root.this.getClassName())")
     public List<D> getAll() {
         List<E> result = service.getAll();
         List<D> resultDTO = new ArrayList<>();
@@ -47,31 +48,25 @@ public abstract class AbstractRestControllerCRUD<
     }
 
     @GetMapping("{id}")
-    //@PreAuthorize("hasAuthority('READ:' + #root.this.getClassName())")
+    @PreAuthorize("hasAuthority('READ:' + #root.this.getClassName())")
     public D getById(@PathVariable("id") Long id) {
         return mapper.toDTO(service.getById(id));
     }
 
-/*    @GetMapping("{name}")
-    @PreAuthorize("hasAuthority('READ:' + #root.this.getClassName())")
-    public D findByName(@PathVariable String name) {
-        return null;
-    }*/
-
     @PostMapping
-    //@PreAuthorize("hasAuthority('WRITE:' + #root.this.getClassName())")
+    @PreAuthorize("hasAuthority('WRITE:' + #root.this.getClassName())")
     public E save(@RequestBody E entity) {
         return service.save(entity);
     }
 
     @PostMapping("/all")
-    //@PreAuthorize("hasAuthority('WRITE:' + #root.this.getClassName())")
+    @PreAuthorize("hasAuthority('WRITE:' + #root.this.getClassName())")
     public void saveAll(@RequestBody List<E> entities) {
         service.saveAll(entities);
     }
 
     @PutMapping("{id}")
-    //@PreAuthorize("hasAuthority('WRITE:' + #root.this.getClassName())")
+    @PreAuthorize("hasAuthority('WRITE:' + #root.this.getClassName())")
     public E update(@PathVariable("id") E object, @RequestBody E entity) {
         BeanUtils.copyProperties(entity, object, "id", "guid");
 
@@ -79,7 +74,7 @@ public abstract class AbstractRestControllerCRUD<
     }
 
     @DeleteMapping("{id}")
-    //@PreAuthorize("hasAuthority('DELETE:' + #root.this.getClassName())")
+    @PreAuthorize("hasAuthority('DELETE:' + #root.this.getClassName())")
     public void delete(@PathVariable("id") Long id) {
         service.delete(id);
     }
