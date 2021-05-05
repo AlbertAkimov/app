@@ -21,14 +21,16 @@ require([
     'views/toolbar',
     'views/typePrice',
     'views/units',
-    'views/userManager'],function (
+    'views/userManager',
+    'views/chat'],function (
         products,
         resourcesProxy,
         sidebar,
         toolbar,
         typePrice,
         units,
-        userManager) {
+        userManager,
+        chat) {
     webix.ready(function() {
         webix.ui({
             container: 'main',
@@ -46,6 +48,7 @@ require([
         'products': buildRoute(products),
         'typePrice' : buildRoute(typePrice),
         'units' : buildRoute(units),
-        'usersManager' : buildRoute(userManager)
+        'usersManager' : buildRoute(userManager),
+        'chat' : buildRoute(chat)
     })
 })
