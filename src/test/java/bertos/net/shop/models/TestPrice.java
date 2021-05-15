@@ -32,11 +32,11 @@ public class TestPrice extends AbstractTestCRUD<Product, ProductService> {
 
         Product product = service.getById(7L);
 
-        Assert.assertNull(product);
+        Assert.assertNotNull(product);
 
         TypePrice typePrice = typePriceService.getById(1L);
 
-        Assert.assertNull(typePrice);
+        Assert.assertNotNull(typePrice);
 
         Price price = new Price();
 

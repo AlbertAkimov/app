@@ -40,12 +40,9 @@ public class TestUserCRUD extends AbstractTestCRUD<User, UserServiceImp> {
     @Test
     public void testCRUD() {
 
-        Role roleUser = roleRepository.findByName("ROLE_BASE");
+/*        List<Role> roles = roleRepository.findAll();
 
-        Assert.assertNull(roleUser);
-
-        List<Role> userRoles = new ArrayList<>();
-        userRoles.add(roleUser);
+        Assert.assertNotNull(roles);*/
 
         User user = new User();
         user.setUsername("test");
@@ -55,7 +52,7 @@ public class TestUserCRUD extends AbstractTestCRUD<User, UserServiceImp> {
         user.setPasswordConfirm(passwordEncoder.encode("12345678"));
         user.setEmail("test@gmail.com");
         user.setPhone("89996669966");
-        //user.setRoles(userRoles);
+        //user.setBridges();
         user.setStatus(Status.ACTIVE);
 
         init(user, true);
