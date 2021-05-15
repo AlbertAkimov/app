@@ -32,25 +32,17 @@ import java.util.Properties;
 @SpringBootTest(classes = Application.class)
 @SpringBootConfiguration
 @ContextConfiguration
-@TestPropertySource(locations = "classpath:config.properties")
 public class TestBarcode extends AbstractTestCRUD<Barcode, BarcodeService> {
 
     @Test
     public void generateAndSaveBarcodeToFile() throws IOException {
 
         Properties properties = new Properties();
-        InputStream in = this.getClass().getResourceAsStream("config.properties");
-
-        Assert.assertNull(in);
+        InputStream in = TestBarcode.class.getResourceAsStream("/config.properties");
 
         properties.load(in);
 
-        Assert.assertNull(properties);
-
         String pathToSave = properties.getProperty("tests.tmp.catalog");
-
-        Assert.assertNull(pathToSave);
-        Assert.assertTrue(StringUtils.isEmpty(pathToSave));
 
         Barcode result = service.getById(29L);
 
@@ -67,6 +59,8 @@ public class TestBarcode extends AbstractTestCRUD<Barcode, BarcodeService> {
 
             File outFile = new File(pathToSave);
             ImageIO.write(image, "png", outFile);
+
+            Assert.assertTrue(outFile.delete());
 
         } catch (IOException e) {
             e.printStackTrace();
