@@ -2,7 +2,6 @@ package bertos.net.shop.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -12,7 +11,7 @@ import javax.persistence.*;
  * @Date: 27.12.2020
  * @Description:
  */
-@EqualsAndHashCode(callSuper = true)
+
 @Table(name = "barcodes")
 @Entity
 @Data

@@ -1,6 +1,5 @@
 package bertos.net.shop.services;
 
-import bertos.net.shop.model.AbstractEntity;
 import bertos.net.shop.model.access.Permission;
 import bertos.net.shop.repository.PermissionRepository;
 import org.springframework.stereotype.Service;

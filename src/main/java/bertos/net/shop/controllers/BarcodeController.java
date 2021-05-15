@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.awt.image.BufferedImage;
 
-
 /**
  * @Authot: Albert Akimov
  * @Date: 31.12.2020

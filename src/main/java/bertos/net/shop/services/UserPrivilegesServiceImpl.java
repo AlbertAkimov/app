@@ -6,6 +6,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * @Authot: Albert Akimov
+ * @Date: 06.12.2020
+ * @Description:
+ */
+
 @Service
 public class UserPrivilegesServiceImpl extends
         AbstractCRUDServiceImpl<UserPrivileges, UserPrivilegesRepository>

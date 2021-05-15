@@ -1,8 +1,6 @@
 package bertos.net.shop.model;
 
-import javafx.geometry.Side;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -14,7 +12,6 @@ import java.util.List;
  * @Description:
  */
 
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "sidebar")
 @Data

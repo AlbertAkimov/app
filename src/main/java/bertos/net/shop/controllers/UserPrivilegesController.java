@@ -8,7 +8,6 @@ import bertos.net.shop.model.access.UserPrivileges;
 import bertos.net.shop.services.PermissionService;
 import bertos.net.shop.services.UserPrivilegesServiceImpl;
 import bertos.net.shop.services.UserServiceImp;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

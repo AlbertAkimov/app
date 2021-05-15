@@ -1,8 +1,8 @@
 package bertos.net.shop.services;
 
 import bertos.net.shop.model.Status;
-import bertos.net.shop.model.access.UserPrivileges;
 import bertos.net.shop.model.access.User;
+import bertos.net.shop.model.access.UserPrivileges;
 import bertos.net.shop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -48,7 +48,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
                     grantedAuthorities.add(new SimpleGrantedAuthority(bridge.getRole().getName()));
                 if (bridge.getPermission() != null)
                     if (bridge.getPermission().getStatus() == Status.ACTIVE) {
-                        grantedAuthorities.add(new SimpleGrantedAuthority(bridge.getPermission().getPermission()));
+                        grantedAuthorities.add(new SimpleGrantedAuthority(bridge.getPermission().getName()));
                     }
             }
         }

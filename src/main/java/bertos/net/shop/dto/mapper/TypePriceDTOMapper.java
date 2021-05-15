@@ -1,7 +1,6 @@
 package bertos.net.shop.dto.mapper;
 
 import bertos.net.shop.dto.TypePriceDTO;
-import bertos.net.shop.dto.mapper.AbstractMapper;
 import bertos.net.shop.model.TypePrice;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

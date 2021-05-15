@@ -38,7 +38,7 @@ define(['tables/roleDialog'], function (roleDialog) {
                                                 permission = {
                                                     id: data[i].id_2_w,
                                                     id_2: data[i].id_w,
-                                                    permission: "WRITE:" + nameTable
+                                                    name: "WRITE:" + nameTable
                                                 };
                                                 permissions.push(permission);
                                             }
@@ -47,7 +47,7 @@ define(['tables/roleDialog'], function (roleDialog) {
                                                 permission = {
                                                     id: data[i].id_2_r,
                                                     id_2: data[i].id_r,
-                                                    permission: "READ:" + nameTable
+                                                    name: "READ:" + nameTable
                                                 };
                                                 permissions.push(permission);
                                             }
@@ -56,7 +56,7 @@ define(['tables/roleDialog'], function (roleDialog) {
                                                 permission = {
                                                     id: data[i].id_2_d,
                                                     id_2: data[i].id_d,
-                                                    permission: "DELETE:" + nameTable
+                                                    name: "DELETE:" + nameTable
                                                 };
                                                 permissions.push(permission);
                                             }
@@ -69,7 +69,7 @@ define(['tables/roleDialog'], function (roleDialog) {
                                                     permission: {
                                                         id: permissions[j].id,
                                                         status: "ACTIVE",
-                                                        permission: permissions[j].permission
+                                                        name: permissions[j].name
                                                     },
                                                     role: {
                                                         id: data[i].id,
@@ -222,17 +222,17 @@ define(['tables/roleDialog'], function (roleDialog) {
                                                     isRemove = obj.isRemove;
                                                 }
 
-                                                if (bridges[i].permission.permission.charAt(0) === 'W') {
+                                                if (bridges[i].permission.name.charAt(0) === 'W') {
                                                     id_w    = bridges[i].id;
                                                     id_2_w  = bridges[i].permission.id;
                                                     isWrite = 1;
                                                 }
-                                                if (bridges[i].permission.permission.charAt(0) === 'R') {
+                                                if (bridges[i].permission.name.charAt(0) === 'R') {
                                                     id_r    = bridges[i].id;
                                                     id_2_r  = bridges[i].permission.id;
                                                     isRead  = 1;
                                                 }
-                                                if (bridges[i].permission.permission.charAt(0) === 'D') {
+                                                if (bridges[i].permission.name.charAt(0) === 'D') {
                                                     id_d     = bridges[i].id;
                                                     id_2_d   = bridges[i].permission.id;
                                                     isRemove = 1;

@@ -3,7 +3,6 @@ package bertos.net.shop.dto;
 import bertos.net.shop.model.Status;
 import bertos.net.shop.model.TypeBarcode;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
@@ -11,7 +10,7 @@ import lombok.ToString;
  * @Date: 27.12.2020
  * @Description:
  */
-@EqualsAndHashCode(callSuper = true)
+
 @Data
 @ToString
 public class BarcodeDTO extends AbstractDataTransferObject {

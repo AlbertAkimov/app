@@ -1,12 +1,14 @@
 package bertos.net.shop.dto;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import java.util.List;
+/**
+ * @Authot: Albert Akimov
+ * @Date: 06.12.2020
+ * @Description:
+ */
 
-@EqualsAndHashCode(callSuper = true)
 @Data
 @ToString
 public class UserDTO extends AbstractDataTransferObject {
@@ -16,6 +18,4 @@ public class UserDTO extends AbstractDataTransferObject {
     private String lastName;
     private String email;
     private String phone;
-
-    //private List<RelationBridgeDTO> bridges;
 }

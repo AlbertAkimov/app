@@ -1,7 +1,6 @@
 package bertos.net.shop.dto.mapper;
 
 import bertos.net.shop.dto.SidebarDTO;
-import bertos.net.shop.dto.mapper.AbstractMapper;
 import bertos.net.shop.model.Sidebar;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

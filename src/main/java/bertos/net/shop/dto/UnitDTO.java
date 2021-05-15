@@ -1,7 +1,6 @@
 package bertos.net.shop.dto;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
@@ -10,7 +9,6 @@ import lombok.ToString;
  * @Description:
  */
 
-@EqualsAndHashCode(callSuper = true)
 @Data
 @ToString
 public class UnitDTO extends AbstractDataTransferObject {

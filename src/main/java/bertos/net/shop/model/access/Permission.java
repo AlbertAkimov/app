@@ -2,12 +2,10 @@ package bertos.net.shop.model.access;
 
 import bertos.net.shop.model.AbstractEntity;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @Authot: Albert Akimov
@@ -22,7 +20,7 @@ import java.util.Objects;
 public class Permission extends AbstractEntity {
 
     @Column(name = "name")
-    private String permission;
+    private String name;
 
     @OneToMany(mappedBy = "permission",
             cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
@@ -33,6 +31,6 @@ public class Permission extends AbstractEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Permission that = (Permission) o;
-        return permission.equals(that.permission);
+        return name.equals(that.name);
     }
 }

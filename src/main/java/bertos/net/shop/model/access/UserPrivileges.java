@@ -1,12 +1,7 @@
 package bertos.net.shop.model.access;
 
 import bertos.net.shop.model.AbstractEntity;
-import bertos.net.shop.model.access.Permission;
-import bertos.net.shop.model.access.Role;
-import bertos.net.shop.model.access.User;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 

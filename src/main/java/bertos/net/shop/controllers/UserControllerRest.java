@@ -7,6 +7,12 @@ import bertos.net.shop.services.UserServiceImp;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * @Authot: Albert Akimov
+ * @Date: 06.12.2020
+ * @Description:
+ */
+
 @RestController
 @RequestMapping("/users")
 public class UserControllerRest extends

@@ -1,10 +1,14 @@
 package bertos.net.shop.dto;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-@EqualsAndHashCode(callSuper = true)
+/**
+ * @Authot: Albert Akimov
+ * @Date: 17.05.2020
+ * @Description:
+ */
+
 @Data
 @ToString
 public class RoleDTO extends AbstractDataTransferObject {

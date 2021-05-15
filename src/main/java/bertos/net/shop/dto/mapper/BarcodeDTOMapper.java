@@ -1,7 +1,6 @@
 package bertos.net.shop.dto.mapper;
 
 import bertos.net.shop.dto.BarcodeDTO;
-import bertos.net.shop.dto.mapper.AbstractMapper;
 import bertos.net.shop.model.Barcode;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
