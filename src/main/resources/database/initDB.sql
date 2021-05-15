@@ -83,7 +83,7 @@ create table if not exists orders #todo доделать таблицу
     id          bigint auto_increment primary key,
     guid        varchar(36),
     id_customer bigint not null,
-    id_card     bigint not null,
+    id_card     bigint,
     id_product  bigint not null
 
 );
