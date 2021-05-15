@@ -18,14 +18,14 @@ define(['tables/typePriceDialog', 'tables/unitDialog'], function (typePriceDialo
                         {template: "Карточка товара", type: "section"},
                         {view: 'label', label: 'Идентификатор'},
                         {view: 'text', name: 'id'},
-                        {view: 'label', label: 'Идентификатор родителя'},
-                        {view: 'text', name: 'parentId'},
-                        {view: 'label', label: 'Уровень группировки'},
-                        {view: 'text', name: 'levelGroup'},
-                        {view: 'label', label: 'Это группа'},
-                        {view: 'text', name: 'isGroup'},
-                        {view: 'label', label: 'Это новый'},
-                        {view: 'text', name: 'isNew'},
+                        {view: 'label', label: 'Идентификатор родителя', hidden: true},
+                        {view: 'text', name: 'parentId', hidden: true},
+                        {view: 'label', label: 'Уровень группировки', hidden: true},
+                        {view: 'text', name: 'levelGroup', hidden: true},
+                        {view: 'label', label: 'Это группа', hidden: true},
+                        {view: 'text', name: 'isGroup', hidden: true},
+                        {view: 'label', label: 'Это новый', hidden: true},
+                        {view: 'text', name: 'isNew', hidden: true},
                         {view: 'label', label: 'Статус оборота'},
                         {view: 'combo', name: 'status', value: 'Товар', options:['ACTIVE', 'NOT_ACTIVE', 'DELETED']},
                         {view: 'label', label: 'Наименование'},
@@ -38,8 +38,8 @@ define(['tables/typePriceDialog', 'tables/unitDialog'], function (typePriceDialo
                 {
                     rows: [
                         {template: "Единица измерения", type: "section"},
-                        {view: 'label', label: 'Идентификатор единицы'},
-                        {view: 'text', name: 'idUnit'},
+                        {view: 'label', label: 'Идентификатор единицы', hidden: true},
+                        {view: 'text', name: 'idUnit', hidden: true},
                         {view: 'label', label: 'Статус оборота единицы'},
                         {view: 'combo', name: 'unitStatus', value: 'Товар', options:['ACTIVE', 'NOT_ACTIVE', 'DELETED']},
                         {view: 'label', label: 'Наименование единицы измерения'},
@@ -66,8 +66,8 @@ define(['tables/typePriceDialog', 'tables/unitDialog'], function (typePriceDialo
                 {
                     rows: [
                         {template: "Штрихкод", type: "section"},
-                        {view: 'label', label: 'Идентификатор штрихкода'},
-                        {view: 'text', name: 'id_barcode'},
+                        {view: 'label', label: 'Идентификатор штрихкода', hidden: true},
+                        {view: 'text', name: 'id_barcode', hidden: true},
                         {
                             cols: [
                                 {view: 'label', label: 'Штрихкод'},

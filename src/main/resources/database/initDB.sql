@@ -69,7 +69,7 @@ create table if not exists cards
     updated_by          varchar(255),
     number_card         varchar(100),
     type_card           ENUM (1,2,3) default 1,
-    discount_percentage int          default 3,
+    discount_percent    int          default 3,
     status              varchar(25)  default 'ACTIVE',
     accumulation        bigint       default 0,
 
@@ -179,12 +179,19 @@ create table if not exists users
 create table if not exists users_roles
 (
     id              bigint auto_increment primary key not null,
+    guid            varchar(36),
     user_id         bigint not null ,
     role_id         bigint not null ,
     permission_id   bigint not null,
+    status          varchar(25) default 'ACTIVE',
+    created         timestamp   default CURRENT_TIMESTAMP,
+    updated         timestamp   default CURRENT_TIMESTAMP,
+    created_by      varchar(255),
+    updated_by      varchar(255),
 
     foreign key (user_id) references users (id),
     foreign key (role_id) references roles (id),
+    foreign key (permission_id) references permissions (id),
     UNIQUE (user_id, role_id, permission_id)
 );
 
@@ -199,8 +206,6 @@ create table if not exists permissions
     created_by      varchar(255),
     updated_by      varchar(255),
     status          varchar(25) default 'ACTIVE',
-    permission      varchar(255) not null
-    /*performance     varchar(255) not null,*/
-/*    type_permission varchar(25),*/
+    name            varchar(255) not null
 )
 
