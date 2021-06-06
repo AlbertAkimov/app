@@ -2,6 +2,8 @@ package bertos.net.shop.models;
 
 import bertos.net.shop.Application;
 import bertos.net.shop.model.Barcode;
+import bertos.net.shop.models.util.TestUtil;
+import bertos.net.shop.models.util.TypeOS;
 import bertos.net.shop.services.BarcodeService;
 import bertos.net.shop.utils.BarcodeUtils;
 import org.junit.Assert;
@@ -10,9 +12,7 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.util.StringUtils;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -42,7 +42,13 @@ public class TestBarcode extends AbstractTestCRUD<Barcode, BarcodeService> {
 
         properties.load(in);
 
-        String pathToSave = properties.getProperty("tests.tmp.catalog");
+        TypeOS typeOS = TestUtil.getOsType();
+        String pathToSave = "";
+
+        if(typeOS == TypeOS.WINDOWS)
+            pathToSave = properties.getProperty("tests.tmp.catalog.windows");
+        else if(typeOS == TypeOS.MAC_OS)
+            pathToSave = properties.getProperty("tests.tmp.catalog.mac");
 
         Barcode result = service.getById(29L);
 
