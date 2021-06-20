@@ -72,5 +72,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="${contextPath}/resources/libs/bootstrap.min.js"></script>
 <script src="${contextPath}/resources/js/util/commonsUtil.js"></script>
+
+<%--WEB SOCKET--%>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<%--WEB SOCKET--%>
+
+<%--<script src="${contextPath}/resources/libs/sockjs.min.js"></script>
+<script src="${contextPath}/resources/libs/stomp.min.js"></script>--%>
 </body>
 </html>

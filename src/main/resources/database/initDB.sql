@@ -207,5 +207,42 @@ create table if not exists permissions
     updated_by      varchar(255),
     status          varchar(25) default 'ACTIVE',
     name            varchar(255) not null
-)
+);
 
+#/////////////////////////////////CHAT MESSAGE//////////////////////////////////////////
+
+create table if not exists chat_message(
+
+    id              bigint auto_increment primary key  not null,
+    guid            varchar(36),
+    created         timestamp   default CURRENT_TIMESTAMP,
+    updated         timestamp   default CURRENT_TIMESTAMP,
+    created_by      varchar(255),
+    updated_by      varchar(255),
+    status          varchar(25) default 'ACTIVE',
+
+    chat_id bigint not null,
+    sender_id bigint not null,
+    recipient_id bigint not null,
+    sender_name varchar(512) not null ,
+    recipient_name varchar(512) not null,
+    content mediumtext not null,
+    timestamp timestamp not null,
+    message_status enum('RECEIVED', 'DELIVERED')
+
+);
+
+create table if not exists chat_room
+(
+    id         bigint auto_increment primary key not null,
+    guid       varchar(36),
+    created    timestamp   default CURRENT_TIMESTAMP,
+    updated    timestamp   default CURRENT_TIMESTAMP,
+    created_by varchar(255),
+    updated_by varchar(255),
+    status     varchar(25) default 'ACTIVE',
+
+    chat_id bigint not null,
+    sender_id bigint not null,
+    recipient_id bigint not null
+);

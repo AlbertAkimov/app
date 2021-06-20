@@ -15,7 +15,6 @@ import java.util.UUID;
  * @Description:
  */
 
-@EqualsAndHashCode(callSuper = true)
 @MappedSuperclass
 @Data
 @ToString
@@ -34,7 +33,8 @@ public abstract class AbstractEntity extends Auditable<String> {
     private Status status;
 
     public AbstractEntity() {
-        guid = UUID.randomUUID().toString();
+        if(this.guid == null)
+            guid = UUID.randomUUID().toString();
     }
 
 }

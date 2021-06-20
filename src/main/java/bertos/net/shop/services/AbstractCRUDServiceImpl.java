@@ -15,7 +15,8 @@ import java.util.List;
  * @Description:
  */
 @Slf4j
-public abstract class AbstractCRUDServiceImpl<E extends AbstractEntity, R extends CRUDRepository<E>> implements CRUDService<E> {
+public abstract class AbstractCRUDServiceImpl
+        <E extends AbstractEntity, R extends CRUDRepository<E>> implements CRUDService<E> {
 
     protected final R repository;
     private final String clazz;

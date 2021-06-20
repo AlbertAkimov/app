@@ -1,5 +1,6 @@
 package bertos.net.shop.audit;
 
+import lombok.Data;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -16,6 +17,7 @@ import java.util.Date;
  */
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
+@Data
 public abstract class Auditable<E> {
 
     @CreatedBy
@@ -35,6 +37,8 @@ public abstract class Auditable<E> {
     @Column(name = "updated")
     @Temporal(TemporalType.TIMESTAMP)
     protected Date lastModifiedDate;
+
+    //TODO Нужно подумать как не наследовать или отключать поля аудита там где оно не нужно.
 
 }
 
