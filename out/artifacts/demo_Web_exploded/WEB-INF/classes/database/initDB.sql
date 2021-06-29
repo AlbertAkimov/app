@@ -69,7 +69,7 @@ create table if not exists cards
     updated_by          varchar(255),
     number_card         varchar(100),
     type_card           ENUM (1,2,3) default 1,
-    discount_percentage int          default 3,
+    discount_percent    int          default 3,
     status              varchar(25)  default 'ACTIVE',
     accumulation        bigint       default 0,
 
@@ -83,7 +83,7 @@ create table if not exists orders #todo доделать таблицу
     id          bigint auto_increment primary key,
     guid        varchar(36),
     id_customer bigint not null,
-    id_card     bigint not null,
+    id_card     bigint,
     id_product  bigint not null
 
 );
@@ -179,12 +179,19 @@ create table if not exists users
 create table if not exists users_roles
 (
     id              bigint auto_increment primary key not null,
+    guid            varchar(36),
     user_id         bigint not null ,
     role_id         bigint not null ,
     permission_id   bigint not null,
+    status          varchar(25) default 'ACTIVE',
+    created         timestamp   default CURRENT_TIMESTAMP,
+    updated         timestamp   default CURRENT_TIMESTAMP,
+    created_by      varchar(255),
+    updated_by      varchar(255),
 
     foreign key (user_id) references users (id),
     foreign key (role_id) references roles (id),
+    foreign key (permission_id) references permissions (id),
     UNIQUE (user_id, role_id, permission_id)
 );
 
@@ -199,8 +206,52 @@ create table if not exists permissions
     created_by      varchar(255),
     updated_by      varchar(255),
     status          varchar(25) default 'ACTIVE',
-    permission      varchar(255) not null
-    /*performance     varchar(255) not null,*/
-/*    type_permission varchar(25),*/
-)
+    name            varchar(255) not null
+);
 
+#/////////////////////////////////CHAT MESSAGE//////////////////////////////////////////
+
+create table if not exists chat_message(
+
+    id              bigint auto_increment primary key  not null,
+    guid            varchar(36),
+    created         timestamp   default CURRENT_TIMESTAMP,
+    updated         timestamp   default CURRENT_TIMESTAMP,
+    created_by      varchar(255),
+    updated_by      varchar(255),
+    status          varchar(25) default 'ACTIVE',
+
+    chat_id bigint not null,
+    sender_id bigint not null,
+    recipient_id bigint not null,
+    sender_name varchar(512) not null ,
+    recipient_name varchar(512) not null,
+    content mediumtext not null,
+    timestamp timestamp not null,
+    message_status enum('RECEIVED', 'DELIVERED')
+
+);
+
+create table if not exists chat_room
+(
+    id         bigint auto_increment primary key not null,
+    guid       varchar(36),
+    created    timestamp   default CURRENT_TIMESTAMP,
+    updated    timestamp   default CURRENT_TIMESTAMP,
+    created_by varchar(255),
+    updated_by varchar(255),
+    status     varchar(25) default 'ACTIVE',
+
+    chat_id bigint not null,
+    sender_id bigint not null,
+    recipient_id bigint not null
+);
+
+#AUDITING
+
+create table if not exists revision_info
+(
+    revision_id   bigint auto_increment primary key not null ,
+    rev_timestamp timestamp  not null ,
+    user        varchar(512) not null
+);

@@ -2,7 +2,7 @@ package bertos.net.shop.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
-import lombok.ToString;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "prices")
 @Data
-@ToString
+@Audited
 public class Price extends AbstractEntity {
 
     @Column(name = "price")

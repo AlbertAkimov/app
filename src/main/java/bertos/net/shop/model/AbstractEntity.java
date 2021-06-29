@@ -1,8 +1,6 @@
 package bertos.net.shop.model;
 
-import bertos.net.shop.audit.Auditable;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -19,7 +17,7 @@ import java.util.UUID;
 @Data
 @ToString
 @EntityListeners(AuditingEntityListener.class)
-public abstract class AbstractEntity extends Auditable<String> {
+public abstract class AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

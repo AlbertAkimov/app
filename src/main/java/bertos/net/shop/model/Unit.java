@@ -1,7 +1,7 @@
 package bertos.net.shop.model;
 
 import lombok.Data;
-import lombok.ToString;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
@@ -12,7 +12,7 @@ import javax.persistence.*;
  */
 
 @Data
-@ToString
+@Audited
 @Entity
 @Table(name = "units")
 public class Unit extends AbstractEntity {

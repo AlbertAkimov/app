@@ -2,7 +2,7 @@ package bertos.net.shop.model.access;
 
 import bertos.net.shop.model.AbstractEntity;
 import lombok.Data;
-import lombok.ToString;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.List;
 @Entity
 @Table(name = "permissions")
 @Data
-@ToString
+@Audited
 public class Permission extends AbstractEntity {
 
     @Column(name = "name")

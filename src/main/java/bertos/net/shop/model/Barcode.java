@@ -2,7 +2,7 @@ package bertos.net.shop.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import lombok.ToString;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Table(name = "barcodes")
 @Entity
 @Data
-@ToString
+@Audited
 public class Barcode extends AbstractEntity {
 
     @Column(name = "barcode")

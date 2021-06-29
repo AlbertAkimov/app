@@ -2,7 +2,7 @@ package bertos.net.shop.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
-import lombok.ToString;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.List;
 @Entity
 @Table(name = "products")
 @Data
-@ToString
+@Audited
 public class Product extends AbstractEntity {
 
     @Column(name = "id_parent")

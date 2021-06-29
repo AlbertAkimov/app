@@ -21,10 +21,6 @@ create table if not exists barcodes(
     barcode         varchar(256) not null,
     type_barcode    varchar(10) default 'EAN13',
     status          varchar(25) default 'ACTIVE',
-    created         timestamp   default CURRENT_TIMESTAMP,
-    updated         timestamp   default CURRENT_TIMESTAMP,
-    created_by      varchar(255),
-    updated_by      varchar(255),
     unique (guid)
 
 );
@@ -35,11 +31,7 @@ create table if not exists units
     id          bigint auto_increment primary key,
     guid        varchar(36),
     unit_name   varchar(256) not null,
-    status      varchar(25) default 'ACTIVE',
-    created     timestamp   default CURRENT_TIMESTAMP,
-    updated     timestamp   default CURRENT_TIMESTAMP,
-    created_by  varchar(255),
-    updated_by  varchar(255)
+    status      varchar(25) default 'ACTIVE'
 );
 
 #/////////////////////////////////CUSTOMERS//////////////////////////////////////////
@@ -50,10 +42,6 @@ create table if not exists customers
     first_name  varchar(50)  not null,
     last_name   varchar(100) not null,
     status      varchar(25) default 'ACTIVE',
-    created     timestamp   default CURRENT_TIMESTAMP,
-    updated     timestamp   default CURRENT_TIMESTAMP,
-    created_by  varchar(255),
-    updated_by  varchar(255),
     unique (guid)
 );
 
@@ -63,10 +51,6 @@ create table if not exists cards
     id                  bigint auto_increment primary key,
     id_customer         bigint,
     guid                varchar(36),
-    created             timestamp    default CURRENT_TIMESTAMP,
-    updated             timestamp    default CURRENT_TIMESTAMP,
-    created_by          varchar(255),
-    updated_by          varchar(255),
     number_card         varchar(100),
     type_card           ENUM (1,2,3) default 1,
     discount_percent    int          default 3,
@@ -101,10 +85,6 @@ create table if not exists products
   name          varchar(256),
   type_product  varchar(36) default 'ТОВАР',
   status        varchar(25)  default 'ACTIVE',
-  created       timestamp   default CURRENT_TIMESTAMP,
-  updated       timestamp   default CURRENT_TIMESTAMP,
-  created_by    varchar(255),
-  updated_by    varchar(255),
 
     foreign key (id_unit) references units(id),
     foreign key (id_barcode) references barcodes(id),
@@ -120,10 +100,6 @@ create table if not exists prices (
     guid            varchar(36),
     price           double,
     status          varchar(25) default 'ACTIVE',
-    created         timestamp   default CURRENT_TIMESTAMP,
-    updated         timestamp   default CURRENT_TIMESTAMP,
-    created_by      varchar(255),
-    updated_by      varchar(255),
 
     foreign key (id_type_price) references type_prices(id),
     foreign key (id_product) references products(id)
@@ -133,11 +109,7 @@ create table if not exists type_prices(
     id          bigint auto_increment primary key,
     guid        varchar(36),
     name        varchar(256),
-    status      varchar(25)  default 'ACTIVE',
-    created     timestamp   default CURRENT_TIMESTAMP,
-    updated     timestamp   default CURRENT_TIMESTAMP,
-    created_by  varchar(255),
-    updated_by  varchar(255)
+    status      varchar(25)  default 'ACTIVE'
 );
 
 #/////////////////////////////////ROLES//////////////////////////////////////////
@@ -147,10 +119,6 @@ create table if not exists roles
     guid        varchar(36),
     name        varchar(100),
     status      varchar(25)  default 'ACTIVE',
-    created     timestamp   default CURRENT_TIMESTAMP,
-    updated     timestamp   default CURRENT_TIMESTAMP,
-    created_by  varchar(255),
-    updated_by  varchar(255),
     unique (name)
 );
 
@@ -164,10 +132,6 @@ create table if not exists users
     firstName           varchar(255),
     lastName            varchar(255),
     email               varchar(255),
-    created             timestamp   default CURRENT_TIMESTAMP,
-    updated             timestamp   default CURRENT_TIMESTAMP,
-    created_by          varchar(255),
-    updated_by          varchar(255),
     status              varchar(25) default 'ACTIVE',
     password_confirm    varchar(255),
     phone varchar(25),
@@ -184,10 +148,6 @@ create table if not exists users_roles
     role_id         bigint not null ,
     permission_id   bigint not null,
     status          varchar(25) default 'ACTIVE',
-    created         timestamp   default CURRENT_TIMESTAMP,
-    updated         timestamp   default CURRENT_TIMESTAMP,
-    created_by      varchar(255),
-    updated_by      varchar(255),
 
     foreign key (user_id) references users (id),
     foreign key (role_id) references roles (id),
@@ -201,10 +161,6 @@ create table if not exists permissions
 (
     id              bigint auto_increment primary key not null,
     guid            varchar(36),
-    created         timestamp   default CURRENT_TIMESTAMP,
-    updated         timestamp   default CURRENT_TIMESTAMP,
-    created_by      varchar(255),
-    updated_by      varchar(255),
     status          varchar(25) default 'ACTIVE',
     name            varchar(255) not null
 );
@@ -215,12 +171,7 @@ create table if not exists chat_message(
 
     id              bigint auto_increment primary key  not null,
     guid            varchar(36),
-    created         timestamp   default CURRENT_TIMESTAMP,
-    updated         timestamp   default CURRENT_TIMESTAMP,
-    created_by      varchar(255),
-    updated_by      varchar(255),
     status          varchar(25) default 'ACTIVE',
-
     chat_id bigint not null,
     sender_id bigint not null,
     recipient_id bigint not null,
@@ -236,13 +187,17 @@ create table if not exists chat_room
 (
     id         bigint auto_increment primary key not null,
     guid       varchar(36),
-    created    timestamp   default CURRENT_TIMESTAMP,
-    updated    timestamp   default CURRENT_TIMESTAMP,
-    created_by varchar(255),
-    updated_by varchar(255),
     status     varchar(25) default 'ACTIVE',
-
     chat_id bigint not null,
     sender_id bigint not null,
     recipient_id bigint not null
+);
+
+#/////////////////////////////////AUDIT//////////////////////////////////////////
+
+create table if not exists revision_info
+(
+    revision_id   bigint auto_increment primary key not null ,
+    rev_timestamp timestamp  not null ,
+    user        varchar(512) not null
 );

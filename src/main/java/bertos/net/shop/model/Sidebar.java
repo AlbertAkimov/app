@@ -1,7 +1,7 @@
 package bertos.net.shop.model;
 
 import lombok.Data;
-import lombok.ToString;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "sidebar")
 @Data
-@ToString
+@Audited
 public class Sidebar extends AbstractEntity {
 
     @Column(name = "id_parent")

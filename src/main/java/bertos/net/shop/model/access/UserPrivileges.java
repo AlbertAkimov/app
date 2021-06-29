@@ -2,6 +2,7 @@ package bertos.net.shop.model.access;
 
 import bertos.net.shop.model.AbstractEntity;
 import lombok.Data;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
@@ -13,6 +14,7 @@ import javax.persistence.*;
 
 @Entity
 @Data
+@Audited
 @Table(name = "users_roles")
 public class UserPrivileges extends AbstractEntity {
 

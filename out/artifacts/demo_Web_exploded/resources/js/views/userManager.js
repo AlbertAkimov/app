@@ -2,7 +2,7 @@ requirejs.config({
     baseURI: 'js'
 })
 
-define(function () {
+define(['tables/roleDialog'], function (roleDialog) {
     return {
 
         type: 'wide',
@@ -38,7 +38,7 @@ define(function () {
                                                 permission = {
                                                     id: data[i].id_2_w,
                                                     id_2: data[i].id_w,
-                                                    permission: "WRITE:" + nameTable
+                                                    name: "WRITE:" + nameTable
                                                 };
                                                 permissions.push(permission);
                                             }
@@ -47,7 +47,7 @@ define(function () {
                                                 permission = {
                                                     id: data[i].id_2_r,
                                                     id_2: data[i].id_r,
-                                                    permission: "READ:" + nameTable
+                                                    name: "READ:" + nameTable
                                                 };
                                                 permissions.push(permission);
                                             }
@@ -56,7 +56,7 @@ define(function () {
                                                 permission = {
                                                     id: data[i].id_2_d,
                                                     id_2: data[i].id_d,
-                                                    permission: "DELETE:" + nameTable
+                                                    name: "DELETE:" + nameTable
                                                 };
                                                 permissions.push(permission);
                                             }
@@ -65,19 +65,34 @@ define(function () {
 
                                                 let result = new Object({
                                                     id: permissions[j].id_2,
+                                                    status: "ACTIVE",
                                                     permission: {
                                                         id: permissions[j].id,
-                                                        permission: permissions[j].permission
+                                                        status: "ACTIVE",
+                                                        name: permissions[j].name
                                                     },
                                                     role: {
                                                         id: data[i].id,
+                                                        status: "ACTIVE",
                                                         name: data[i].name
                                                     },
-                                                    user: user
+                                                    user: user // todo а нужен ли?
                                                 })
 
                                                 privileges.push(result);
                                             }
+                                        }
+
+                                        if (privileges.length === 0) {
+
+                                            privileges.push(
+                                                new Object({
+                                                        id: null,
+                                                        permission: null,
+                                                        user: user
+                                                    }
+                                                )
+                                            );
                                         }
 
                                         let param = {
@@ -185,12 +200,12 @@ define(function () {
                                                 if(obj !== undefined)
                                                     isFound = 1;
 
-                                                let id_w     = 0;
-                                                let id_r     = 0;
-                                                let id_d     = 99999;
-                                                let id_2_w   = 0;
-                                                let id_2_r   = 0;
-                                                let id_2_d   = 99999;
+                                                let id_w     = webix.uid();
+                                                let id_r     = webix.uid();
+                                                let id_d     = webix.uid();
+                                                let id_2_w   = webix.uid();
+                                                let id_2_r   = webix.uid();
+                                                let id_2_d   = webix.uid();
                                                 let isWrite  = 0;
                                                 let isRead   = 0;
                                                 let isRemove = 0;
@@ -207,17 +222,17 @@ define(function () {
                                                     isRemove = obj.isRemove;
                                                 }
 
-                                                if (bridges[i].permission.permission.charAt(0) === 'W') {
+                                                if (bridges[i].permission.name.charAt(0) === 'W') {
                                                     id_w    = bridges[i].id;
                                                     id_2_w  = bridges[i].permission.id;
                                                     isWrite = 1;
                                                 }
-                                                if (bridges[i].permission.permission.charAt(0) === 'R') {
+                                                if (bridges[i].permission.name.charAt(0) === 'R') {
                                                     id_r    = bridges[i].id;
                                                     id_2_r  = bridges[i].permission.id;
                                                     isRead  = 1;
                                                 }
-                                                if (bridges[i].permission.permission.charAt(0) === 'D') {
+                                                if (bridges[i].permission.name.charAt(0) === 'D') {
                                                     id_d     = bridges[i].id;
                                                     id_2_d   = bridges[i].permission.id;
                                                     isRemove = 1;
@@ -263,6 +278,21 @@ define(function () {
                     },
 
                     {
+                        view: "toolbar",
+                        elements: [
+                            {
+                                view: 'button',
+                                value: 'Добавить',
+                                width: 100,
+                                click: function () {
+                                    $$("role_table").add({name: 'Выберите роль'});
+                                }
+                            },
+
+                        ]
+                    },
+
+                    {
                         id: 'role_table',
                         view: 'datatable',
                         editable:true,
@@ -276,6 +306,7 @@ define(function () {
                                     header: "id_role",
                                     css: {"text-align": "canter"},
                                     template: "#id#",
+                                    hidden: true
                                     //adjust:true
                                 },
 
@@ -283,6 +314,7 @@ define(function () {
                                     id: "id_w",
                                     header: "id_w",
                                     css: {"text-align": "canter"},
+                                    hidden: true
                                     //template: "#id#",
                                     //adjust:true
                                 },
@@ -291,6 +323,7 @@ define(function () {
                                     id: "id_r",
                                     header: "id_r",
                                     css: {"text-align": "canter"},
+                                    hidden: true
                                     //template: "#id#",
                                     //adjust:true
                                 },
@@ -299,6 +332,7 @@ define(function () {
                                     id: "id_d",
                                     header: "id_d",
                                     css: {"text-align": "canter"},
+                                    hidden: true
                                     //template: "#id#",
                                     //adjust:true
                                 },
@@ -306,18 +340,21 @@ define(function () {
                                 {
                                     id: 'id_2_w',
                                     header: 'id_2_w',
+                                    hidden: true
                                     //hidden: true
                                 },
 
                                 {
                                     id: 'id_2_r',
                                     header: 'id_2_r',
+                                    hidden: true
                                     //hidden: true
                                 },
 
                                 {
                                     id: 'id_2_d',
                                     header: 'id_2_d',
+                                    hidden: true
                                     //hidden: true
                                 },
 
@@ -345,7 +382,27 @@ define(function () {
                                     template:"{common.checkbox()}"
                                 },
 
-                            ]
+                            ],
+
+                        on: {
+                            onItemClick: function (id) {
+
+                                if (id.column === 'name') {
+                                    webix.ui(
+                                        {
+                                            view: 'window',
+                                            head: 'Список ролей',
+                                            width: 400,
+                                            position: 'center',
+                                            modal: true,
+                                            parentTable: this,
+                                            cell: id,
+                                            body: roleDialog
+                                        }).show()
+                                    //})
+                                }
+                            }
+                        }
                     }
                 ]
             }
