@@ -1,6 +1,5 @@
 package bertos.net.shop.services.chat;
 
-import bertos.net.shop.model.AbstractEntity;
 import bertos.net.shop.model.chat.ChatRoom;
 import bertos.net.shop.repository.chat.ChatRoomRepository;
 import bertos.net.shop.services.AbstractCRUDServiceImpl;
@@ -19,8 +18,11 @@ public class ChatRoomServiceImp
         extends AbstractCRUDServiceImpl<ChatRoom, ChatRoomRepository>
         implements ChatRoomService {
 
-    public ChatRoomServiceImp(ChatRoomRepository repository) {
+    protected final ChatRoomRepository chatRoomRepository;
+
+    public ChatRoomServiceImp(ChatRoomRepository repository, ChatRoomRepository chatRoomRepository) {
         super(repository, ChatRoom.class);
+        this.chatRoomRepository = chatRoomRepository;
     }
 
 

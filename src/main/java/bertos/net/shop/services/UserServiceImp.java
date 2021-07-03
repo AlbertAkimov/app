@@ -1,8 +1,10 @@
 package bertos.net.shop.services;
 
 import bertos.net.shop.model.Status;
+import bertos.net.shop.model.access.Permission;
 import bertos.net.shop.model.access.Role;
 import bertos.net.shop.model.access.User;
+import bertos.net.shop.model.access.UserPrivileges;
 import bertos.net.shop.repository.RoleRepository;
 import bertos.net.shop.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +23,7 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class UserServiceImp extends AbstractCRUDServiceImpl<User, UserRepository> implements UserService {
+public class UserServiceImp extends AbstractCRUDServiceImpl<User, UserRepository>  {
 
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder passwordEncoder;
@@ -33,7 +35,6 @@ public class UserServiceImp extends AbstractCRUDServiceImpl<User, UserRepository
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Override
     public User findByUsername(String username) {
 
         User user = repository.findByUsername(username);
@@ -44,17 +45,32 @@ public class UserServiceImp extends AbstractCRUDServiceImpl<User, UserRepository
         return user;
     }
 
-    @Override
     public User register(User user) {
 
-        Role roleUser = roleRepository.findByName("ROLE_BASE");
+        List<Role> roles = roleRepository.findAll();
+        List<UserPrivileges> privileges = new ArrayList<>();
 
-        List<Role> userRoles = new ArrayList<>();
-        userRoles.add(roleUser);
+        for(Role role : roles) {
+
+            if(!role.getIsBase())
+                continue;
+
+            UserPrivileges userPrivileges = new UserPrivileges();
+            userPrivileges.setRole(role);
+            userPrivileges.setUser(user);
+
+            Permission permission = new Permission();
+            permission.setStatus(Status.ACTIVE);
+            permission.setName("READ:" + role.getName().substring(5));
+
+            userPrivileges.setPermission(permission);
+
+            privileges.add(userPrivileges);
+        }
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        //user.setRoles(userRoles);
         user.setStatus(Status.ACTIVE);
-
+        user.setBridges(privileges);
         save(user);
 
         return user;

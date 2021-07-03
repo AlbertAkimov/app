@@ -22,6 +22,12 @@ public class Role extends AbstractEntity{
     @Column(name = "name")
     private String name;
 
+    @Column(name = "performance")
+    private String performance;
+
+    @Column(name = "is_base")
+    private Boolean isBase;
+
     @OneToMany(mappedBy = "role",
             cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<UserPrivileges> bridges;

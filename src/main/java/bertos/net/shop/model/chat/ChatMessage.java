@@ -18,10 +18,6 @@ import java.util.Date;
 @Table(name = "chat_message")
 public class ChatMessage extends AbstractEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(name = "chat_id")
     private Long chatId;
 

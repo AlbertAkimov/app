@@ -19,13 +19,20 @@ public class AuditRevisionListener implements RevisionListener {
     @Override
     public void newRevision(Object o) {
 
-        String currentUser = Optional.ofNullable(SecurityContextHolder.getContext())
-                .map(SecurityContext::getAuthentication)
-                .filter(Authentication::isAuthenticated)
-                .map(Authentication::getPrincipal)
-                .map(User.class::cast)
-                .map(User::getUsername)
-                .orElse("Unknown-User");
+        String currentUser = "";
+
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+
+        if(authentication.isAuthenticated()) {
+
+            Object principal = authentication.getPrincipal();
+
+            if(principal instanceof String)
+                currentUser = (String) principal;
+            else
+                currentUser = ((User) principal).getUsername();
+        }
 
         AuditRevisionEntity audit = (AuditRevisionEntity) o;
         audit.setUser(currentUser);

@@ -1,10 +1,11 @@
-package bertos.net.shop.controllers;
+package bertos.net.shop.controllers.chat;
 
+import bertos.net.shop.controllers.AbstractRestControllerCRUD;
 import bertos.net.shop.dto.chat.ChatMessageDTO;
 import bertos.net.shop.dto.mapper.chat.ChatMessageDTOMapper;
 import bertos.net.shop.model.chat.ChatMessage;
 import bertos.net.shop.model.chat.ChatNotification;
-import bertos.net.shop.services.chat.ChatMessageService;
+import bertos.net.shop.services.chat.ChatMessageServiceImpl;
 import bertos.net.shop.services.chat.ChatRoomServiceImp;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -21,12 +22,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/chat")
 public class ChatMessageController extends AbstractRestControllerCRUD
-        <ChatMessage, ChatMessageDTO, ChatMessageService, ChatMessageDTOMapper> {
+        <ChatMessage, ChatMessageDTO, ChatMessageServiceImpl, ChatMessageDTOMapper> {
 
     protected final SimpMessagingTemplate messagingTemplate;
     protected final ChatRoomServiceImp chatRoomService;
 
-    protected ChatMessageController(ChatMessageService service,
+    protected ChatMessageController(ChatMessageServiceImpl service,
                                     ChatMessageDTOMapper mapper,
                                     SimpMessagingTemplate messagingTemplate,
                                     ChatRoomServiceImp chatRoomService) {

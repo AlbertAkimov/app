@@ -16,10 +16,6 @@ import javax.persistence.*;
 @Table(name = "chat_room")
 public class ChatRoom extends AbstractEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(name = "chat_id")
     private Long chatId;
 

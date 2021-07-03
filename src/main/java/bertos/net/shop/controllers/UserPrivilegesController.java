@@ -6,7 +6,7 @@ import bertos.net.shop.model.access.Permission;
 import bertos.net.shop.model.access.User;
 import bertos.net.shop.model.access.UserPrivileges;
 import bertos.net.shop.services.PermissionService;
-import bertos.net.shop.services.UserPrivilegesServiceImpl;
+import bertos.net.shop.services.UserPrivilegesService;
 import bertos.net.shop.services.UserServiceImp;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,12 +24,12 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/privileges", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserPrivilegesController extends AbstractRestControllerCRUD<
-        UserPrivileges, UserPrivilegesDTO, UserPrivilegesServiceImpl, UserPrivilegesMapper> {
+        UserPrivileges, UserPrivilegesDTO, UserPrivilegesService, UserPrivilegesMapper> {
 
     protected final PermissionService permissionService;
     protected final UserServiceImp userService;
 
-    protected UserPrivilegesController(UserPrivilegesServiceImpl service, UserPrivilegesMapper mapper, PermissionService permissionService, UserServiceImp userService) {
+    protected UserPrivilegesController(UserPrivilegesService service, UserPrivilegesMapper mapper, PermissionService permissionService, UserServiceImp userService) {
         super(service, mapper, UserPrivileges.class);
         this.permissionService = permissionService;
         this.userService = userService;

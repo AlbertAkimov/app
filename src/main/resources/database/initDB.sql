@@ -118,6 +118,8 @@ create table if not exists roles
     id          bigint auto_increment primary key not null,
     guid        varchar(36),
     name        varchar(100),
+    is_base     boolean default false not null ,
+    performance varchar(255) not null,
     status      varchar(25)  default 'ACTIVE',
     unique (name)
 );
