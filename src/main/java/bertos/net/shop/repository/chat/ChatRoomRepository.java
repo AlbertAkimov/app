@@ -4,6 +4,8 @@ import bertos.net.shop.model.chat.ChatRoom;
 import bertos.net.shop.repository.CRUDRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 /**
  * @Authot: Albert Akimov
  * @Date: 20.06.2021
@@ -13,5 +15,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ChatRoomRepository extends CRUDRepository<ChatRoom> {
 
-    Long findBySenderIdAndRecipientId(Long senderId, Long recipientId);
+    ChatRoom findBySenderIdAndRecipientId(Long senderId, Long recipientId);
 }
