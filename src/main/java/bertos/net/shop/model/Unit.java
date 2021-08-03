@@ -12,7 +12,7 @@ import javax.persistence.*;
  */
 
 @Data
-@Audited
+//@Audited
 @Entity
 @Table(name = "units")
 public class Unit extends AbstractEntity {

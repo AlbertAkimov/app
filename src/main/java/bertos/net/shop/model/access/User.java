@@ -22,7 +22,7 @@ import java.util.Set;
 
 @Entity
 @Data
-@Audited
+//@Audited
 @Table(name = "users")
 public class User extends AbstractEntity implements UserDetails {
 

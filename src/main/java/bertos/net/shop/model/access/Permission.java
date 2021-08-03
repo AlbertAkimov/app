@@ -16,7 +16,7 @@ import java.util.List;
 @Entity
 @Table(name = "permissions")
 @Data
-@Audited
+//@Audited
 public class Permission extends AbstractEntity {
 
     @Column(name = "name")

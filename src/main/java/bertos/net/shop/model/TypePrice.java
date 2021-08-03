@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "type_prices")
 @Data
-@Audited
+//@Audited
 public class TypePrice extends AbstractEntity {
 
     @Column(name = "name")

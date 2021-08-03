@@ -31,6 +31,7 @@ require([
         units,
         userManager,
         chat) {
+    connect(); //todo вынести в другое место.
     webix.ready(function() {
         webix.ui({
             container: 'main',

@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "sidebar")
 @Data
-@Audited
+//@Audited
 public class Sidebar extends AbstractEntity {
 
     @Column(name = "id_parent")

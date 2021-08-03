@@ -16,7 +16,7 @@ import java.util.List;
 @Entity
 @Table(name = "products")
 @Data
-@Audited
+//@Audited
 public class Product extends AbstractEntity {
 
     @Column(name = "id_parent")

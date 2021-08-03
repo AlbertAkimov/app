@@ -45,6 +45,8 @@
     <%--AWESOME--%>
     <script type="text/javascript" src="http://cdn.webix.com/components/sidebar/sidebar.js" charset="UTF-8"></script>
     <script src="${contextPath}/resources/webix/webix.js"></script>
+    <script src="${contextPath}/resources/libs/stomp.min.js"></script>
+    <script src="${contextPath}/resources/libs/sockjs.min.js"></script>
     <%--<script src="${contextPath}/resources/webix/webix.min.js"></script>--%>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -53,32 +55,42 @@
 
 </head>
 <body>
-<div class="container">
 
+<%--TODO--%>
+<%--перенести в свой класс стилей--%>
+<style type="text/css">
+    .webix_list_item span{
+        font-weight: bold;
+        min-width: 100px;
+        float: left;
+        text-align: center;
+    }
+    .webix_list_item span.own{
+        color:#4a4;
+    }
+</style>
+
+<!-- /container -->
+<div class="container">
     <c:if test="${pageContext.request.userPrincipal.name != null}">
         <form id="logoutForm" method="POST" action="${contextPath}/logout">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
-
         <h2>Welcome ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">выход</a></h2>
-
     </c:if>
-
 </div>
-
 <div id="main"></div>
-
 <!-- /container -->
+
+<script src="${contextPath}/resources/js/util/webSocketUtil.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="${contextPath}/resources/libs/bootstrap.min.js"></script>
 <script src="${contextPath}/resources/js/util/commonsUtil.js"></script>
 
 <%--WEB SOCKET--%>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<%--<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>--%>
 <%--WEB SOCKET--%>
 
-<%--<script src="${contextPath}/resources/libs/sockjs.min.js"></script>
-<script src="${contextPath}/resources/libs/stomp.min.js"></script>--%>
 </body>
 </html>

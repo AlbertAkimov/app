@@ -26,24 +26,27 @@ public class ChatRoomService
     public Long getChatId(Long senderId, Long recipientId, boolean createIfNotExist) {
 
         ChatRoom chatRoom = repository.findBySenderIdAndRecipientId(senderId, recipientId);
+        Long chatId = 0L;
 
         if(chatRoom != null)
-            return chatRoom.getChatId();
+            chatId = chatRoom.getChatId();
 
-        Long chatId = senderId + recipientId;
+        else if(createIfNotExist) {
 
-        ChatRoom senderRecipient = new ChatRoom();
-        senderRecipient.setStatus(Status.ACTIVE);
-        senderRecipient.setChatId(chatId);
-        senderRecipient.setSenderId(senderId);
-        senderRecipient.setRecipientId(recipientId);
+            chatId = senderId + recipientId;
 
-        ChatRoom recipientSender = new ChatRoom();
-        recipientSender.setStatus(Status.ACTIVE);
-        recipientSender.setChatId(chatId);
-        recipientSender.setSenderId(senderId);
-        recipientSender.setRecipientId(recipientId);
+            ChatRoom senderRecipient = new ChatRoom();
+            senderRecipient.setStatus(Status.ACTIVE);
+            senderRecipient.setChatId(chatId);
+            senderRecipient.setSenderId(senderId);
+            senderRecipient.setRecipientId(recipientId);
 
+            ChatRoom recipientSender = new ChatRoom();
+            recipientSender.setStatus(Status.ACTIVE);
+            recipientSender.setChatId(chatId);
+            recipientSender.setSenderId(senderId);
+            recipientSender.setRecipientId(recipientId);
+        }
         return chatId;
     }
 }

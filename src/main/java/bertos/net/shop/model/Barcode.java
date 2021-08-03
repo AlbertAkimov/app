@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Table(name = "barcodes")
 @Entity
 @Data
-@Audited
+//@Audited
 public class Barcode extends AbstractEntity {
 
     @Column(name = "barcode")

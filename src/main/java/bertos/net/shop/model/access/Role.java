@@ -15,7 +15,7 @@ import java.util.List;
 
 @Entity
 @Data
-@Audited
+//@Audited
 @Table(name = "roles")
 public class Role extends AbstractEntity{
 

@@ -14,7 +14,7 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Audited
+//@Audited
 @Table(name = "users_roles")
 public class UserPrivileges extends AbstractEntity {
 
