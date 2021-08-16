@@ -44,8 +44,11 @@ public class ChatRoomService
             ChatRoom recipientSender = new ChatRoom();
             recipientSender.setStatus(Status.ACTIVE);
             recipientSender.setChatId(chatId);
-            recipientSender.setSenderId(senderId);
-            recipientSender.setRecipientId(recipientId);
+            recipientSender.setSenderId(recipientId);
+            recipientSender.setRecipientId(senderId);
+
+            repository.save(senderRecipient);
+            repository.save(recipientSender);
         }
         return chatId;
     }

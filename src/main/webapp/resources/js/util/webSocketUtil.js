@@ -2,9 +2,9 @@
 import {Stomp} from '/resources/libs/stomp.min'*/
 
 let stompClient = null;
-let currentUser = {id: 1, name: 'TESTER'};
 
 const onConnected = () => {
+    let currentUser = $$('main_toolbar').getValues();
     console.log("connected");
     console.log(currentUser);
     stompClient.subscribe(

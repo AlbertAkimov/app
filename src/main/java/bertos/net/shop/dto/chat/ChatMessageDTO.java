@@ -11,4 +11,7 @@ import lombok.Data;
 
 @Data
 public class ChatMessageDTO extends AbstractDataTransferObject {
+
+    public String senderName;
+    public String content;
 }

@@ -8,16 +8,78 @@ define(function () {
 
     return {
 
-        height: 600,
+        id: 'chat',
+        height: 690,
 
         rows:[
-            { template:"Тестирование чата Webix", type:"header" },
+            {template: "Тестирование чата Webix", type:"header"},
             {
-                view: "list", id:"chat", gravity:3,
-                //url:  "faye->/data", save: "faye->/data",
-                type:{ height:"auto" },
-                template:chat_template
+                cols:
+                    [
+                        {
+                            id: 'list_users',
+                            view: 'datatable',
+                            url: 'resource->/users',
+                            editable:true,
+                            editaction: "custom",
+                            gravity:3,
+                            type: {height:"auto"},
+                            maxWidth: 200,
+                            select: 'row',
+                            columns: [
+                                {
+                                    id: 'id',
+                                    header: 'id',
+                                    template: "#id#",
+                                    adjust:true
+
+                                },
+                                {
+                                    id: 'username',
+                                    header: 'Имя',
+                                    fillspace: true
+                                }
+                            ],
+
+                            on: {
+                                onItemClick: function (id) {
+                                    $$("list_users").load({
+                                        $proxy: true,
+                                        load: function (view, params) {
+                                            let sender = $$('main_toolbar').getValues();
+                                            webix.ajax().get("/chat/messages/" + id.row + "/" + sender.id).then(function (value) {
+
+                                                let messages = value.json();
+
+                                                $$('list_of_messages').clearAll();
+
+                                                for(let i = 0; i < messages.length; i++) {
+
+                                                    $$('list_of_messages').add(
+                                                        {
+                                                            user: messages[i].senderName,
+                                                            value: messages[i].content
+
+                                                        }
+                                                    );
+                                                }
+
+                                            })
+                                        }
+                                    });
+                                }
+                            }
+                        },
+                        {
+                            view: "list",
+                            id: 'list_of_messages',
+                            gravity:3,
+                            type:{ height:"auto" },
+                            template:chat_template
+                        },
+                    ]
             },
+
             { cols: [
                     { view:"text", id:"message", placeholder:"Напишите сообщение", gravity: 3},
                     {
@@ -27,14 +89,25 @@ define(function () {
 
                             let content = $$('message').getValue();
 
+                            let sender = $$('main_toolbar').getValues();
+                            let recipient = $$("list_users").getSelectedItem();
+
                             let message =
                             {
-                                senderId: 1,
-                                senderName: "Test sender",
-                                recipientId: 1,
-                                recipientName: "Test recipient",
+                                senderId: sender.id,
+                                senderName: sender.username,
+                                recipientId: recipient.id,
+                                recipientName: recipient.username,
                                 content: content
                             }
+
+                            $$('list_of_messages').add(
+                                {
+                                    user: sender.username,
+                                    value: content
+
+                                }
+                            );
 
                             //connect();
                             sendMessage(message);

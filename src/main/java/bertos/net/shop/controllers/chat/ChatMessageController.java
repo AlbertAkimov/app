@@ -63,16 +63,19 @@ public class ChatMessageController extends AbstractRestControllerCRUD
     }
 
     @GetMapping("/messages/{senderId}/{recipientId}/count")
+    @PreAuthorize("hasAuthority('READ:CHATMESSAGE')")
     public Long countNewMessage(@PathVariable Long senderId, @PathVariable Long recipientId) {
         return service.countNewMessage(senderId, recipientId);
     }
 
     @GetMapping("/messages/{senderId}/{recipientId}")
+    @PreAuthorize("hasAuthority('READ:CHATMESSAGE')")
     public List<ChatMessage> findChatMessage(@PathVariable Long senderId, @PathVariable Long recipientId) {
         return service.findChatMessage(senderId, recipientId);
     }
 
     @GetMapping("/messages/{id}")
+    @PreAuthorize("hasAuthority('READ:CHATMESSAGE')")
     public ChatMessage findChatMessage(@PathVariable Long id) {
         return service.findById(id);
     }
