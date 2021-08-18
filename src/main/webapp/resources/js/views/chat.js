@@ -111,6 +111,7 @@ define(function () {
 
                             //connect();
                             sendMessage(message);
+                            $$('message').setValue("");
                             //disconnect();
 
                         }
