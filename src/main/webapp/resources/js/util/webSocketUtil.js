@@ -7,7 +7,11 @@ let handlers = [];
 const onMessageReceived = (msg) => {
     //todo метод тестовый, все нужно привести в порядок!
     const notification = JSON.parse(msg.body);
-    const active = $$("list_users").getSelectedItem();
+    let active = $$("list_users").getSelectedItem();
+
+    if(active === undefined) {
+        active = {id: 0};
+    }
 
     if (active.id === notification.senderId) {
 
@@ -29,10 +33,17 @@ const onMessageReceived = (msg) => {
             }
         });
 
-    } /*else {
-        message.info("Received a new message from " + notification.senderName);
-    }*/
-    //loadContacts();
+    } else {
+/*        webix.message.position = "bottom";
+        webix.message.expire = 20000;*/
+
+        webix.message({
+            text: "Новое сообщение от " + "<br/>" + notification.senderName,
+            type: "success",
+            position: "bottom",
+            expire: 20000
+        });
+    }
 };
 
 const onConnected = () => {

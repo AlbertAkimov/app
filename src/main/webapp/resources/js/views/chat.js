@@ -86,34 +86,7 @@ define(function () {
                         view:"button",
                         value: "Отправить",
                         click: function () {
-
-                            let content = $$('message').getValue();
-
-                            let sender = $$('main_toolbar').getValues();
-                            let recipient = $$("list_users").getSelectedItem();
-
-                            let message =
-                            {
-                                senderId: sender.id,
-                                senderName: sender.username,
-                                recipientId: recipient.id,
-                                recipientName: recipient.username,
-                                content: content
-                            }
-
-                            $$('list_of_messages').add(
-                                {
-                                    user: sender.username,
-                                    value: content
-
-                                }
-                            );
-
-                            //connect();
-                            sendMessage(message);
-                            $$('message').setValue("");
-                            //disconnect();
-
+                            send();
                         }
                     }
                 ]}
@@ -124,3 +97,31 @@ define(function () {
 function chat_template(obj){
     return "<span class='own'>" + obj.user +  "</span>" + obj.value;
 }
+
+function send() {
+    let content = $$('message').getValue();
+
+    let sender = $$('main_toolbar').getValues();
+    let recipient = $$("list_users").getSelectedItem();
+
+    let message =
+        {
+            senderId: sender.id,
+            senderName: sender.username,
+            recipientId: recipient.id,
+            recipientName: recipient.username,
+            content: content
+        }
+
+    $$('list_of_messages').add(
+        {
+            user: sender.username,
+            value: content
+        }
+    );
+    sendMessage(message);
+    $$('message').setValue("");
+}
+
+webix.UIManager.addHotKey("Enter", send, $$("message"));
+webix.UIManager.setFocus($$("message"));
