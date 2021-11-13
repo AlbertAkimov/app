@@ -110,7 +110,9 @@ function send() {
             senderName: sender.username,
             recipientId: recipient.id,
             recipientName: recipient.username,
-            content: content
+            content: content,
+            status: 'ACTIVE',
+            timestamp: new Date()
         }
 
     $$('list_of_messages').add(

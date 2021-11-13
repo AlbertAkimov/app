@@ -25,9 +25,9 @@ public class UserControllerRest extends
         super(service, mapper, User.class);
     }
 
-    @GetMapping("/user/auh/detail")
+    @GetMapping("/user/authentication_user")
     @PreAuthorize("hasAuthority('READ:USER')")
-    public UserDTO getDetailsForAuhUser() {
+    public UserDTO getAuthenticationUser() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
         return mapper.toDTO(service.findByUsername(username));

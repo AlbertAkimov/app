@@ -6,7 +6,7 @@ define(function () {
     return {
         view: "toolbar",
         id: 'main_toolbar',
-        url: 'resource->/users/user/auh/detail', //todo убрать отсюда
+        url: 'resource->/users/user/authentication_user', //todo убрать отсюда
         padding: 3,
         elements: [
             {

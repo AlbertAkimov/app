@@ -40,6 +40,7 @@ public class ChatMessage extends AbstractEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date timestamp;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "message_status")
     private MessageStatus messageStatus;
 
