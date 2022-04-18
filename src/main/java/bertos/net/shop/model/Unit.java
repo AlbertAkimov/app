@@ -1,5 +1,6 @@
 package bertos.net.shop.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import org.hibernate.envers.Audited;
 
@@ -20,7 +21,7 @@ public class Unit extends AbstractEntity {
     @Column(name = "unit_name")
     private String unitName;
 
-    @OneToOne(mappedBy = "unit", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
-    //@JsonManagedReference
-    private Product product;
+ /*   @OneToOne(mappedBy = "unit", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @JsonBackReference
+    private Product product;*/
 }

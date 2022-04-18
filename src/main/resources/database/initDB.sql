@@ -2,7 +2,7 @@ ALTER TABLE users
     AUTO_INCREMENT = 0;
 ALTER TABLE cards
     AUTO_INCREMENT = 0;
-ALTER TABLE customers
+ALTER TABLE orders
     AUTO_INCREMENT = 0;
 ALTER TABLE users_roles
     AUTO_INCREMENT = 0;
@@ -35,11 +35,11 @@ create table if not exists units
 );
 
 #/////////////////////////////////CUSTOMERS//////////////////////////////////////////
-create table if not exists customers
+create table if not exists partners
 (
     id          bigint auto_increment primary key,
     guid        varchar(36),
-    first_name  varchar(50)  not null,
+    first_name  varchar(100)  not null,
     last_name   varchar(100) not null,
     status      varchar(25) default 'ACTIVE',
     unique (guid)
@@ -49,16 +49,16 @@ create table if not exists customers
 create table if not exists cards
 (
     id                  bigint auto_increment primary key,
-    id_customer         bigint,
+    id_owner            bigint,
     guid                varchar(36),
-    number_card         varchar(100),
-    type_card           ENUM (1,2,3) default 1,
-    discount_percent    int          default 3,
-    status              varchar(25)  default 'ACTIVE',
-    accumulation        bigint       default 0,
+    number              varchar(100),
+    type                int             default 0,
+    percent             int             default 0,
+    status              varchar(25)     default 'ACTIVE',
+    accumulation        bigint          default 0,
 
     unique (guid),
-    foreign key (id_customer) references customers (id)
+    foreign key (id_owner) references partners (id)
 );
 
 #/////////////////////////////////ORDERS//////////////////////////////////////////
@@ -66,10 +66,27 @@ create table if not exists orders #todo доделать таблицу
 (
     id          bigint auto_increment primary key,
     guid        varchar(36),
-    id_customer bigint not null,
+    status      varchar(25) default 'ACTIVE',
+    id_owner    bigint not null,
     id_card     bigint,
-    id_product  bigint not null
 
+    foreign key (id_owner) references partners(id)
+);
+
+#/////////////////////////////////PRODUCT_OF_ORDERS//////////////////////////////////////////
+create table if not exists products_of_orders
+(
+    id          bigint auto_increment primary key,
+    id_order    bigint not null,
+    id_product  bigint not null,
+    guid        varchar(36),
+    status      varchar(25) default 'ACTIVE',
+    amt         double,
+    price       double,
+    sum         double,
+
+    foreign key (id_order) references orders(id),
+    foreign key (id_product) references products(id)
 );
 
 #/////////////////////////////////PRODUCTS//////////////////////////////////////////

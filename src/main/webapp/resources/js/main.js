@@ -22,7 +22,8 @@ require([
     'views/typePrice',
     'views/units',
     'views/userManager',
-    'views/chat'],function (
+    'views/chat',
+    'views/orders'],function (
         products,
         resourcesProxy,
         sidebar,
@@ -30,7 +31,8 @@ require([
         typePrice,
         units,
         userManager,
-        chat) {
+        chat,
+        orders) {
     connect(); //todo вынести в другое место.
     webix.ready(function() {
         webix.ui({
@@ -50,6 +52,7 @@ require([
         'typePrice' : buildRoute(typePrice),
         'units' : buildRoute(units),
         'usersManager' : buildRoute(userManager),
-        'chat' : buildRoute(chat)
+        'chat' : buildRoute(chat),
+        'orders' :buildRoute(orders)
     })
 })

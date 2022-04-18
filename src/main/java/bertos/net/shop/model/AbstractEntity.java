@@ -34,5 +34,4 @@ public abstract class AbstractEntity {
         if(this.guid == null)
             guid = UUID.randomUUID().toString();
     }
-
 }

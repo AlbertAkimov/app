@@ -41,16 +41,18 @@ public class Product extends AbstractEntity {
     private List<Product> data;
 
     @OneToMany(mappedBy = "product", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY)
-    @JsonManagedReference
+    //@JsonManagedReference
     private List<Price> prices;
 
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_unit", referencedColumnName = "id")
     @OrderColumn
+    //@JsonManagedReference
     private Unit unit;
 
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_barcode", referencedColumnName = "id")
     @OrderColumn
+    //@JsonManagedReference
     private Barcode barcode;
 }

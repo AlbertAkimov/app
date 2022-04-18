@@ -1,5 +1,6 @@
 package bertos.net.shop.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.envers.Audited;
@@ -30,6 +31,6 @@ public class Barcode extends AbstractEntity {
     private String imageBarcode;
 
     @OneToOne(mappedBy = "barcode", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
-    //@JsonManagedReference
+    @JsonBackReference
     private Product product;
 }
